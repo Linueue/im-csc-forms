@@ -6,19 +6,18 @@
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
-    import Row from "$lib/components/row.svelte"
+    import FormPagination from "$lib/components/forms/FormPagination.svelte"
     import { enhance } from "$app/forms"
     import { formSchema } from "./schema.svelte.ts"
     import { getAge } from "$lib/utils/date"
-
-    const REGIONAL_OFFICES = [
-        "I", "II", "III", "IV", "MIMAROPA", "V", "VI", "VII", "VIII",
-        "IX", "X", "XI", "XII", "XIII", "NCR", "CAR", "BARMM", "NIR",
-    ];
+    import { CITIZENSHIPS } from "./selection-constants.svelte"
 
     $effect(() => {
         if(formSchema.applicantBirthdate.value != null)
+        {
             formSchema.applicantAge.value = getAge(formSchema.applicantBirthdate.value);
+            formSchema.applicantAge.validateThenSet();
+        }
     });
 </script>
 
@@ -29,21 +28,50 @@
         <Separator />
     
         <form method="POST" use:enhance autocomplete=off>
-            <Label class="min-h-8 text-sm font-normal"><i>Personal Details</i></Label>
+            <FormPagination totalPages={2}>
+                {#snippet childRender({currentPage})}
+                    {#if currentPage == 1}
+                        <div>
+                            <Label class="min-h-8 text-sm font-normal"><i>Personal Details</i></Label>
 
-            <div class="divider">
-                <FormMultiField name={"Name"}>
-                    <FormUnlabeledField bind:value={formSchema.applicantLastName} placeholder={"Last Name"} />
-                    <FormUnlabeledField bind:value={formSchema.applicantFirstName} placeholder={"First Name"} />
-                    <FormUnlabeledField bind:value={formSchema.applicantMiddleName} placeholder={"Middle Name"} />
-                </FormMultiField>
-                <Picker title={"sex"} name={"Sex"} options={["Male", "Female"]} bind:value={formSchema.applicantSex} />
-                <FormDate bind:value={formSchema.applicantBirthdate} name={"Date of Birth"} />
-                <FormField bind:value={formSchema.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
-                <FormField bind:value={formSchema.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
-            </div>
+                            <div class="divider">
+                                <FormMultiField name={"Name"}>
+                                    <FormUnlabeledField bind:value={formSchema.applicantLastName} placeholder={"Last Name"} />
+                                    <FormUnlabeledField bind:value={formSchema.applicantFirstName} placeholder={"First Name"} />
+                                    <FormUnlabeledField bind:value={formSchema.applicantMiddleName} placeholder={"Middle Name"} />
+                                </FormMultiField>
+                                <Picker
+                                    title={"sex"}
+                                    name={"Sex"}
+                                    options={[
+                                        {value: "M", label: "Male"},
+                                        {value: "F", label: "Female"},
+                                    ]}
+                                    bind:value={formSchema.applicantSex}
+                                />
+                                <FormDate bind:value={formSchema.applicantBirthdate} name={"Date of Birth"} />
+                                <FormField bind:value={formSchema.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
+                                <FormField bind:value={formSchema.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
+                                <Picker
+                                    title={"nationality"}
+                                    name={"Nationality"}
+                                    options={CITIZENSHIPS}
+                                    bind:value={formSchema.applicantCitizenship}
+                                />
+                            </div>
 
-            <Separator />
+                            <Separator />
+                        </div>
+                    {:else if currentPage == 2}
+                        <div>
+                            <h1>That is all</h1>
+                            <h1>Thank you!</h1>
+
+                            <Separator />
+                        </div>
+                    {/if}
+                {/snippet}
+            </FormPagination>
         </form>
     </div>
 </div>
