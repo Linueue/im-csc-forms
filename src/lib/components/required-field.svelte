@@ -9,11 +9,11 @@
 <div class="container">
 {#if validState == ValidState.Required}
     <div transition:slide>
-            <Label class="pt-1 pb-1 text-red-500 text-xs/3">This is a required field!</Label>
+            <Label class="pt-1 pb-1 text-destructive text-xs/3">This is a required field!</Label>
     </div>
 {:else if validState == ValidState.Invalid}
     <div transition:slide>
-        <Label class="pt-1 pb-1 text-red-500 text-xs/3">{errorMessage}</Label>
+        <Label class="pt-1 pb-1 text-destructive text-xs/3">{errorMessage}</Label>
     </div>
 {/if}
 </div>

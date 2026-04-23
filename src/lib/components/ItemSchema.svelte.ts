@@ -165,6 +165,7 @@ class ItemNumber extends Item<number>
     validate()
     {
         const value = this.value;
+        console.log(value);
 
         if(!this.hasValue() || value == null)
         {
