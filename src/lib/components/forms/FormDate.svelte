@@ -8,7 +8,7 @@
     import ChevronDownIcon from "@lucide/svelte/icons/chevron-down";
     import {
         getLocalTimeZone,
-            today,
+        today,
     } from "@internationalized/date";
 
     let { value = $bindable(), name, errorMessage = "Invalid!" } = $props();

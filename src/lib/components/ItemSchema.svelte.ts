@@ -13,7 +13,7 @@ export const enum ValidState
     Required,
 };
 
-class Item<T>
+export class Item<T>
 {
     #value: T | null = $state(null);
     isOptional: boolean;
@@ -165,7 +165,6 @@ class ItemNumber extends Item<number>
     validate()
     {
         const value = this.value;
-        console.log(value);
 
         if(!this.hasValue() || value == null)
         {

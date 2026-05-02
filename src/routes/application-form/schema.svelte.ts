@@ -1,4 +1,4 @@
-import { item } from "$lib/components/ItemSchema.svelte";
+import { item, type Item, ValidState } from "$lib/components/ItemSchema.svelte";
 
 // The Form Schema for validation during client runtime
 // This does not correspond to Database schema
@@ -13,3 +13,25 @@ export const formSchema = $state({
     applicantBirthplace: item.string().min(1).max(50),
     applicantCitizenship: item.string().default("Filipino"),
 });
+
+export function checkAllValidation(schema: Map<String, Item<any>>): boolean
+{
+    for(const [_, value] of schema)
+    {
+        if(value.validate() != ValidState.Valid)
+            return false;
+    };
+
+    return true;
+}
+
+export function serialize(schema: Map<string, Item<any>>)
+{
+    let data: Record<string, string | null> = {};
+
+    schema.forEach((value, key) => {
+        data[key.toString()] = value.value?.toString() ?? null;
+    });
+
+    return JSON.stringify(data);
+}
