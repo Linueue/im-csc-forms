@@ -5,7 +5,7 @@
     let { children, isLoading = false } = $props();
 </script>
 
-<Button type="submit" variant="outline">
+<Button type="submit" variant="default">
     {#if isLoading}
         <LoadingIcon class="animate-spin" />
     {/if}

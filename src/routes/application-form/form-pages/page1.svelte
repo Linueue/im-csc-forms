@@ -1,11 +1,14 @@
 <script lang="ts">
     import { Label } from "$lib/components/ui/label/index.js"
     import { Separator } from "$lib/components/ui/separator/index.js"
-    import Picker from "$lib/components/forms/FormPicker.svelte"
+    import Row from "$lib/components/row.svelte"
+    import FormPicker from "$lib/components/forms/FormPicker.svelte"
+    import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
+    import CircleUserIcon from "@lucide/svelte/icons/circle-user"
     import { formSchema } from "../schema.svelte.ts"
     import { getAge } from "$lib/utils/date"
     import { CITIZENSHIPS } from "../selection-constants.svelte"
@@ -19,7 +22,10 @@
     });
 </script>
 
-<Label class="min-h-8 text-sm font-normal"><i>Personal Details</i></Label>
+<Row gap="0.5em" class="pt-[0.5em]">
+    <CircleUserIcon />
+    <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Personal Details</Label>
+</Row>
 
 <div class="divider">
     <FormMultiField name={"Name"}>
@@ -27,8 +33,7 @@
         <FormUnlabeledField bind:value={formSchema.applicantFirstName} placeholder={"First Name"} />
         <FormUnlabeledField bind:value={formSchema.applicantMiddleName} placeholder={"Middle Name"} />
     </FormMultiField>
-    <Picker
-        title={"sex"}
+    <FormToggleGroup
         name={"Sex"}
         options={[
             {value: "M", label: "Male"},
@@ -39,7 +44,7 @@
     <FormDate bind:value={formSchema.applicantBirthdate} name={"Date of Birth"} />
     <FormField bind:value={formSchema.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
     <FormField bind:value={formSchema.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
-    <Picker
+    <FormPicker
         title={"nationality"}
         name={"Nationality"}
         options={CITIZENSHIPS}
@@ -52,6 +57,10 @@
 <style>
     .divider
     {
-        padding: 0.5em 0.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        width: 100%;
     }
 </style>

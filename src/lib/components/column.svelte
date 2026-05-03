@@ -1,8 +1,8 @@
 <script lang="ts">
-    let { gap = "0px", children } = $props();
+    let { gap = "0px", children, ...restProps } = $props();
 </script>
 
-<div style={`gap: ${gap}`}>
+<div style={`gap: ${gap}`} {...restProps}>
     {@render children()}
 </div>
 

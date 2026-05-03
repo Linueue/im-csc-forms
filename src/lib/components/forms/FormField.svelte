@@ -8,9 +8,9 @@
     let { value = $bindable(), name, errorMessage = "Invalid!", type = "text", readonly = false, placeholder = "" } = $props();
 </script>
 
-<Label for="field" class="pb-1 pt-1">{name}</Label>
+<Label for="field" class="pb-1">{name}</Label>
 <div class="relative flex items-center">
-    <Input readonly={readonly} type={type} placeholder={placeholder} class={`pr-10 w-100% border-2 ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`} bind:value={value.value} id="field" onblur={() => value.validateThenSet() } />
+    <Input readonly={readonly} type={type} placeholder={placeholder} class={`pr-10 w-full border-2 ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`} bind:value={value.value} id="field" onblur={() => value.validateThenSet() } />
     {#if value.validState != ValidState.Valid}
         <TriangleAlertIcon class="absolute right-2" color="var(--destructive)" />
     {/if}

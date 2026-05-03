@@ -16,10 +16,10 @@
     let open = $state(false);
 </script>
 
-<Label for="field" class="pb-1 pt-1">{name}</Label>
+<Label for="field" class="pb-1">{name}</Label>
 <Popover.Root bind:open>
-    <Popover.Trigger id="date">
-        <Button variant="outline" class={`w-48 justify-between font-normal ${(value.validState != ValidState.Valid) ? "border-red-500" : ""}`}>
+    <Popover.Trigger id="date" class="w-48">
+        <Button variant="outline" class={`w-48 bg-muted justify-between font-normal ${(value.validState != ValidState.Valid) ? "border-red-500" : ""}`}>
             {value.value != null ?
                 value.value.toDate(getLocalTimeZone()).toLocaleDateString() :
                 "Select date"

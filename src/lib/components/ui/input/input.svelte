@@ -38,7 +38,7 @@
 		bind:this={ref}
 		data-slot={dataSlot}
 		class={cn(
-			"dark:bg-input/30 border-input hover:border-primary focus-visible:border-primary aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 h-9 rounded-md border bg-muted px-2.5 py-1 text-base shadow-xs transition-[color,box-shadow] file:h-7 file:text-sm file:font-medium md:text-sm file:text-foreground placeholder:text-muted-foreground w-full min-w-0 outline-none file:inline-flex file:border-0 file:bg-transparent disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+			"dark:bg-input/30 border-input focus-visible:border-primary aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 h-9 rounded-md border bg-muted px-2.5 py-1 text-base shadow-xs transition-[color,box-shadow] file:h-7 file:text-sm file:font-medium md:text-sm file:text-foreground placeholder:text-muted-foreground w-full min-w-0 outline-none file:inline-flex file:border-0 file:bg-transparent disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
 			className
 		)}
 		{type}

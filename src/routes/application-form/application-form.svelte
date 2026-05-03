@@ -38,9 +38,9 @@
     }
 </script>
 
-<div class="content-container bg-muted">
-    <div class="content bg-background">
-        <h1>CSC Application</h1>
+<div class="content-container bg-background">
+    <div class="content">
+        <h1>Application Form</h1>
 
         <Separator />
     
@@ -69,12 +69,8 @@
     h1
     {
         font-size: 2rem;
-        padding: 0.5rem 0rem 1rem 0rem;
-    }
-
-    .divider
-    {
-        padding: 0.5em 0.5em;
+        padding: 0.25rem 0rem 0.25rem 0rem;
+        font-family: var(--font-serif);
     }
 
     .content-container

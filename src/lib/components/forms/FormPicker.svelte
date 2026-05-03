@@ -2,7 +2,6 @@
     import * as Select from "$lib/components/ui/select/index.js"
     import { Label } from "$lib/components/ui/label/index.js"
     import RequiredField from "$lib/components/required-field.svelte"
-    import { Select as SelectPrimitive } from "bits-ui"
 
     let {
         title,
@@ -16,9 +15,9 @@
     let currentSelected = $derived(options.find((f) => f.value == value.value)?.label ?? "<None Selected>");
 </script>
 
-<Label for={title} class="pb-1 pt-1">{name}</Label>
+<Label for={title} class="pb-1">{name}</Label>
 <Select.Root type="single" name={title} bind:value={value.value}>
-  <Select.Trigger>
+  <Select.Trigger class="bg-muted">
     {currentSelected}
   </Select.Trigger>
   <Select.Content class="max-h-75">

@@ -7,7 +7,7 @@
     let { name, errorMessage = "Invalid!", children } = $props();
 </script>
 
-<Label for="field" class="pb-1 pt-1">{name}</Label>
+<Label for="field" class="pb-1">{name}</Label>
 <Row gap="5px">
     {@render children()}
 </Row>
