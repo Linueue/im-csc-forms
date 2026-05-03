@@ -88,6 +88,6 @@
         max-width: 80ch;
         width: 100%;
         border-radius: var(--radius);
-        min-height: 100vh;
+        min-height: 50vh;
     }
 </style>
