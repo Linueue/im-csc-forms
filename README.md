@@ -1,42 +1,33 @@
-# sv
+# CSC Professional Application
+> DISCLAIMER: This repo is a University project requirement, and is not affiliated, endorsed by, or connected to any government agencies. The form structure used in this project is entirely based on publicly available [forms](https://csc.gov.ph/downloads/category/459-cse-application-form). Any data used is fictional. However, some fields of the forms are intentionally omitted to keep the project in a manageable scope.
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+## Tech Stack
+The tech stack used are the following:
+1. [SvelteKit](https://svelte.dev/docs/kit/introduction) - frontend/backend
+2. [MySQL](https://www.mysql.com) - database
+3. [shadcn-svelte](https://www.shadcn-svelte.com) - UI components
 
-## Creating a project
+## Build Instructions
+### Dev
 
-If you're seeing this, you've probably already done this step. Congrats!
+First off, clone the repo,
 
-```sh
-# create a new project
-npx sv create my-app
+```
+git clone
 ```
 
-To recreate this project with the same configuration:
+Open up the cloned repo to any of your favorite IDEs/code editors,
 
-```sh
-# recreate this project
-npx sv@0.15.1 create --template minimal --types ts --install npm im-csc-forms
+```
+npm install
 ```
 
-## Developing
+Host it locally,
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+### Production
 
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+TODO
