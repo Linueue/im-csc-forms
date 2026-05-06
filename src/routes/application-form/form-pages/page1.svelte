@@ -4,6 +4,7 @@
     import Row from "$lib/components/row.svelte"
     import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
+    import FormImageUpload from "$lib/components/forms/FormImageUpload.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
@@ -50,6 +51,21 @@
         options={CITIZENSHIPS}
         bind:value={formSchema.applicantCitizenship}
     />
+
+    <FormImageUpload
+        bind:value={formSchema.applicantPhoto}
+        name={"Picture"}
+        title={"Upload your Passport-size Photo"}
+        errorMessage={"Your file is over 5MB large!"}
+    >
+        {#snippet description()}
+            - Philippine passport size
+            - Showing 80% face capture
+            - In bare face & showing left and right ears
+            - With handwritten (not computer generated) name tag showing signature over printed full name
+            - File must not be over 5MB
+        {/snippet}
+    </FormImageUpload>
 </div>
 
 <Separator />

@@ -12,6 +12,7 @@ export const formSchema = $state({
     applicantBirthdate: item.date(),
     applicantBirthplace: item.string().min(1).max(50),
     applicantCitizenship: item.string().default("Filipino"),
+    applicantPhoto: item.image().aspectRatio(3.5 / 4.5).size(5 * 1024 * 1024), // Limits to 5MB
 });
 
 export function checkAllValidation(schema: Map<String, Item<any>>): boolean

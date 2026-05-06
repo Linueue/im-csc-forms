@@ -176,6 +176,50 @@ class ItemNumber extends Item<number>
     }
 }
 
+class ItemImage extends Item<File>
+{
+    aspectRatioNum: number | null;
+    sizeNum: number;
+
+    constructor()
+    {
+        super();
+        this.aspectRatioNum = null;
+        this.sizeNum = Infinity;
+    }
+
+    aspectRatio(value: number)
+    {
+        this.aspectRatioNum = value;
+        return this;
+    }
+
+    size(value: number)
+    {
+        this.sizeNum = value;
+        return this;
+    }
+
+    validate()
+    {
+        const value = this.value;
+
+        if(!this.hasValue() || value == null)
+        {
+            return this.isOptional ? ValidState.Valid : ValidState.Required;
+        }
+
+        if(!this.value)
+            return ValidState.Invalid;
+        if(this.aspectRatioNum == null)
+            return ValidState.Valid;
+        if(this.sizeNum <= this.value.size)
+            return ValidState.Invalid;
+
+        return ValidState.Valid;
+    }
+}
+
 export const item = {
     string: () => {
         return new ItemString().default("");
@@ -188,5 +232,8 @@ export const item = {
     },
     number: () => {
         return new ItemNumber().default(null);
-    }
+    },
+    image: () => {
+        return new ItemImage().default(null);
+    },
 }
