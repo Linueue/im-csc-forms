@@ -90,7 +90,7 @@ export class Item<T>
     }
 }
 
-class ItemString extends Item<string>
+export class ItemString extends Item<string>
 {
     minLen: number;
     maxLen: number;
@@ -138,7 +138,7 @@ class ItemString extends Item<string>
     }
 }
 
-class ItemNumber extends Item<number>
+export class ItemNumber extends Item<number>
 {
     minNum: number;
     maxNum: number;
@@ -176,7 +176,7 @@ class ItemNumber extends Item<number>
     }
 }
 
-class ItemImage extends Item<File>
+export class ItemImage extends Item<File>
 {
     aspectRatioNum: number | null;
     sizeNum: number;

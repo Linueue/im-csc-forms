@@ -35,7 +35,10 @@
                         <MessageSquareWarningIcon color="var(--destructive)" />
                         <Alert.Title>Disclaimer</Alert.Title>
                         <Alert.Description>
-                            This website is not an official government website, and is only for University purposes. Any data that is collected shall only be for dummy data. 
+                            This website is not an official government website,
+                            and is only for University purposes. Any data collected
+                            is entirely fictional, thus, only for database mock data.
+                            For educational purposes only.
                         </Alert.Description>
                     </Alert.Root>
                 </div>

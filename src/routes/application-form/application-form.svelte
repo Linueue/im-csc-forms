@@ -2,12 +2,22 @@
     import { Separator } from "$lib/components/ui/separator/index.js"
     import FormPagination from "$lib/components/forms/FormPagination.svelte"
     import FormButton from "$lib/components/forms/FormButton.svelte"
-    import { formSchema, checkAllValidation, serialize } from "./schema.svelte.ts"
+    import {
+        formSchema,
+        checkAllValidation,
+        serialize,
+        getFileUploads,
+        SubmitStatus,
+    } from "./schema.svelte.ts"
     import { enhance } from "$app/forms"
+    import { fade, scale } from "svelte/transition"
+    import CheckIcon from "@lucide/svelte/icons/circle-check"
+    import XIcon from "@lucide/svelte/icons/circle-x"
     import { type SubmitFunction } from "@sveltejs/kit"
     import Page1 from "./form-pages/page1.svelte"
 
     let isSubmitting = $state(false);
+    let submitStatus = $state(SubmitStatus.None);
 
     const submitFn: SubmitFunction = async ({ cancel, formData }) => {
         const schemaMap = new Map(Object.entries(formSchema));
@@ -27,13 +37,22 @@
             formData.delete(key);
 
         const serialized: string = serialize(schemaMap);
+        const fileUploads = getFileUploads(schemaMap);
 
         formData.set("payload", serialized);
 
-        return async ({ update }) => {
-            const result = await update();
+        for(const [key, value] of Object.entries(fileUploads))
+        {
+            // value! means trust me, this will not be null
+            formData.set(key, value!);
+        }
+
+        return async ({ result, update }) => {
+            await update();
 
             console.log(result);
+
+            submitStatus = result.status == 200 ? SubmitStatus.Submitted : SubmitStatus.Failed;
         };
     }
 </script>
@@ -43,25 +62,41 @@
         <h1>Application Form</h1>
 
         <Separator />
-    
-        <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off>
-            <FormPagination totalPages={2}>
-                <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
-                {#snippet childRender({currentPage})}
-                    {#if currentPage == 1}
-                        <Page1 />
-                    {:else if currentPage == 2}
-                        <h1>That is all</h1>
-                        <h1>Thank you!</h1>
 
-                        <Separator />
-                    {/if}
-                {/snippet}
-                {#snippet submitRender()}
-                    <FormButton isLoading={isSubmitting}>Submit</FormButton>
-                {/snippet}
-            </FormPagination>
-        </form>
+        {#if submitStatus == SubmitStatus.None}
+            <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off enctype="multipart/form-data">
+                <FormPagination totalPages={2}>
+                    <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
+                    {#snippet childRender({currentPage})}
+                        {#if currentPage == 1}
+                            <Page1 />
+                        {:else if currentPage == 2}
+                            <h1>That is all</h1>
+                            <h1>Thank you!</h1>
+
+                            <Separator />
+                        {/if}
+                    {/snippet}
+                    {#snippet submitRender()}
+                        <FormButton isLoading={isSubmitting}>Submit</FormButton>
+                    {/snippet}
+                </FormPagination>
+            </form>
+        {:else if submitStatus == SubmitStatus.Submitted}
+            <div class="flex flex-col items-center p-[1em] pt-[3.5em] pb-[3.5em] border-2 rounded-md" transition:fade>
+                <div class="p-5">
+                    <CheckIcon color="var(--primary)" size={32} />
+                </div>
+                <p transition:scale class="text-secondary">Submitted Successfully</p>
+            </div>
+        {:else}
+            <div class="flex flex-col items-center p-[1em] pt-[3.5em] pb-[3.5em] border-2 rounded-md" transition:fade>
+                <div class="p-5">
+                    <XIcon color="var(--destructive)" size={32} />
+                </div>
+                <p transition:scale class="text-secondary">Failed to submit, please try again.</p>
+            </div>
+        {/if}
     </div>
 </div>
 
