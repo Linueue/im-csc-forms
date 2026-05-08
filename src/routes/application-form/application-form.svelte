@@ -108,7 +108,7 @@
 
     .content-container
     {
-        padding: 0.5em;
+        padding: 0em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -117,7 +117,7 @@
 
     .content
     {
-        padding: 1em;
+        padding: 0.25em 1em 1em 1em;
         max-width: 80ch;
         width: 100%;
         border-radius: var(--radius);

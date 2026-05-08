@@ -19,7 +19,7 @@
 <Label for="field" class="pb-1">{name}</Label>
 <Popover.Root bind:open>
     <Popover.Trigger id="date" class="w-48">
-        <Button variant="outline" class={`w-48 bg-muted justify-between font-normal ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`}>
+        <Button variant="outline" class={`w-48 border-2 bg-muted justify-between font-normal ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`}>
             {value.value != null ?
                 value.value.toDate(getLocalTimeZone()).toLocaleDateString() :
                 "Select date"

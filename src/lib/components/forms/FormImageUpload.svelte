@@ -4,7 +4,6 @@
     import { Label } from "$lib/components/ui/label/index.js"
     import { onDestroy } from "svelte"
     import ImageIcon from "@lucide/svelte/icons/image"
-    import * as Card from "$lib/components/ui/card/index.js"
     import * as Dialog from "$lib/components/ui/dialog/index.js"
     import RequiredField from "$lib/components/required-field.svelte"
 
@@ -62,13 +61,13 @@
       type="button"
     >
         {#if savedSrc}
-            <div class="flex align-center justify-center border-2 rounded-md p-2">
+            <div class="flex align-center justify-center border-2 rounded-md p-2 bg-input/30">
                 <img src={savedSrc} alt="Preview" class="rounded-md" />
             </div>
         {:else}
-            <div class="flex flex-col items-center justify-center border-2 rounded-md p-5">
-                <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
-                <p class="text-muted">Upload Image</p>
+            <div class="flex flex-col items-center justify-center border-2 rounded-md p-5 bg-muted dark:bg-input/30 hover:bg-input/50 cursor-pointer">
+                <ImageIcon size={128} strokeWidth={0.25} color="var(--muted-foreground)" />
+                <p class="text-muted-foreground">Upload Image</p>
             </div>
         {/if}
     </Dialog.Trigger>

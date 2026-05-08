@@ -17,7 +17,7 @@
 
 <Label for={title} class="pb-1">{name}</Label>
 <Select.Root type="single" name={title} bind:value={value.value}>
-  <Select.Trigger class="bg-muted">
+  <Select.Trigger class="bg-muted border-2">
     {currentSelected}
   </Select.Trigger>
   <Select.Content class="max-h-75">
