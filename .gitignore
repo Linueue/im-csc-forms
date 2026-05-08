@@ -1,4 +1,5 @@
 node_modules
+docker_sql_cmd.bat
 
 # Output
 .output

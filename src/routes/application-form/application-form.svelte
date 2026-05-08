@@ -50,8 +50,6 @@
         return async ({ result, update }) => {
             await update();
 
-            console.log(result);
-
             submitStatus = result.status == 200 ? SubmitStatus.Submitted : SubmitStatus.Failed;
         };
     }

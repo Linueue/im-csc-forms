@@ -22,6 +22,12 @@ Open up the cloned repo to any of your favorite IDEs/code editors,
 npm install
 ```
 
+Populate the database,
+
+```
+npm run migrate
+```
+
 Host it locally,
 
 ```
