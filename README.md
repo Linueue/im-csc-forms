@@ -13,7 +13,7 @@ The tech stack used are the following:
 First off, clone the repo,
 
 ```
-git clone
+git clone https://github.com/Linueue/im-csc-forms
 ```
 
 Open up the cloned repo to any of your favorite IDEs/code editors,
