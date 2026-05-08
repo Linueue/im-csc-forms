@@ -11,7 +11,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "db:migrate": "node scripts/db-migrations.ts",
-        "db:create": "node scripts/db-setup.ts"
+        "db:create": "node scripts/db-setup.ts",
+        "db:destroy": "node scripts/db-destroy.ts"
 	},
 	"devDependencies": {
 		"@fontsource-variable/inter": "^5.2.8",

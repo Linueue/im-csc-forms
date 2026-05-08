@@ -22,10 +22,28 @@ Open up the cloned repo to any of your favorite IDEs/code editors,
 npm install
 ```
 
-Populate the database,
+Copy the `.env.example` to `.env`, and modify the fields, `DB_USER`, and `DB_PASSWORD`.
+
+If you have yet to create a database locally through Workbench, or other DBMS GUI, run,
 
 ```
-npm run migrate
+npm run db:create
+```
+
+However, if you did, please modify the `DB_DATABASE` in `.env` to the corresponding name you assigned to Workbench
+
+Populate the database,
+
+> Database migration just means the controlled process of transferring data, schemma, and application logic from a source DB to a target system. This is useful, since we all have different machines, and we wouldn't want to manually do it in MySQL
+
+```
+npm run db:migrate
+```
+
+And if you want a fresh DB,
+
+```
+npm run db:destroy
 ```
 
 Host it locally,

@@ -14,17 +14,17 @@ const pool = mysql.createPool({
     queueLimit: 0,
 });
 
-async function createDatabase()
+async function destroyDatabase()
 {
     const DB_DATABASE = process.env.DB_DATABASE ?? "ApplicationsDB";
-    await pool.execute(`CREATE DATABASE IF NOT EXISTS ${DB_DATABASE};`);
+    await pool.execute(`DROP DATABASE ${DB_DATABASE};`);
 
-    console.log(`Database '${DB_DATABASE}' created successfully.`);
+    console.log(`Database '${DB_DATABASE}' destroyed successfully.`);
 
     await pool.end();
 }
 
-createDatabase().catch((err) => {
+destroyDatabase().catch((err) => {
     console.error(err);
     pool.end();
 });
