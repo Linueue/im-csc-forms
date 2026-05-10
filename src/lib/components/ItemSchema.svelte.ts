@@ -13,16 +13,10 @@ export const enum ValidState
     Required,
 };
 
-export class Item<T>
+export class SchemaItem<T>
 {
-    #value: T | null = $state(null);
-    isOptional: boolean;
-    #validState: ValidState = $state(ValidState.Valid);
-
-    constructor()
-    {
-        this.isOptional = false;
-    }
+    isOptional: boolean = false;
+    defaultValue: T | null = null;
 
     optional(value: boolean)
     {
@@ -32,14 +26,35 @@ export class Item<T>
 
     default(value: T | null)
     {
-        this.#value = value;
+        this.defaultValue = value;
         return this;
     }
 
-    setValue(value: T)
+    hasValue(_: T | null): boolean
     {
-        this.#value = value;
-        return this;
+        return true;
+    }
+
+    validate(value: T | null): ValidState
+    {
+        if(!this.hasValue(value) || value == null)
+        {
+            return this.isOptional ? ValidState.Valid : ValidState.Required;
+        }
+
+        return ValidState.Valid;
+    }
+}
+
+export class Item<T>
+{
+    #value: T | null = $state(null);
+    schemaItem: SchemaItem<T>;
+    #validState: ValidState = $state(ValidState.Valid);
+
+    constructor(schemaItem: SchemaItem<T>)
+    {
+        this.schemaItem = schemaItem;
     }
 
     set value(value: T)
@@ -52,11 +67,6 @@ export class Item<T>
         this.#validState = value;
     }
 
-    getValue(): T | null
-    {
-        return this.#value;
-    }
-
     get value(): T | null
     {
         return this.#value;
@@ -67,40 +77,16 @@ export class Item<T>
         return this.#validState;
     }
 
-    hasValue(): boolean
-    {
-        return true;
-    }
-
-    validate(): ValidState
-    {
-        const value = this.#value;
-
-        if(!this.hasValue() || value == null)
-        {
-            return this.isOptional ? ValidState.Valid : ValidState.Required;
-        }
-
-        return ValidState.Valid;
-    }
-
     validateThenSet()
     {
-        this.validState = this.validate();
+        this.validState = this.schemaItem.validate(this.value);
     }
 }
 
-export class ItemString extends Item<string>
+export class SchemaItemString extends SchemaItem<string>
 {
-    minLen: number;
-    maxLen: number;
-
-    constructor()
-    {
-        super();
-        this.minLen = 0;
-        this.maxLen = Infinity;
-    }
+    minLen: number = 0;
+    maxLen: number = Infinity;
 
     min(value: number)
     {
@@ -114,18 +100,16 @@ export class ItemString extends Item<string>
         return this;
     }
 
-    hasValue(): boolean
+    hasValue(value: string | null): boolean
     {
-        if(this.value == null)
+        if(value == null)
             return false;
-        return this.value.length != 0;
+        return value.length != 0;
     }
 
-    validate()
+    validate(value: string | null)
     {
-        const value = this.value;
-
-        if(!this.hasValue())
+        if(!this.hasValue(value))
         {
             return this.isOptional ? ValidState.Valid : ValidState.Required;
         }
@@ -138,17 +122,10 @@ export class ItemString extends Item<string>
     }
 }
 
-export class ItemNumber extends Item<number>
+export class SchemaItemNumber extends SchemaItem<number>
 {
-    minNum: number;
-    maxNum: number;
-
-    constructor()
-    {
-        super();
-        this.minNum = 0;
-        this.maxNum = Infinity;
-    }
+    minNum: number = 0;
+    maxNum: number = Infinity;
 
     min(value: number)
     {
@@ -162,11 +139,9 @@ export class ItemNumber extends Item<number>
         return this;
     }
 
-    validate()
+    validate(value: number | null)
     {
-        const value = this.value;
-
-        if(!this.hasValue() || value == null)
+        if(!this.hasValue(value) || value == null)
         {
             return this.isOptional ? ValidState.Valid : ValidState.Required;
         }
@@ -176,23 +151,9 @@ export class ItemNumber extends Item<number>
     }
 }
 
-export class ItemImage extends Item<File>
+export class SchemaItemImage extends SchemaItem<File>
 {
-    aspectRatioNum: number | null;
-    sizeNum: number;
-
-    constructor()
-    {
-        super();
-        this.aspectRatioNum = null;
-        this.sizeNum = Infinity;
-    }
-
-    aspectRatio(value: number)
-    {
-        this.aspectRatioNum = value;
-        return this;
-    }
+    sizeNum: number = Infinity;
 
     size(value: number)
     {
@@ -200,40 +161,40 @@ export class ItemImage extends Item<File>
         return this;
     }
 
-    validate()
+    validate(value: File | null)
     {
-        const value = this.value;
-
-        if(!this.hasValue() || value == null)
+        if(!this.hasValue(value) || value == null)
         {
             return this.isOptional ? ValidState.Valid : ValidState.Required;
         }
 
-        if(!this.value)
+        if(!value)
             return ValidState.Invalid;
-        if(this.aspectRatioNum == null)
-            return ValidState.Valid;
-        if(this.sizeNum <= this.value.size)
+        if(this.sizeNum <= value.size)
             return ValidState.Invalid;
 
         return ValidState.Valid;
     }
 }
 
+export function mapForm(schema: Record<string, SchemaItem<any>>)
+{
+}
+
 export const item = {
     string: () => {
-        return new ItemString().default("");
+        return new SchemaItemString().default("");
     },
     date: () => {
-        return new Item<CalendarDate>().default(null);
+        return new SchemaItem<CalendarDate>().default(null);
     },
     boolean: () => {
-        return new Item<boolean>().default(false);
+        return new SchemaItem<boolean>().default(false);
     },
     number: () => {
-        return new ItemNumber().default(null);
+        return new SchemaItemNumber().default(null);
     },
     image: () => {
-        return new ItemImage().default(null);
+        return new SchemaItemImage().default(null);
     },
 }
