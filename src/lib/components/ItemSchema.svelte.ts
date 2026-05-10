@@ -24,6 +24,16 @@ export class Item<T>
         this.isOptional = false;
     }
 
+    clone()
+    {
+        const newItem = new Item<T>();
+        newItem.value = this.value;
+        newItem.isOptional = this.isOptional;
+        newItem.validState = this.validState;
+
+        return newItem;
+    }
+
     optional(value: boolean)
     {
         this.isOptional = value;
@@ -42,7 +52,7 @@ export class Item<T>
         return this;
     }
 
-    set value(value: T)
+    set value(value: T | null)
     {
         this.#value = value;
     }
@@ -102,6 +112,18 @@ export class ItemString extends Item<string>
         this.maxLen = Infinity;
     }
 
+    clone()
+    {
+        const newItem = new ItemString();
+        newItem.value = this.value;
+        newItem.isOptional = this.isOptional;
+        newItem.validState = this.validState;
+        newItem.minLen = this.minLen;
+        newItem.maxLen = this.maxLen;
+
+        return newItem;
+    }
+
     min(value: number)
     {
         this.minLen = value;
@@ -150,6 +172,18 @@ export class ItemNumber extends Item<number>
         this.maxNum = Infinity;
     }
 
+    clone()
+    {
+        const newItem = new ItemNumber();
+        newItem.value = this.value;
+        newItem.isOptional = this.isOptional;
+        newItem.validState = this.validState;
+        newItem.minNum = this.minNum;
+        newItem.maxNum  = this.maxNum;
+
+        return newItem;
+    }
+
     min(value: number)
     {
         this.minNum = value;
@@ -178,20 +212,23 @@ export class ItemNumber extends Item<number>
 
 export class ItemImage extends Item<File>
 {
-    aspectRatioNum: number | null;
     sizeNum: number;
 
     constructor()
     {
         super();
-        this.aspectRatioNum = null;
         this.sizeNum = Infinity;
     }
 
-    aspectRatio(value: number)
+    clone()
     {
-        this.aspectRatioNum = value;
-        return this;
+        const newItem = new ItemImage();
+        newItem.value = this.value;
+        newItem.isOptional = this.isOptional;
+        newItem.validState = this.validState;
+        newItem.sizeNum = this.sizeNum;
+
+        return newItem;
     }
 
     size(value: number)
@@ -211,8 +248,6 @@ export class ItemImage extends Item<File>
 
         if(!this.value)
             return ValidState.Invalid;
-        if(this.aspectRatioNum == null)
-            return ValidState.Valid;
         if(this.sizeNum <= this.value.size)
             return ValidState.Invalid;
 

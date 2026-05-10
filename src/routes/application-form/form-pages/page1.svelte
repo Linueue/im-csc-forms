@@ -10,9 +10,10 @@
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
-    import { formSchema } from "../schema.svelte.ts"
     import { getAge } from "$lib/utils/date"
     import { CITIZENSHIPS } from "../selection-constants.svelte"
+
+    let { formSchema = $bindable() } = $props();
 
     $effect(() => {
         if(formSchema.applicantBirthdate.value != null)

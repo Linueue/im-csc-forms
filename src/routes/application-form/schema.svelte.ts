@@ -3,7 +3,7 @@ import { item, type Item, ValidState, ItemImage } from "$lib/components/ItemSche
 // The Form Schema for validation during client runtime
 // This does not correspond to Database schema
 // This is only for the form that the user will submit
-export const formSchema = $state({
+const formSchema = {
     applicantFirstName: item.string(),
     applicantLastName: item.string(),
     applicantMiddleName: item.string(),
@@ -12,13 +12,18 @@ export const formSchema = $state({
     applicantBirthdate: item.date(),
     applicantBirthplace: item.string().min(1).max(50),
     applicantCitizenship: item.string().default("Filipino"),
-    applicantPhoto: item.image().aspectRatio(3.5 / 4.5).size(5 * 1024 * 1024), // Limits to 5MB
-});
+    applicantPhoto: item.image().size(5 * 1024 * 1024), // Limits to 5MB
+};
 
 export const enum SubmitStatus
 {
     None, Submitted, Failed,
 };
+
+export function createFormSchema(): Record<string, Item<any>>
+{
+    return Object.fromEntries(Object.entries(formSchema).map(([key, item]) => [key, item.clone()]));
+}
 
 export function checkAllValidation(schema: Map<String, Item<any>>): boolean
 {

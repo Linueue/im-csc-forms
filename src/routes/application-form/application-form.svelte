@@ -3,10 +3,10 @@
     import FormPagination from "$lib/components/forms/FormPagination.svelte"
     import FormButton from "$lib/components/forms/FormButton.svelte"
     import {
-        formSchema,
         checkAllValidation,
         serialize,
         getFileUploads,
+        createFormSchema,
         SubmitStatus,
     } from "./schema.svelte.ts"
     import { enhance } from "$app/forms"
@@ -18,6 +18,7 @@
 
     let isSubmitting = $state(false);
     let submitStatus = $state(SubmitStatus.None);
+    let formSchema = $state(createFormSchema());
 
     const submitFn: SubmitFunction = async ({ cancel, formData }) => {
         const schemaMap = new Map(Object.entries(formSchema));
@@ -67,7 +68,7 @@
                     <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                     {#snippet childRender({currentPage})}
                         {#if currentPage == 1}
-                            <Page1 />
+                            <Page1 bind:formSchema />
                         {:else if currentPage == 2}
                             <h1>That is all</h1>
                             <h1>Thank you!</h1>
