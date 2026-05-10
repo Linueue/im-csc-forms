@@ -55,9 +55,10 @@ export class Item<T>
     constructor(schemaItem: SchemaItem<T>)
     {
         this.schemaItem = schemaItem;
+        this.value = schemaItem.defaultValue;
     }
 
-    set value(value: T)
+    set value(value: T | null)
     {
         this.#value = value;
     }

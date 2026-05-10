@@ -25,7 +25,10 @@
     function saveChangesFn()
     {
         if(!files)
+        {
+            value.validateThenSet();
             return;
+        }
 
         value.value = files[0];
         value.validateThenSet();
