@@ -10,15 +10,16 @@
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
-    import { formSchema } from "../schema.svelte.ts"
     import { getAge } from "$lib/utils/date"
     import { CITIZENSHIPS } from "../selection-constants.svelte"
 
+    let { formSchemaData = $bindable() } = $props();
+
     $effect(() => {
-        if(formSchema.applicantBirthdate.value != null)
+        if(formSchemaData.applicantBirthdate.value != null)
         {
-            formSchema.applicantAge.value = getAge(formSchema.applicantBirthdate.value);
-            formSchema.applicantAge.validateThenSet();
+            formSchemaData.applicantAge.value = getAge(formSchemaData.applicantBirthdate.value);
+            formSchemaData.applicantAge.validateThenSet();
         }
     });
 </script>
@@ -30,9 +31,9 @@
 
 <div class="divider">
     <FormMultiField name={"Name"}>
-        <FormUnlabeledField bind:value={formSchema.applicantLastName} placeholder={"Last Name"} />
-        <FormUnlabeledField bind:value={formSchema.applicantFirstName} placeholder={"First Name"} />
-        <FormUnlabeledField bind:value={formSchema.applicantMiddleName} placeholder={"Middle Name"} />
+        <FormUnlabeledField bind:value={formSchemaData.applicantLastName} placeholder={"Last Name"} />
+        <FormUnlabeledField bind:value={formSchemaData.applicantFirstName} placeholder={"First Name"} />
+        <FormUnlabeledField bind:value={formSchemaData.applicantMiddleName} placeholder={"Middle Name"} />
     </FormMultiField>
     <FormToggleGroup
         name={"Sex"}
@@ -40,20 +41,20 @@
             {value: "M", label: "Male"},
             {value: "F", label: "Female"},
         ]}
-        bind:value={formSchema.applicantSex}
+        bind:value={formSchemaData.applicantSex}
     />
-    <FormDate bind:value={formSchema.applicantBirthdate} name={"Date of Birth"} />
-    <FormField bind:value={formSchema.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
-    <FormField bind:value={formSchema.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
+    <FormDate bind:value={formSchemaData.applicantBirthdate} name={"Date of Birth"} />
+    <FormField bind:value={formSchemaData.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
+    <FormField bind:value={formSchemaData.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
     <FormPicker
         title={"nationality"}
         name={"Nationality"}
         options={CITIZENSHIPS}
-        bind:value={formSchema.applicantCitizenship}
+        bind:value={formSchemaData.applicantCitizenship}
     />
 
     <FormImageUpload
-        bind:value={formSchema.applicantPhoto}
+        bind:value={formSchemaData.applicantPhoto}
         name={"Picture"}
         title={"Upload your Passport-size Photo"}
         errorMessage={"Your file is over 5MB large!"}

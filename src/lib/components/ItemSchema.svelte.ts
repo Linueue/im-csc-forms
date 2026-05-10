@@ -179,6 +179,12 @@ export class SchemaItemImage extends SchemaItem<File>
 
 export function mapForm(schema: Record<string, SchemaItem<any>>)
 {
+    return Object.fromEntries(
+        Object.entries(schema)
+            .map(
+                ([key, item]) => [key, new Item(item)]
+            )
+    );
 }
 
 export const item = {

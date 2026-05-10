@@ -2,11 +2,12 @@
     import { Separator } from "$lib/components/ui/separator/index.js"
     import FormPagination from "$lib/components/forms/FormPagination.svelte"
     import FormButton from "$lib/components/forms/FormButton.svelte"
+    import { mapForm } from "$lib/components/ItemSchema.svelte"
     import {
-        formSchema,
         checkAllValidation,
         serialize,
         getFileUploads,
+        formSchema,
         SubmitStatus,
     } from "./schema.svelte.ts"
     import { enhance } from "$app/forms"
@@ -18,9 +19,10 @@
 
     let isSubmitting = $state(false);
     let submitStatus = $state(SubmitStatus.None);
+    let formSchemaData = $state(mapForm(formSchema));
 
     const submitFn: SubmitFunction = async ({ cancel, formData }) => {
-        const schemaMap = new Map(Object.entries(formSchema));
+        const schemaMap = new Map(Object.entries(formSchemaData));
         // Check if there are non-optional empty fields
         const isValid = checkAllValidation(schemaMap);
 
@@ -67,7 +69,7 @@
                     <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                     {#snippet childRender({currentPage})}
                         {#if currentPage == 1}
-                            <Page1 />
+                            <Page1 bind:formSchemaData />
                         {:else if currentPage == 2}
                             <h1>That is all</h1>
                             <h1>Thank you!</h1>

@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Input } from "$lib/components/ui/input/index.js"
-    import { Label } from "$lib/components/ui/label/index.js"
     import RequiredField from "$lib/components/required-field.svelte"
     import { ValidState } from "$lib/components/ItemSchema.svelte"
     import Column from "$lib/components/column.svelte"

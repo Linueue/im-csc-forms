@@ -1,9 +1,9 @@
-import { item, type Item, ValidState, ItemImage } from "$lib/components/ItemSchema.svelte";
+import { item, type Item, ValidState, SchemaItemImage } from "$lib/components/ItemSchema.svelte";
 
 // The Form Schema for validation during client runtime
 // This does not correspond to Database schema
 // This is only for the form that the user will submit
-export const formSchema = $state({
+export const formSchema = {
     applicantFirstName: item.string(),
     applicantLastName: item.string(),
     applicantMiddleName: item.string(),
@@ -12,8 +12,8 @@ export const formSchema = $state({
     applicantBirthdate: item.date(),
     applicantBirthplace: item.string().min(1).max(50),
     applicantCitizenship: item.string().default("Filipino"),
-    applicantPhoto: item.image().aspectRatio(3.5 / 4.5).size(5 * 1024 * 1024), // Limits to 5MB
-});
+    applicantPhoto: item.image().size(5 * 1024 * 1024), // Limits to 5MB
+};
 
 export const enum SubmitStatus
 {
@@ -24,7 +24,8 @@ export function checkAllValidation(schema: Map<String, Item<any>>): boolean
 {
     for(const [_, value] of schema)
     {
-        if(value.validate() != ValidState.Valid)
+        value.validateThenSet();
+        if(value.validState != ValidState.Valid)
             return false;
     };
 
@@ -37,7 +38,7 @@ export function serialize(schema: Map<string, Item<any>>)
 
     schema.forEach((value, key) => {
         // Ignore any file uploads, these are handled as part of the formData
-        if(value instanceof ItemImage)
+        if(value.schemaItem instanceof SchemaItemImage)
             return;
 
         data[key.toString()] = value.value?.toString() ?? null;
@@ -52,7 +53,7 @@ export function getFileUploads(schema: Map<string, Item<any>>): Record<string, F
     let data: Record<string, File | null> = {};
 
     schema.forEach((value, key) => {
-        if(!(value instanceof ItemImage))
+        if(!(value instanceof SchemaItemImage))
             return;
 
         data[key.toString()] = value.value;
