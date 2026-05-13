@@ -13,6 +13,7 @@ export const formSchema = {
     applicantBirthplace: item.string().min(1).max(50),
     applicantCitizenship: item.string().default("Filipino"),
     applicantPhoto: item.image().size(5 * 1024 * 1024), // Limits to 5MB
+    applicantSignature: item.image().size(1 * 1024 * 1024), // Limits to 1MB
 };
 
 export const enum SubmitStatus
@@ -53,7 +54,7 @@ export function getFileUploads(schema: Map<string, Item<any>>): Record<string, F
     let data: Record<string, File | null> = {};
 
     schema.forEach((value, key) => {
-        if(!(value instanceof SchemaItemImage))
+        if(!(value.schemaItem instanceof SchemaItemImage))
             return;
 
         data[key.toString()] = value.value;

@@ -2,6 +2,7 @@ import mysql from "mysql2/promise"
 import fs from "fs/promises"
 import path from "path"
 import dotenv from "dotenv"
+import readline from "node:readline"
 
 dotenv.config();
 
@@ -17,8 +18,6 @@ const pool = mysql.createPool({
     waitForConnections: true,
     queueLimit: 0,
 });
-
-console.log(process.env.DB_PASSWORD);
 
 const MIGRATIONS_DIR = "src/database/migrations/"
 
