@@ -43,10 +43,9 @@
             {/each}
 
             {#if preview}
-            
-      <svg class="absolute w-full h-full fill-gray-900 pointer-events-none" viewBox="0 0 {width} {height}">
-        <path d={preview} />
-      </svg>
+              <svg class="absolute w-full h-full fill-gray-900 pointer-events-none" viewBox="0 0 {width} {height}">
+                <path d={preview} />
+              </svg>
             {/if}
         </div>
     <button class="absolute top-2 right-2 px-4 py-2 text-sm opacity-65 text-muted-foreground bg-background border border-gray-200 rounded" onclick={clear}>Clear</button>

@@ -16,6 +16,9 @@
     import XIcon from "@lucide/svelte/icons/circle-x"
     import { type SubmitFunction } from "@sveltejs/kit"
     import Page1 from "./form-pages/page1.svelte"
+    import Page2 from "./form-pages/page2.svelte"
+    import Page3 from "./form-pages/page3.svelte"
+    import Summary from "./form-pages/summary.svelte"
 
     let isSubmitting = $state(false);
     let submitStatus = $state(SubmitStatus.None);
@@ -38,10 +41,11 @@
         for(const key of formData.keys())
             formData.delete(key);
 
-        const serialized: string = serialize(schemaMap);
+        const serialized = serialize(schemaMap);
+        const serializedString = JSON.stringify(serialized);
         const fileUploads = getFileUploads(schemaMap);
 
-        formData.set("payload", serialized);
+        formData.set("payload", serializedString);
 
         for(const [key, value] of Object.entries(fileUploads))
         {
@@ -65,16 +69,17 @@
 
         {#if submitStatus == SubmitStatus.None}
             <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off enctype="multipart/form-data">
-                <FormPagination totalPages={2}>
+                <FormPagination totalPages={4}>
                     <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                     {#snippet childRender({currentPage})}
                         {#if currentPage == 1}
                             <Page1 bind:formSchemaData />
                         {:else if currentPage == 2}
-                            <h1>That is all</h1>
-                            <h1>Thank you!</h1>
-
-                            <Separator />
+                            <Page2 bind:formSchemaData />
+                        {:else if currentPage == 3}
+                            <Page3 bind:formSchemaData />
+                        {:else if currentPage == 4}
+                            <Summary bind:formSchemaData />
                         {/if}
                     {/snippet}
                     {#snippet submitRender()}

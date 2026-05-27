@@ -7,7 +7,7 @@
     let { value = $bindable(), errorMessage = "Invalid!", type = "text", readonly = false, placeholder = "" } = $props();
 </script>
 
-<Column>
+<div class="flex flex-col items-stretch w-full">
     <Input readonly={readonly} type={type} placeholder={placeholder} class={`w-100% border-2 ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`} bind:value={value.value} id="field" onblur={() => value.validateThenSet() } />
     <RequiredField validState={value.validState} errorMessage={errorMessage} />
-</Column>
+</div>

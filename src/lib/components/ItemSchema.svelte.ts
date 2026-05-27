@@ -15,12 +15,24 @@ export const enum ValidState
 
 export class SchemaItem<T>
 {
-    isOptional: boolean = false;
+    isOptional: boolean = $state(false);
     defaultValue: T | null = null;
+    #condition: { sourceKey: string, conditionFn: (value: any) => boolean } | null = null;
 
     optional(value: boolean)
     {
         this.isOptional = value;
+        return this;
+    }
+
+    get condition()
+    {
+        return this.#condition;
+    }
+
+    conditionallyRequired(sourceKey: string, conditionFn: (sourceVal: any) => boolean)
+    {
+        this.#condition = { sourceKey, conditionFn };
         return this;
     }
 
@@ -56,6 +68,11 @@ export class Item<T>
     {
         this.schemaItem = schemaItem;
         this.value = schemaItem.defaultValue;
+    }
+
+    isOptional()
+    {
+        return this.schemaItem.isOptional;
     }
 
     set value(value: T | null)
@@ -178,14 +195,59 @@ export class SchemaItemImage extends SchemaItem<File>
     }
 }
 
+export class SchemaItemArray extends SchemaItem<Array<Record<string, Item<any>>>>
+{
+    hasValue(value: Array<Record<string, Item<any>>> | null)
+    {
+        return value != null && value.length != 0;
+    }
+
+    validate(value: Array<Record<string, Item<any>>> | null)
+    {
+        if(!this.hasValue(value) || value == null)
+        {
+            return this.isOptional ? ValidState.Valid : ValidState.Required;
+        }
+
+        for(const val of value)
+        {
+            for(const [_, v] of Object.entries(val))
+            {
+                v.validateThenSet();
+                if(v.validState != ValidState.Valid)
+                    return v.validState;
+            }
+        }
+
+        return ValidState.Valid;
+    }
+}
+
 export function mapForm(schema: Record<string, SchemaItem<any>>)
 {
-    return Object.fromEntries(
+    const form = Object.fromEntries(
         Object.entries(schema)
             .map(
                 ([key, item]) => [key, new Item(item)]
             )
     );
+
+    for(const [_, item] of Object.entries(form))
+    {
+        const condition = item.schemaItem.condition;
+        if(!condition)
+            continue;
+
+        const source = form[condition.sourceKey];
+        if(!source)
+            continue;
+
+        $effect(() => {
+            item.schemaItem.isOptional = !condition.conditionFn(source.value);
+        });
+    }
+
+    return form;
 }
 
 export const item = {
@@ -196,10 +258,13 @@ export const item = {
         return new SchemaItem<CalendarDate>().default(null);
     },
     boolean: () => {
-        return new SchemaItem<boolean>().default(false);
+        return new SchemaItem<boolean>().default(null);
     },
     number: () => {
         return new SchemaItemNumber().default(null);
+    },
+    array: () => {
+        return new SchemaItemArray().default(null);
     },
     image: () => {
         return new SchemaItemImage().default(null);

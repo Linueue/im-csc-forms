@@ -91,73 +91,75 @@
     });
 </script>
 
-<Label for={name} class="pb-1">{name}</Label>
-<Dialog.Root>
-    <Dialog.Trigger
-      type="button"
-    >
-        {#if savedSrc}
-            <div class="flex align-center justify-center border-2 rounded-md p-2 bg-input/30">
-                <img src={savedSrc} alt="Preview" class="rounded-md" />
-            </div>
-        {:else}
-            <div class="flex flex-col items-center justify-center border-2 rounded-md p-5 bg-muted dark:bg-input/30 hover:bg-input/50 cursor-pointer">
-                <ImageIcon size={128} strokeWidth={0.25} color="var(--muted-foreground)" />
-                <p class="text-muted-foreground">Upload Image</p>
-            </div>
-        {/if}
-    </Dialog.Trigger>
-    <Dialog.Content class="sm:max-w-106.25">
-        <Dialog.Header>
-            <Dialog.Title>{title}</Dialog.Title>
-            <Dialog.Description class="whitespace-pre-line">
-                {@render description()}
-            </Dialog.Description>
-        </Dialog.Header>
-        {#if !draw}
-            {#if previewSrc}
-                <div class="flex align-center justify-center border-2 rounded-md p-2">
-                    <img src={previewSrc} alt="Preview" class="rounded-md" />
+<div class="flex flex-col items-stretch w-full">
+    <Label for={name} class="mb-1.25">{name}</Label>
+    <Dialog.Root>
+        <Dialog.Trigger
+          type="button"
+        >
+            {#if savedSrc}
+                <div class="flex align-center justify-center border-2 rounded-md p-2 bg-input/30">
+                    <img src={savedSrc} alt="Preview" class="rounded-md" />
                 </div>
             {:else}
-                <div class="flex align-center justify-center border-2 rounded-md">
-                    <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
+                <div class="flex flex-col items-center justify-center border-2 rounded-md p-5 bg-muted dark:bg-input/30 hover:bg-input/50 cursor-pointer">
+                    <ImageIcon size={128} strokeWidth={0.25} color="var(--muted-foreground)" />
+                    <p class="text-muted-foreground">Upload Image</p>
                 </div>
             {/if}
-            <div class="w-full flex flex-col gap-1">
-                <Input accept="image/png, image/jpeg" type="file" onchange={handleFileUpload} />
-                <p class="text-center text-muted-foreground">or</p>
-                <Button onclick={() => { draw = true; }} class="w-full">
-                    Draw
-                </Button>
-            </div>
-        {:else}
-            <div class="w-full flex flex-col gap-1">
-                <Signature bind:signatureData />
-                <p class="text-center text-muted-foreground">Boat goes binted</p>
-                <p class="text-center text-muted-foreground">or</p>
-                <Button onclick={() => { draw = false; }}>
-                    Upload
-                </Button>
-            </div>
-        {/if}
-        <Dialog.Footer>
-            <Dialog.Close
-                type="button"
-                class={buttonVariants({ variant: "outline" })}
-                onclick={cancelChangesFn}
-            >
-                Cancel
-            </Dialog.Close>
-            <Dialog.Close
-                type="button"
-                class={buttonVariants({ variant: "default" })}
-                onclick={saveChangesFn}
-            >
-                Save Changes
-            </Dialog.Close>
-        </Dialog.Footer>
-    </Dialog.Content>
-</Dialog.Root>
+        </Dialog.Trigger>
+        <Dialog.Content class="sm:max-w-106.25">
+            <Dialog.Header>
+                <Dialog.Title>{title}</Dialog.Title>
+                <Dialog.Description class="whitespace-pre-line">
+                    {@render description()}
+                </Dialog.Description>
+            </Dialog.Header>
+            {#if !draw}
+                {#if previewSrc}
+                    <div class="flex align-center justify-center border-2 rounded-md p-2">
+                        <img src={previewSrc} alt="Preview" class="rounded-md" />
+                    </div>
+                {:else}
+                    <div class="flex align-center justify-center border-2 rounded-md">
+                        <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
+                    </div>
+                {/if}
+                <div class="w-full flex flex-col gap-1">
+                    <Input accept="image/png, image/jpeg" type="file" onchange={handleFileUpload} />
+                    <p class="text-center text-muted-foreground">or</p>
+                    <Button onclick={() => { draw = true; }} class="w-full">
+                        Draw
+                    </Button>
+                </div>
+            {:else}
+                <div class="w-full flex flex-col gap-1">
+                    <Signature bind:signatureData />
+                    <p class="text-center text-muted-foreground">Boat goes binted</p>
+                    <p class="text-center text-muted-foreground">or</p>
+                    <Button onclick={() => { draw = false; }}>
+                        Upload
+                    </Button>
+                </div>
+            {/if}
+            <Dialog.Footer>
+                <Dialog.Close
+                    type="button"
+                    class={buttonVariants({ variant: "outline" })}
+                    onclick={cancelChangesFn}
+                >
+                    Cancel
+                </Dialog.Close>
+                <Dialog.Close
+                    type="button"
+                    class={buttonVariants({ variant: "default" })}
+                    onclick={saveChangesFn}
+                >
+                    Save Changes
+                </Dialog.Close>
+            </Dialog.Footer>
+        </Dialog.Content>
+    </Dialog.Root>
 
-<RequiredField validState={value.validState} errorMessage={errorMessage} />
+    <RequiredField validState={value.validState} errorMessage={errorMessage} />
+</div>

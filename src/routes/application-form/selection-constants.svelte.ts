@@ -1,6 +1,22 @@
 export const REGIONAL_OFFICES = [
-    "I", "II", "III", "IV", "MIMAROPA", "V", "VI", "VII", "VIII",
-    "IX", "X", "XI", "XII", "XIII", "NCR", "CAR", "BARMM", "NIR",
+    { value: "I", label: "Regional Office I" },
+    { value: "II", label: "Regional Office II" },
+    { value: "III", label: "Regional Office III" },
+    { value: "IV", label: "Regional Office IV" },
+    { value: "MIMAROPA", label: "Regional Office MIMAROPA" },
+    { value: "V", label: "Regional Office V" },
+    { value: "VI", label: "Regional Office VI" },
+    { value: "VII", label: "Regional Office VII" },
+    { value: "VIII", label: "Regional Office VIII" },
+    { value: "IX", label: "Regional Office IX" },
+    { value: "X", label: "Regional Office X" },
+    { value: "XI", label: "Regional Office XI" },
+    { value: "XII", label: "Regional Office XII" },
+    { value: "XIII", label: "Regional Office XIII" },
+    { value: "NCR", label: "Regional Office NCR" },
+    { value: "CAR", label: "Regional Office CAR" },
+    { value: "BARMM", label: "Regional Office BARMM" },
+    { value: "NIR", label: "Regional Office NIR" },
 ];
 
 export const CITIZENSHIPS = [
@@ -221,4 +237,13 @@ export const CITIZENSHIPS = [
 
   { value: "Zambian", label: "Zambian" },
   { value: "Zimbabwean", label: "Zimbabwean" }
+];
+
+export const CIVIL_STATUS = [
+  { value: "S", label: "Single" },
+  { value: "M", label: "Married" },
+  { value: "W", label: "Widowed" },
+  { value: "D", label: "Divorced" },
+  { value: "LS", label: "Legally Separated" },
+  { value: "A", label: "Annulled" },
 ];

@@ -12,7 +12,8 @@
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
     import { getAge } from "$lib/utils/date"
-    import { CITIZENSHIPS } from "../selection-constants.svelte"
+    import { CITIZENSHIPS, CIVIL_STATUS } from "../selection-constants.svelte"
+    import MailIcon from "@lucide/svelte/icons/mail"
 
     let { formSchemaData = $bindable() } = $props();
 
@@ -30,7 +31,7 @@
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Personal Details</Label>
 </Row>
 
-<div class="divider">
+<div class="divider space-y-2.5">
     <FormMultiField name={"Name"}>
         <FormUnlabeledField bind:value={formSchemaData.applicantLastName} placeholder={"Last Name"} />
         <FormUnlabeledField bind:value={formSchemaData.applicantFirstName} placeholder={"First Name"} />
@@ -48,12 +49,45 @@
     <FormField bind:value={formSchemaData.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
     <FormField bind:value={formSchemaData.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
     <FormPicker
-        title={"nationality"}
-        name={"Nationality"}
+        name={"Citizenship"}
         options={CITIZENSHIPS}
         bind:value={formSchemaData.applicantCitizenship}
     />
-
+    <FormPicker
+        name={"Civil Status"}
+        options={CIVIL_STATUS}
+        bind:value={formSchemaData.applicantCivilStatus}
+    />
+    <FormField
+        bind:value={formSchemaData.applicantMotherMaidenName}
+        name={"Mother Maiden Name"}
+        placeholder={"Jane Doe"}
+    />
+    <FormField
+        bind:value={formSchemaData.applicantAddress}
+        name={"Address"}
+        placeholder={"#123 San Juan St., Manila"}
+    />
+    <FormField
+        bind:value={formSchemaData.applicantMobile}
+        type={"number"}
+        name={"Mobile Number"}
+        placeholder={"09123456789"}
+    />
+    <FormField
+        bind:value={formSchemaData.applicantTelephone}
+        name={"Telephone Number"}
+        placeholder={"+632 123 456"}
+    />
+    <FormField
+        bind:value={formSchemaData.applicantEmail}
+        name={"Email"}
+        placeholder={"johndoe@gmail.com"}
+    >
+        {#snippet icon()}
+            <MailIcon strokeWidth={1} />
+        {/snippet}
+    </FormField>
     <FormImageUpload
         bind:value={formSchemaData.applicantPhoto}
         name={"Picture"}
@@ -80,7 +114,7 @@
     </FormSignatureUpload>
 </div>
 
-<Separator />
+<Separator class="mt-2" />
 
 <style>
     .divider
@@ -88,7 +122,5 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        gap: 5px;
-        width: 100%;
     }
 </style>
