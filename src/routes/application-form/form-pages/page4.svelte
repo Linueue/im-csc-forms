@@ -4,20 +4,23 @@
     import Row from "$lib/components/row.svelte"
     import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
-    import FormImageUpload from "$lib/components/forms/FormImageUpload.svelte"
-    import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
-    import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
-    import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
-    import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
-    import { getAge } from "$lib/utils/date"
     import { EMPLOYMENT_STATUS } from "../selection-constants.svelte"
-    import { item, mapForm } from "$lib/components/ItemSchema.svelte"
-    import MailIcon from "@lucide/svelte/icons/mail"
     import { slide } from "svelte/transition"
 
     let { formSchemaData = $bindable() } = $props();
+
+    $effect(() => {
+        if(formSchemaData.isEmployed.value === false)
+        {
+            formSchemaData.employmentPosition.value = null;
+            formSchemaData.employmentYears.value = null;
+            formSchemaData.employmentStatus.value = null;
+            formSchemaData.agencyName.value = null;
+            formSchemaData.agencyAddress.value = null;
+        }
+    });
 </script>
 
 <Row gap="0.5em" class="pt-[0.5em]">

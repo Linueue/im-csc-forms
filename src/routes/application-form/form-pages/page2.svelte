@@ -14,10 +14,10 @@
     let { formSchemaData = $bindable() } = $props();
 
     $effect(() => {
-        if(formSchemaData.applicantAge.value != null)
-        {
+        if(formSchemaData.applicantAge.value !== null)
             formSchemaData.isSeniorCitizen.value = formSchemaData.applicantAge.value >= 60;;
-        }
+        if(formSchemaData.isFirstTime.value !== null)
+            formSchemaData.lastExaminationTaken.value = null;
     });
 
     function addEntry()

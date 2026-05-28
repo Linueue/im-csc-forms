@@ -2,21 +2,36 @@
     import { Label } from "$lib/components/ui/label/index.js"
     import { Separator } from "$lib/components/ui/separator/index.js"
     import Row from "$lib/components/row.svelte"
-    import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
-    import FormImageUpload from "$lib/components/forms/FormImageUpload.svelte"
-    import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
-    import { getAge } from "$lib/utils/date"
-    import { REGIONAL_OFFICES } from "../selection-constants.svelte"
-    import MailIcon from "@lucide/svelte/icons/mail"
     import { slide } from "svelte/transition"
 
     let { formSchemaData = $bindable() } = $props();
+
+    $effect(() => {
+        switch(formSchemaData.highestEducLevel.value as string | null)
+        {
+            case "":
+            case "High School":
+            case "Vocational":
+                formSchemaData.titleOfDegree.value = null;
+                formSchemaData.major.value = null;
+                break;
+        }
+        switch(formSchemaData.completion.value as string | null)
+        {
+            case "G":
+                formSchemaData.NGHighestAttain.value = null;
+                break;
+            case "NO":
+                formSchemaData.graduationDate.value = null;
+                break;
+        }
+    });
 </script>
 
 <Row gap="0.5em" class="pt-[0.5em]">
@@ -25,15 +40,6 @@
 </Row>
 
 <div class="divider">
-    <!--
-    // Page 3
-    highestEducLevel: item.string(), // If this is none, then don't display all
-    titleOfDegree: item.string(),
-    completion: item.string().min(1).max(2),
-    graduationDate: item.date().optional(true),
-    honorsReceived: item.string().optional(true),
-    NGHighestAttain: item.string().optional(true),-->
-
     <FormToggleGroup
         name={"Highest Education Level"}
         options={[

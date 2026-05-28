@@ -5,7 +5,6 @@
     import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormImageUpload from "$lib/components/forms/FormImageUpload.svelte"
-    import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
