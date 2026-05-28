@@ -17,13 +17,6 @@
     import { slide } from "svelte/transition"
 
     let { formSchemaData = $bindable() } = $props();
-
-    $effect(() => {
-        if(formSchemaData.applicantAge.value !== null)
-        {
-            formSchemaData.isSeniorCitizen.value = formSchemaData.applicantAge.value >= 60;
-        }
-    });
 </script>
 
 <Row gap="0.5em" class="pt-[0.5em]">

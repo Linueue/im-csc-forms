@@ -247,3 +247,11 @@ export const CIVIL_STATUS = [
   { value: "LS", label: "Legally Separated" },
   { value: "A", label: "Annulled" },
 ];
+
+export const EMPLOYMENT_STATUS = [
+  { value: "REG", label: "Regular" },
+  { value: "PJ", label: "Project Based/Job Order" },
+  { value: "PRO", label: "Probational" },
+  { value: "SEA", label: "Seasonal" },
+  { value: "FT", label: "Fixed-Term/Contractual" },
+];

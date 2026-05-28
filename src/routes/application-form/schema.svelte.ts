@@ -54,6 +54,14 @@ export const formSchema = {
     schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null),
     schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null),
     schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null),
+
+    // Page 4
+    isEmployed: item.boolean(),
+    employmentPosition: item.string().conditionallyRequired("isEmployed", (val) => val === true),
+    employmentYears: item.number().min(0).max(100).conditionallyRequired("isEmployed", (val) => val === true),
+    employmentStatus: item.string().min(1).max(3).conditionallyRequired("isEmployed", (val) => val === true),
+    agencyName: item.string().conditionallyRequired("isEmployed", (val) => val === true),
+    agencyAddress: item.string().conditionallyRequired("isEmployed", (val) => val === true),
 };
 
 export const enum SubmitStatus

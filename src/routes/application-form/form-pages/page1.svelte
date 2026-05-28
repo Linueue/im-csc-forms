@@ -102,16 +102,6 @@
             - File must not be over 5MB
         {/snippet}
     </FormImageUpload>
-    <FormSignatureUpload
-        bind:value={formSchemaData.applicantSignature}
-        name={"Signature"}
-        title={"Upload your Signature Photo"}
-        errorMessage={"Your file is over 1MB large!"}
-    >
-        {#snippet description()}
-            - Black ink on white background
-        {/snippet}
-    </FormSignatureUpload>
 </div>
 
 <Separator class="mt-2" />

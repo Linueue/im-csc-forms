@@ -18,6 +18,7 @@
     import Page1 from "./form-pages/page1.svelte"
     import Page2 from "./form-pages/page2.svelte"
     import Page3 from "./form-pages/page3.svelte"
+    import Page4 from "./form-pages/page4.svelte"
     import Summary from "./form-pages/summary.svelte"
 
     let isSubmitting = $state(false);
@@ -69,7 +70,7 @@
 
         {#if submitStatus == SubmitStatus.None}
             <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off enctype="multipart/form-data">
-                <FormPagination totalPages={4}>
+                <FormPagination totalPages={5}>
                     <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                     {#snippet childRender({currentPage})}
                         {#if currentPage == 1}
@@ -79,6 +80,8 @@
                         {:else if currentPage == 3}
                             <Page3 bind:formSchemaData />
                         {:else if currentPage == 4}
+                            <Page4 bind:formSchemaData />
+                        {:else if currentPage == 5}
                             <Summary bind:formSchemaData />
                         {/if}
                     {/snippet}

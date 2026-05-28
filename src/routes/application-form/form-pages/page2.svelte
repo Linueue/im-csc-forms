@@ -3,18 +3,10 @@
     import { Separator } from "$lib/components/ui/separator/index.js"
     import { Button } from "$lib/components/ui/button/index.js"
     import Row from "$lib/components/row.svelte"
-    import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
-    import FormImageUpload from "$lib/components/forms/FormImageUpload.svelte"
-    import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
-    import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
-    import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
-    import { getAge } from "$lib/utils/date"
-    import { REGIONAL_OFFICES } from "../selection-constants.svelte"
-    import MailIcon from "@lucide/svelte/icons/mail"
     import { slide } from "svelte/transition"
     import { existingExaminationSchema } from "../schema.svelte"
     import { mapForm } from "$lib/components/ItemSchema.svelte"
@@ -85,7 +77,7 @@
     <p class="text-sm">Existing Examinations</p>
     <div class="divider space-y-2.5">
         {#each formSchemaData.existingExaminations.value as existingExamination, idx}
-            <div transition:slide class="divider">
+            <div transition:slide class="divider space-y-2.5">
                 <div class="flex flex-row items-center gap-2">
                     <Separator class="flex-1 h-px bg-border" />
                     <p class="text-sm text-muted-foreground font-medium">Entry {idx + 1}</p>

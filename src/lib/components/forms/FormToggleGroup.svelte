@@ -17,7 +17,7 @@
         bind:value={value.value}
         disabled={disabled}
         onValueChange={() => value.validateThenSet() }
-        class="w-full shadow-mini flex items-center gap-x-0.5 py-0"
+        class="w-full shadow-mini flex flex-wrap items-center gap-x-0.5 py-0"
         variant="outline"
         type="single"
     >
@@ -29,6 +29,7 @@
                     dark:bg-input/30 bg-muted
                     border-2 border-l-2 data-[state=on]:border-primary flex-1 py-[2em]
                     hover:text-secondary data-[state=on]:hover:text-primary
+                    min-w-[10em] sm:w-auto
                     group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-l-2
                     group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-l-2`
                 }>
