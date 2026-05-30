@@ -49,7 +49,7 @@ export class SchemaItem<T>
 
     validate(value: T | null): ValidState
     {
-        if(!this.hasValue(value) || value === null || value === "")
+        if(!this.hasValue(value) || value === null || value === "" || value === undefined)
         {
             return this.isOptional ? ValidState.Valid : ValidState.Required;
         }

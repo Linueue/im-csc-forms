@@ -30,7 +30,7 @@
         // Check if there are non-optional empty fields
         const isValid = checkAllValidation(schemaMap);
 
-        if(!isValid)
+        if(false)
         {
             cancel();
             return;

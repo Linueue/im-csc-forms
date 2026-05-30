@@ -5,7 +5,7 @@
     import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
-    import CircleUserIcon from "@lucide/svelte/icons/circle-user"
+    import BriefcaseIcon from "@lucide/svelte/icons/briefcase"
     import { EMPLOYMENT_STATUS } from "../selection-constants.svelte"
     import { slide } from "svelte/transition"
 
@@ -23,12 +23,12 @@
     });
 </script>
 
-<Row gap="0.5em" class="pt-[0.5em]">
-    <CircleUserIcon />
+<Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
+    <BriefcaseIcon />
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Employment</Label>
 </Row>
 
-<div class="divider space-y-2.5">
+<div class="divider space-y-5">
     <FormToggleGroup
         name={"DO YOU HAVE A JOB?"}
         options={[
@@ -38,7 +38,7 @@
         bind:value={formSchemaData.isEmployed}
     />
     {#if formSchemaData.isEmployed.value}
-        <div transition:slide class="divider space-y-2.5">
+        <div transition:slide class="divider space-y-5">
             <FormField
                 bind:value={formSchemaData.employmentPosition}
                 name={"Position"}

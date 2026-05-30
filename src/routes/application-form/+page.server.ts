@@ -8,14 +8,6 @@ export const actions: Actions = {
         const payload = JSON.parse(data.get("payload") as string);
         const applicantPhoto = data.get("applicantPhoto") as File;
 
-        if(payload.existingExaminations)
-        {
-            for(const examination of payload.existingExaminations)
-            {
-                console.log(examination);
-            }
-        }
-
         console.log(payload);
 
         const applicantPhotoURL = await upload(applicantPhoto, "applicant-photo");

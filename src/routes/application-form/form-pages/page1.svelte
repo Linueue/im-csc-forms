@@ -25,12 +25,12 @@
     });
 </script>
 
-<Row gap="0.5em" class="pt-[0.5em]">
+<Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
     <CircleUserIcon />
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Personal Details</Label>
 </Row>
 
-<div class="divider space-y-2.5">
+<div class="divider space-y-5">
     <FormMultiField name={"Name"}>
         <FormUnlabeledField bind:value={formSchemaData.applicantLastName} placeholder={"Last Name"} />
         <FormUnlabeledField bind:value={formSchemaData.applicantFirstName} placeholder={"First Name"} />

@@ -43,5 +43,5 @@ CREATE TABLE IF NOT EXISTS EXISTING_EXAMINATION(
     ExistingExaminationDate DATE NOT NULL,
     ExistingExaminationPlace VARCHAR(100) NOT NULL,
     PRIMARY KEY(ApplicantNo, ExistingExaminationSeq),
-    FOREIGN KEY(ApplicantNo) REFERENCES Applicant(ApplicantNo)
+    FOREIGN KEY(ApplicantNo) REFERENCES APPLICANT(ApplicantNo)
 );

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Calendar } from "$lib/components/ui/calendar/index.js"
     import * as Popover from "$lib/components/ui/popover/index.js"
-    import { Button, buttonVariants } from "$lib/components/ui/button/index.js"
+    import { buttonVariants } from "$lib/components/ui/button/index.js"
     import { Label } from "$lib/components/ui/label/index.js"
     import RequiredField from "$lib/components/required-field.svelte"
     import { ValidState } from "$lib/components/ItemSchema.svelte"
@@ -32,7 +32,7 @@
                 {#if value.value}
                     {value.value.toDate(getLocalTimeZone()).toLocaleDateString()}
                 {:else}
-                    <div class="text-muted-foreground">{"Select date"}</div>
+                    <div class="text-muted-foreground">Select date</div>
                 {/if}
             </div>
             <ChevronDownIcon />

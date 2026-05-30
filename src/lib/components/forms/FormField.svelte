@@ -25,7 +25,7 @@
             readonly={readonly}
             type={type}
             placeholder={placeholder}
-            class={`w-full border-2
+            class={`w-full border-2 text-sm
                 ${icon ? "pl-[3em]" : ""}
                 ${(value.validState != ValidState.Valid) ? "pr-10 border-destructive" : ""}
             `}
@@ -34,7 +34,7 @@
             onblur={() => value.validateThenSet() }
         />
         {#if value.validState != ValidState.Valid}
-            <TriangleAlertIcon class="absolute right-2" color="var(--destructive)" />
+            <TriangleAlertIcon strokeWidth="1.5" class="absolute right-2" color="var(--destructive)" />
         {/if}
     </div>
     <RequiredField validState={value.validState} errorMessage={errorMessage} />

@@ -7,7 +7,7 @@
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
-    import CircleUserIcon from "@lucide/svelte/icons/circle-user"
+    import GraduationCapIcon from "@lucide/svelte/icons/graduation-cap"
     import { slide } from "svelte/transition"
 
     let { formSchemaData = $bindable() } = $props();
@@ -34,8 +34,8 @@
     });
 </script>
 
-<Row gap="0.5em" class="pt-[0.5em]">
-    <CircleUserIcon />
+<Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
+    <GraduationCapIcon />
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Education</Label>
 </Row>
 
@@ -51,7 +51,7 @@
         bind:value={formSchemaData.highestEducLevel}
     />
     {#if ["College", "Postgraduate"].includes(formSchemaData.highestEducLevel.value)}
-        <div transition:slide class="divider space-y-2.5 mt-2.5">
+        <div transition:slide class="divider space-y-5 mt-5">
             <FormField
                 bind:value={formSchemaData.titleOfDegree}
                 name={"Title of Degree"}
@@ -65,7 +65,7 @@
         </div>
     {/if}
     {#if formSchemaData.highestEducLevel.value}
-        <div transition:slide class="divider space-y-2.5 mt-2.5">
+        <div transition:slide class="divider space-y-5 mt-2.5">
             <FormToggleGroup
                 name={"Completion"}
                 options={[
@@ -75,7 +75,7 @@
                 bind:value={formSchemaData.completion}
             />
             {#if formSchemaData.completion.value == "NO"}
-                <div transition:slide class="divider space-y-2.5">
+                <div transition:slide class="divider space-y-5">
                     <FormField
                         bind:value={formSchemaData.NGHighestAttain}
                         name={"Highest Attained"}
@@ -83,7 +83,7 @@
                     />
                 </div>
             {:else if formSchemaData.completion.value == "G"}
-                <div transition:slide class="divider space-y-2.5">
+                <div transition:slide class="divider space-y-5">
                     <FormDate
                         bind:value={formSchemaData.graduationDate}
                         name={"Graduation Date"}

@@ -31,7 +31,7 @@
                     hover:text-secondary data-[state=on]:hover:text-primary
                     min-w-[10em] sm:w-auto
 
-                    ${value.value?.length == 4 ? `
+                    ${options.length == 4 ? `
                     group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-tl-md
                     group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-bl-none
                     group-data-horizontal/toggle-group:data-[spacing=0]:nth-2:rounded-tr-md

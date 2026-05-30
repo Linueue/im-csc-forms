@@ -6,7 +6,7 @@
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
-    import CircleUserIcon from "@lucide/svelte/icons/circle-user"
+    import ListCheckIcon from "@lucide/svelte/icons/list-check"
     import { slide } from "svelte/transition"
     import { existingExaminationSchema } from "../schema.svelte"
     import { mapForm } from "$lib/components/ItemSchema.svelte"
@@ -32,12 +32,12 @@
     }
 </script>
 
-<Row gap="0.5em" class="pt-[0.5em]">
-    <CircleUserIcon />
+<Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
+    <ListCheckIcon />
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Eligibility & Demographics</Label>
 </Row>
 
-<div class="divider space-y-2.5">
+<div class="divider space-y-5">
     <FormToggleGroup
         name={"Is this your first time taking the test?"}
         options={[
@@ -74,10 +74,10 @@
         bind:value={formSchemaData.isSeniorCitizen}
     />
     <div class="divider space-y-1.25">
-    <p class="text-sm">Existing Examinations</p>
-    <div class="divider space-y-2.5">
+    <p class="text-sm font-medium">Existing Examinations</p>
+    <div class="divider space-y-5">
         {#each formSchemaData.existingExaminations.value as existingExamination, idx}
-            <div transition:slide class="divider space-y-2.5">
+            <div transition:slide class="divider space-y-5">
                 <div class="flex flex-row items-center gap-2">
                     <Separator class="flex-1 h-px bg-border" />
                     <p class="text-sm text-muted-foreground font-medium">Entry {idx + 1}</p>
