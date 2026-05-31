@@ -65,7 +65,7 @@
         </div>
     {/if}
     {#if formSchemaData.highestEducLevel.value}
-        <div transition:slide class="divider space-y-5 mt-2.5">
+        <div transition:slide class="divider space-y-5 mt-5">
             <FormToggleGroup
                 name={"Completion"}
                 options={[

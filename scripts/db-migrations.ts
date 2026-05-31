@@ -30,7 +30,7 @@ async function migrate()
         console.log(`Running ${file}`);
         const sql = await fs.readFile(path.join(MIGRATIONS_DIR, file), "utf-8");
 
-        await pool.execute(sql);
+        await pool.query(sql);
 
         console.log(`Done ${file}`);
     }

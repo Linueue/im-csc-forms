@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ApplicationForm from "./application-form.svelte";
+    import ApplicationForm from "./application-form.svelte";
 </script>
  
 <ApplicationForm />

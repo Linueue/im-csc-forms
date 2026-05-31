@@ -107,7 +107,7 @@
         {/each}
 
         <div class="flex flex-row items-stretch gap-1">
-            <Button class="flex-1" onclick={addEntry}>Add Entry</Button>
+            <Button class="flex-1" variant="outline" onclick={addEntry}>Add Entry</Button>
             <Button variant="destructive" class="flex-1" onclick={removeEntry}>Remove Entry</Button>
         </div>
         </div>

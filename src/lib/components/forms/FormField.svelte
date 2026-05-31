@@ -26,7 +26,7 @@
             type={type}
             placeholder={placeholder}
             class={`w-full border-2 text-sm
-                ${icon ? "pl-[3em]" : ""}
+                ${icon ? "pl-[2.5em]" : ""}
                 ${(value.validState != ValidState.Valid) ? "pr-10 border-destructive" : ""}
             `}
             bind:value={value.value}

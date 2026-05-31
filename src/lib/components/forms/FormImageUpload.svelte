@@ -5,6 +5,7 @@
     import { onDestroy } from "svelte"
     import ImageIcon from "@lucide/svelte/icons/image"
     import * as Dialog from "$lib/components/ui/dialog/index.js"
+    import { ValidState } from "$lib/components/ItemSchema.svelte"
     import RequiredField from "$lib/components/required-field.svelte"
 
     let {
@@ -62,17 +63,18 @@
     <Label for={name} class="mb-1.25">{name}</Label>
     <Dialog.Root>
         <Dialog.Trigger
-          type="button"
+            type="button"
+            class={`
+                flex flex-col items-center justify-center border-2 rounded-md bg-muted dark:bg-input/30 hover:bg-input/50 cursor-pointer
+                ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}
+                ${(savedSrc ? "p-2" : "p-5")}
+            `}
         >
             {#if savedSrc}
-                <div class="flex align-center justify-center border-2 rounded-md p-2 bg-input/30">
-                    <img src={savedSrc} alt="Preview" class="rounded-md" />
-                </div>
+                <img src={savedSrc} alt="Preview" class="rounded-md max-w-[20em]" />
             {:else}
-                <div class="flex flex-col items-center justify-center border-2 rounded-md p-5 bg-muted dark:bg-input/30 hover:bg-input/50 cursor-pointer">
-                    <ImageIcon size={128} strokeWidth={0.25} color="var(--muted-foreground)" />
-                    <p class="text-muted-foreground">Upload Image</p>
-                </div>
+                <ImageIcon size={128} strokeWidth={0.25} color="var(--muted-foreground)" />
+                <p class="text-muted-foreground">Upload Image</p>
             {/if}
         </Dialog.Trigger>
         <Dialog.Content class="sm:max-w-106.25">
@@ -109,5 +111,5 @@
             </Dialog.Footer>
         </Dialog.Content>
     </Dialog.Root>
+    <RequiredField validState={value.validState} errorMessage={errorMessage} />
 </div>
-<RequiredField validState={value.validState} errorMessage={errorMessage} />

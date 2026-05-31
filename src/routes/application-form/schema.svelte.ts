@@ -13,55 +13,57 @@ export const existingExaminationSchema = {
 // This is only for the form that the user will submit
 export const formSchema = {
     // Page 1
-    applicantFirstName: item.string(),
-    applicantLastName: item.string(),
-    applicantMiddleName: item.string(),
-    applicantSex: item.string().min(1).max(6),
-    applicantAge: item.number().min(18).max(255),
-    applicantBirthdate: item.date(),
-    applicantBirthplace: item.string().min(1).max(50),
-    applicantCitizenship: item.string().default("Filipino"),
-    applicantCivilStatus: item.string().default("S"),
-    applicantPhoto: item.image().size(5 * 1024 * 1024), // Limits to 5MB
-    applicantSignature: item.image().size(1 * 1024 * 1024), // Limits to 1MB
-    applicantMotherMaidenName: item.string(),
-    applicantAddress: item.string(),
-    applicantMobile: item.number(),
-    applicantTelephone: item.string().optional(true),
-    applicantEmail: item.string(),
+    applicantFirstName: item.string().page(1),
+    applicantLastName: item.string().page(1),
+    applicantMiddleName: item.string().page(1),
+    applicantSex: item.string().min(1).max(6).page(1),
+    applicantAge: item.number().min(18).max(255).page(1),
+    applicantBirthdate: item.date().page(1),
+    applicantBirthplace: item.string().min(1).max(50).page(1),
+    applicantCitizenship: item.string().default("Filipino").page(1),
+    applicantCivilStatus: item.string().default("S").page(1),
+    applicantPhoto: item.image().size(5 * 1024 * 1024).page(1), // Limits to 5MB
+    applicantMotherMaidenName: item.string().page(1),
+    applicantAddress: item.string().page(1),
+    applicantMobile: item.number().page(1),
+    applicantTelephone: item.string().optional(true).page(1),
+    applicantEmail: item.string().page(1),
 
     // Page 2
-    isFirstTime: item.boolean().default(null),
-    lastExaminationTaken: item.date().conditionallyRequired("isFirstTime", (val) => val === false), // Depends on isFirstTime
+    isFirstTime: item.boolean().default(null).page(2),
+    lastExaminationTaken: item.date().conditionallyRequired("isFirstTime", (val) => val === false).page(2), // Depends on isFirstTime
     /* FOR CSC Processor Only
     CSCRegionalOffice: item.string(),
     VerifiedAgainst: item.string(),
     */
-    PWD: item.string().optional(true),
-    isPregnant: item.boolean(),
-    isSeniorCitizen: item.boolean(),
-    existingExaminations: item.array().default([]),
+    PWD: item.string().optional(true).page(2),
+    isPregnant: item.boolean().page(2),
+    isSeniorCitizen: item.boolean().page(2),
+    existingExaminations: item.array().default([]).page(2),
 
     // Page 3
-    highestEducLevel: item.string().optional(true), // If this is none, then don't display all
-    titleOfDegree: item.string().conditionallyRequired("highestEducLevel", (val) => ["College", "Postgraduate"].includes(val)),
-    major: item.string().optional(true),
-    completion: item.string().min(1).max(2).conditionallyRequired("highestEducLevel", (val) => val !== null),
-    graduationDate: item.date().conditionallyRequired("highestEducLevel", (val) => val !== null),
-    honorsReceived: item.string().optional(true),
-    NGHighestAttain: item.string().conditionallyRequired("completion", (val) => val === "NO"),
-    schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null),
-    schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null),
-    schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null),
-    schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null),
+    highestEducLevel: item.string().optional(true).page(3), // If this is none, then don't display all
+    titleOfDegree: item.string().conditionallyRequired("highestEducLevel", (val) => ["College", "Postgraduate"].includes(val)).page(3),
+    major: item.string().optional(true).page(3),
+    completion: item.string().min(1).max(2).conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    graduationDate: item.date().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    honorsReceived: item.string().optional(true).page(3),
+    NGHighestAttain: item.string().conditionallyRequired("completion", (val) => val === "NO").page(3),
+    schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
 
     // Page 4
-    isEmployed: item.boolean(),
-    employmentPosition: item.string().conditionallyRequired("isEmployed", (val) => val === true),
-    employmentYears: item.number().min(0).max(100).conditionallyRequired("isEmployed", (val) => val === true),
-    employmentStatus: item.string().min(1).max(3).conditionallyRequired("isEmployed", (val) => val === true),
-    agencyName: item.string().conditionallyRequired("isEmployed", (val) => val === true),
-    agencyAddress: item.string().conditionallyRequired("isEmployed", (val) => val === true),
+    isEmployed: item.boolean().page(4),
+    employmentPosition: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
+    employmentYears: item.number().min(0).max(100).conditionallyRequired("isEmployed", (val) => val === true).page(4),
+    employmentStatus: item.string().min(1).max(3).conditionallyRequired("isEmployed", (val) => val === true).page(4),
+    agencyName: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
+    agencyAddress: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
+
+    // Page 5
+    applicantSignature: item.image().size(1 * 1024 * 1024).page(5), // Limits to 1MB
 };
 
 export const enum SubmitStatus
@@ -79,6 +81,23 @@ export function checkAllValidation(schema: Map<String, Item<any>>): boolean
     };
 
     return true;
+}
+
+export function checkValidation(schema: Map<String, Item<any>>, page: number): boolean
+{
+    let valid = true;
+
+    for(const [_, value] of schema)
+    {
+        if(value.schemaItem.pageNum != page)
+            continue;
+
+        value.validateThenSet();
+        if(value.validState != ValidState.Valid)
+            valid = false;
+    };
+
+    return valid;
 }
 
 export function serialize(schema: Map<string, Item<any>>)

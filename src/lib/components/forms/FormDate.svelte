@@ -24,7 +24,13 @@
         {/if}
     </Label>
     <Popover.Root bind:open>
-        <Popover.Trigger id="${name}" class={`${buttonVariants({variant: "outline", size: "default"})} w-full border-2 bg-muted justify-between font-normal ${(value.validState != ValidState.Valid) ? "border-destructive" : ""}`}>
+        <Popover.Trigger
+            id="${name}"
+            class={
+            `${buttonVariants({variant: "outline", size: "default"})}
+            w-full border-2 bg-muted justify-between font-normal
+            ${(value.validState != ValidState.Valid) ? "border-destructive!" : ""}`
+        }>
             <div class="flex w-full items-center gap-[0.5em]">
                 {#if icon}
                     {@render icon()}

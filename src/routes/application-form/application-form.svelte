@@ -3,8 +3,10 @@
     import FormPagination from "$lib/components/forms/FormPagination.svelte"
     import FormButton from "$lib/components/forms/FormButton.svelte"
     import { mapForm } from "$lib/components/ItemSchema.svelte"
+    import { toast } from "svelte-sonner"
     import {
         checkAllValidation,
+        checkValidation,
         serialize,
         getFileUploads,
         formSchema,
@@ -30,7 +32,7 @@
         // Check if there are non-optional empty fields
         const isValid = checkAllValidation(schemaMap);
 
-        if(false)
+        if(!isValid)
         {
             cancel();
             return;
@@ -60,6 +62,17 @@
             submitStatus = result.status == 200 ? SubmitStatus.Submitted : SubmitStatus.Failed;
         };
     }
+
+    function nextButtonFn(page: number)
+    {
+        const schemaMap = new Map(Object.entries(formSchemaData));
+        const valid = checkValidation(schemaMap, page);
+
+        if(!valid)
+            toast.error("Missing required/invalid fields!")
+
+        return valid;
+    }
 </script>
 
 <div class="content-container bg-background">
@@ -70,7 +83,7 @@
 
         {#if submitStatus == SubmitStatus.None}
             <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off enctype="multipart/form-data">
-                <FormPagination totalPages={5}>
+                <FormPagination totalPages={5} nextButtonFn={nextButtonFn}>
                     <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                     {#snippet childRender({currentPage})}
                         {#if currentPage == 1}

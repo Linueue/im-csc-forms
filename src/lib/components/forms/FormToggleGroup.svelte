@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Label } from "$lib/components/ui/label/index.js"
     import * as ToggleGroup from "$lib/components/ui/toggle-group/index.js"
+    import { ValidState } from "$lib/components/ItemSchema.svelte"
     import RequiredField from "$lib/components/required-field.svelte"
 
     let { name, options = [], errorMessage = "Invalid!", value = $bindable(), disabled = false } = $props();
@@ -26,10 +27,10 @@
                 value={option.value}
                 class={
                     `${option.value === value.value ? "text-primary" : ""}
-                    dark:bg-input/30 bg-muted
-                    border-2 border-l-2 data-[state=on]:border-primary flex-1 py-[2em]
+                    border-2 border-l-2 data-[state=on]:bg-primary/25 bg-input/30 hover:bg-muted flex-1 py-[2em]
                     hover:text-secondary data-[state=on]:hover:text-primary
                     min-w-[10em] sm:w-auto
+                    ${(value.validState != ValidState.Valid) ? "pr-10 border-destructive" : ""}
 
                     ${options.length == 4 ? `
                     group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-tl-md

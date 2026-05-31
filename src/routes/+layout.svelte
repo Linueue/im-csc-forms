@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
-    import {goto} from "$app/navigation"
+    import { Toaster } from "$lib/components/ui/sonner/index.js";
+    import { goto } from "$app/navigation";
     import * as NavigationMenu from "$lib/components/ui/navigation-menu/index.js";
     import { Separator } from "$lib/components/ui/separator/index.js";
     import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
@@ -17,6 +18,7 @@
 
 <!-- For dark mode -->
 <ModeWatcher />
+<Toaster position="bottom-center" richColors />
 
 <div class="flex flex-col min-h-screen">
 <header class="sticky flex flex-row justify-between top-0 z-50 bg-background">

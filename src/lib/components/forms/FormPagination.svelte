@@ -3,11 +3,28 @@
 
     type ChildRender = (args: { currentPage: number }) => any;
     type SubmitRender = (args: { }) => any;
-    let { totalPages, childRender, submitRender } = $props<{totalPages: number, childRender?: ChildRender, submitRender?: SubmitRender}>();
+    type NextButtonFn = (page: number) => any;
+    let { totalPages, childRender, submitRender, nextButtonFn } = $props<{
+        totalPages: number,
+        childRender?: ChildRender,
+        submitRender?: SubmitRender,
+        nextButtonFn: NextButtonFn,
+    }>();
+
+    let page = $state(1);
+
+    function handleNextButton()
+    {
+        const valid = nextButtonFn(page);
+        console.log(valid);
+        if(valid)
+            return;
+        page = page - 1;
+    }
 </script>
 
-<Pagination.Root count={totalPages} perPage={1}>
-    {#snippet child({pages, currentPage})}
+<Pagination.Root count={totalPages} perPage={1} bind:page={page}>
+    {#snippet child({pages: _, currentPage})}
         {#if childRender}
             {@render childRender({ currentPage: currentPage })}
         {/if}
@@ -23,7 +40,7 @@
             {/if}
             {#if currentPage != totalPages}
                 <Pagination.Item class="self-end">
-                    <Pagination.NextButton class="border-border bg-background hover:bg-muted hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs" />
+                    <Pagination.NextButton onclick={() => handleNextButton()} class="border-border bg-background hover:bg-muted hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs" />
                 </Pagination.Item>
             {:else}
                 <Pagination.Item>

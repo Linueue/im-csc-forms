@@ -17,6 +17,7 @@ export class SchemaItem<T>
 {
     isOptional: boolean = $state(false);
     defaultValue: T | null = null;
+    pageNum: number = 0;
     #condition: { sourceKey: string, conditionFn: (value: any) => boolean } | null = null;
 
     optional(value: boolean)
@@ -28,6 +29,12 @@ export class SchemaItem<T>
     get condition()
     {
         return this.#condition;
+    }
+
+    page(page: number)
+    {
+        this.pageNum = page;
+        return this;
     }
 
     conditionallyRequired(sourceKey: string, conditionFn: (sourceVal: any) => boolean)
@@ -206,7 +213,7 @@ export class SchemaItemArray extends SchemaItem<Array<Record<string, Item<any>>>
     {
         if(!this.hasValue(value) || value == null)
         {
-            return this.isOptional ? ValidState.Valid : ValidState.Required;
+            return ValidState.Valid;
         }
 
         for(const val of value)

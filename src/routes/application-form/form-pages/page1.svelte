@@ -10,6 +10,9 @@
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
     import CircleUserIcon from "@lucide/svelte/icons/circle-user"
+    import PhoneIcon from "@lucide/svelte/icons/phone"
+    import EarthIcon from "@lucide/svelte/icons/earth"
+    import UsersIcon from "@lucide/svelte/icons/users"
     import { getAge } from "$lib/utils/date"
     import { CITIZENSHIPS, CIVIL_STATUS } from "../selection-constants.svelte"
     import MailIcon from "@lucide/svelte/icons/mail"
@@ -23,6 +26,10 @@
             formSchemaData.applicantAge.validateThenSet();
         }
     });
+
+    export function getActiveForms()
+    {
+    }
 </script>
 
 <Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
@@ -51,12 +58,20 @@
         name={"Citizenship"}
         options={CITIZENSHIPS}
         bind:value={formSchemaData.applicantCitizenship}
-    />
+    >
+        {#snippet icon()}
+            <EarthIcon strokeWidth={1} />
+        {/snippet}
+    </FormPicker>
     <FormPicker
         name={"Civil Status"}
         options={CIVIL_STATUS}
         bind:value={formSchemaData.applicantCivilStatus}
-    />
+    >
+        {#snippet icon()}
+            <UsersIcon strokeWidth={1} />
+        {/snippet}
+    </FormPicker>
     <FormField
         bind:value={formSchemaData.applicantMotherMaidenName}
         name={"Mother Maiden Name"}
@@ -77,7 +92,11 @@
         bind:value={formSchemaData.applicantTelephone}
         name={"Telephone Number"}
         placeholder={"+632 123 456"}
-    />
+    >
+        {#snippet icon()}
+            <PhoneIcon size={23} strokeWidth={1} />
+        {/snippet}
+    </FormField>
     <FormField
         bind:value={formSchemaData.applicantEmail}
         name={"Email"}

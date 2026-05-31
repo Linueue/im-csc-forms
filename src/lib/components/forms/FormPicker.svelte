@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as Select from "$lib/components/ui/select/index.js"
     import { Label } from "$lib/components/ui/label/index.js"
+    import { ValidState } from "$lib/components/ItemSchema.svelte"
     import RequiredField from "$lib/components/required-field.svelte"
 
     let {
@@ -23,12 +24,15 @@
         {/if}
     </Label>
     <Select.Root type="single" name={name} bind:value={value.value}>
-      <Select.Trigger class="w-full bg-muted border-2">
+      <Select.Trigger
+            class={`w-full bg-muted border-2 ${(value.validState != ValidState.Valid) ? "border-destructive!" : ""}`}>
         <div class="flex w-full items-center gap-[0.5em]">
             {#if icon}
                 {@render icon()}
             {/if}
-            {currentSelected}
+            <div class={value.value !== null ? "" : "bg-muted-foreground"}>
+                {currentSelected}
+            </div>
         </div>
       </Select.Trigger>
       <Select.Content class="max-h-75">
