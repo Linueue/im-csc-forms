@@ -69,7 +69,7 @@
     {/if}
 </div>
 
-<Separator class="mt-2" />
+<Separator class="mt-5" />
 
 <style>
     .divider

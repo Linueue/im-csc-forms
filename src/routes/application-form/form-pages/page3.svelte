@@ -16,6 +16,7 @@
         switch(formSchemaData.highestEducLevel.value as string | null)
         {
             case "":
+                formSchemaData.completion.value = null;
             case "High School":
             case "Vocational":
                 formSchemaData.titleOfDegree.value = null;
@@ -113,7 +114,7 @@
     {/if}
 </div>
 
-<Separator class="mt-2" />
+<Separator class="mt-5" />
 
 <style>
     .divider

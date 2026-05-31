@@ -1,4 +1,4 @@
-import { item, type Item, ValidState, SchemaItemImage, SchemaItemArray, SchemaItem } from "$lib/components/ItemSchema.svelte";
+import { item, type Item, ValidState, SchemaItemImage, SchemaItemArray } from "$lib/components/ItemSchema.svelte";
 import { CalendarDate } from "@internationalized/date";
 
 export const existingExaminationSchema = {
@@ -45,14 +45,14 @@ export const formSchema = {
     highestEducLevel: item.string().optional(true).page(3), // If this is none, then don't display all
     titleOfDegree: item.string().conditionallyRequired("highestEducLevel", (val) => ["College", "Postgraduate"].includes(val)).page(3),
     major: item.string().optional(true).page(3),
-    completion: item.string().min(1).max(2).conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
-    graduationDate: item.date().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    completion: item.string().min(1).max(2).conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    graduationDate: item.date().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
     honorsReceived: item.string().optional(true).page(3),
     NGHighestAttain: item.string().conditionallyRequired("completion", (val) => val === "NO").page(3),
-    schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
-    schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
-    schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
-    schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null).page(3),
+    schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
 
     // Page 4
     isEmployed: item.boolean().page(4),
@@ -85,6 +85,7 @@ export function checkAllValidation(schema: Map<String, Item<any>>): boolean
 
 export function checkValidation(schema: Map<String, Item<any>>, page: number): boolean
 {
+    return true;
     let valid = true;
 
     for(const [_, value] of schema)

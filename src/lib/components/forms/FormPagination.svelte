@@ -32,7 +32,7 @@
         <Pagination.Content class="flex flex-row w-full justify-between pt-2">
             {#if currentPage != 1}
                 <Pagination.Item class="self-start">
-                    <Pagination.PrevButton class="border-border bg-background hover:bg-muted hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs" />
+                    <Pagination.PrevButton />
                 </Pagination.Item>
             {:else}
                 <!-- Placeholder, this pushes Next to the right when page is 1 -->
@@ -40,7 +40,7 @@
             {/if}
             {#if currentPage != totalPages}
                 <Pagination.Item class="self-end">
-                    <Pagination.NextButton onclick={() => handleNextButton()} class="border-border bg-background hover:bg-muted hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs" />
+                    <Pagination.NextButton onclick={() => handleNextButton()} />
                 </Pagination.Item>
             {:else}
                 <Pagination.Item>

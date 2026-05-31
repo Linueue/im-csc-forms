@@ -24,30 +24,31 @@
         {/if}
     </Label>
     <Select.Root type="single" name={name} bind:value={value.value}>
-      <Select.Trigger
-            class={`w-full bg-muted border-2 ${(value.validState != ValidState.Valid) ? "border-destructive!" : ""}`}>
-        <div class="flex w-full items-center gap-[0.5em]">
-            {#if icon}
-                {@render icon()}
-            {/if}
-            <div class={value.value !== null ? "" : "bg-muted-foreground"}>
-                {currentSelected}
+        <Select.Trigger
+            class={`w-full bg-muted border-2 ${(value.validState != ValidState.Valid) ? "border-destructive!" : ""}`}
+        >
+            <div class="flex w-full items-center gap-[0.5em]">
+                {#if icon}
+                    {@render icon()}
+                {/if}
+                <div class={value.value !== null ? "" : "text-muted-foreground"}>
+                    {currentSelected}
+                </div>
             </div>
-        </div>
-      </Select.Trigger>
-      <Select.Content class="max-h-75">
-        <Select.Group>
-          <Select.Item value={""} label={"<None Selected>"} disabled={true} />
-          {#each options as option}
-            <Select.Item
-              value={option.value}
-              label={option.label}
-            >
-              {option.label}
-            </Select.Item>
-          {/each}
-        </Select.Group>
-      </Select.Content>
+        </Select.Trigger>
+        <Select.Content class="max-h-75">
+            <Select.Group>
+            <Select.Item value={""} label={"<None Selected>"} disabled={true} />
+                {#each options as option}
+                    <Select.Item
+                        value={option.value}
+                        label={option.label}
+                    >
+                        {option.label}
+                    </Select.Item>
+                {/each}
+            </Select.Group>
+        </Select.Content>
     </Select.Root>
 </div>
 <RequiredField validState={value.validState} errorMessage={errorMessage} />

@@ -26,6 +26,7 @@
     let isSubmitting = $state(false);
     let submitStatus = $state(SubmitStatus.None);
     let formSchemaData = $state(mapForm(formSchema));
+    let titleRef = $state<HTMLHeadingElement | null>(null)
 
     const submitFn: SubmitFunction = async ({ cancel, formData }) => {
         const schemaMap = new Map(Object.entries(formSchemaData));
@@ -69,7 +70,9 @@
         const valid = checkValidation(schemaMap, page);
 
         if(!valid)
-            toast.error("Missing required/invalid fields!")
+            toast.error("Missing required/invalid fields!");
+        else
+            titleRef!.scrollIntoView({ behavior: "smooth", block: "center" })
 
         return valid;
     }
@@ -77,7 +80,7 @@
 
 <div class="content-container bg-background">
     <div class="content">
-        <h1>Application Form</h1>
+        <h1 bind:this={titleRef}>Application Form</h1>
 
         <Separator />
 
