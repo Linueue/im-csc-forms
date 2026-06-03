@@ -10,8 +10,6 @@ export const actions: Actions = {
         const applicantPhoto = data.get("applicantPhoto") as File;
         const signaturePhoto = data.get("signaturePhoto") as File;
 
-        console.log(payload);
-
         const applicantPhotoPromise = upload(applicantPhoto, "applicant-photo");
         const signaturePhotoPromise = upload(signaturePhoto, "signature-photo");
         const urls = await Promise.all([applicantPhotoPromise, signaturePhotoPromise])
@@ -22,9 +20,9 @@ export const actions: Actions = {
 
         payload["applicantPhoto"] = urls[0];
         payload["signaturePhoto"] = urls[1];
-        // await addApplicant(payload);
+        await addApplicant(payload);
 
-        console.log("Uploaded!");
+        console.log("Applicant added.");
 
         return { ok: true };
     },

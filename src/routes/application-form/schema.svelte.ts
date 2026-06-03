@@ -46,7 +46,7 @@ export const formSchema = {
     titleOfDegree: item.string().conditionallyRequired("highestEducLevel", (val) => ["College", "Postgraduate"].includes(val)).page(3),
     major: item.string().optional(true).page(3),
     completion: item.string().min(1).max(2).conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
-    graduationDate: item.date().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    graduationDate: item.date().conditionallyRequired("completion", (val) => val === "G").page(3),
     honorsReceived: item.string().optional(true).page(3),
     NGHighestAttain: item.string().conditionallyRequired("completion", (val) => val === "NO").page(3),
     schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
@@ -63,7 +63,7 @@ export const formSchema = {
     agencyAddress: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
 
     // Page 5
-    applicantSignature: item.image().size(1 * 1024 * 1024).page(5), // Limits to 1MB
+    signaturePhoto: item.image().size(1 * 1024 * 1024).page(5), // Limits to 1MB
 };
 
 export const enum SubmitStatus
@@ -85,7 +85,6 @@ export function checkAllValidation(schema: Map<String, Item<any>>): boolean
 
 export function checkValidation(schema: Map<String, Item<any>>, page: number): boolean
 {
-    return true;
     let valid = true;
 
     for(const [_, value] of schema)

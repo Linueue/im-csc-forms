@@ -33,8 +33,9 @@
         // Check if there are non-optional empty fields
         const isValid = checkAllValidation(schemaMap);
 
-        if(!isValid)
+        if(!isValid && false)
         {
+            toast.error("Missing required/invalid fields!");
             cancel();
             return;
         }

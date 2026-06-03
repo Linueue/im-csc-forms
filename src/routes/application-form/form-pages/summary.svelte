@@ -240,7 +240,7 @@
     <p class="px-5 font-light text-sm my-5">To continue your submission, please upload, or draw your signature from the provided space below. Your signature will serve as confirmation that the information, and materials you have submitted are not of your own data. By proceeeding with the submission process, you acknowledge that you have read, understood, and agreed to the terms written in our Privacy Policy, including how the information may be collected, stored, processed, and protected in accordance with applicable laws, and regulations.</p>
 
     <FormSignatureUpload
-        bind:value={formSchemaData.applicantSignature}
+        bind:value={formSchemaData.signaturePhoto}
         name={"Signature"}
         title={"Upload your Signature Photo"}
         errorMessage={"Your file is over 1MB large!"}
