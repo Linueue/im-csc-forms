@@ -1,22 +1,13 @@
-import { AwsClient } from "aws4fetch";
-import { STORAGE_ENDPOINT, STORAGE_REGION, STORAGE_ACCESS_KEY_ID, STORAGE_ACCESS_KEY_SECRET } from "$env/static/private";
+import { type StorageClient } from "$lib/server";
 
-const client = new AwsClient({
-    service: "s3",
-    region: STORAGE_REGION,
-    accessKeyId: STORAGE_ACCESS_KEY_ID,
-    secretAccessKey: STORAGE_ACCESS_KEY_SECRET,
-});
-
-const ENDPOINT = STORAGE_ENDPOINT;
 const BUCKET = "im-csc-forms";
 
-export async function upload(file: File, directory: string): Promise<string>
+export async function upload(client: StorageClient, file: File, directory: string): Promise<string>
 {
     const filename = `${directory}/${crypto.randomUUID()}-${encodeURIComponent(file.name)}`
-    const publicUrl = `${ENDPOINT}/${BUCKET}/${filename}`;
+    const publicUrl = `${client.endpoint}/${BUCKET}/${filename}`;
 
-    const signed = await client.sign(
+    const signed = await client.client.sign(
         new Request(publicUrl),
         {
             method: "PUT",

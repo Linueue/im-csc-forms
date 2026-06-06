@@ -16,7 +16,6 @@
     function handleNextButton()
     {
         const valid = nextButtonFn(page);
-        console.log(valid);
         if(valid)
             return;
         page = page - 1;

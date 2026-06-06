@@ -1,0 +1,13 @@
+"$schema" = "./node_modules/wrangler/config-schema.json"
+name = "im-csc-forms"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2026-06-03"
+
+[assets]
+binding = "ASSETS"
+directory = ".svelte-kit/cloudflare"
+
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "im-csc-db"

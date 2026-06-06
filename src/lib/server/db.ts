@@ -1,26 +1,12 @@
-import mysql from "mysql2/promise";
 import { type ResultSetHeader, type RowDataPacket } from "mysql2";
-import { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } from "$env/static/private";
+import { type DBClient } from "$lib/server"
 
-export const pool = mysql.createPool({
-    host: DB_HOST,
-    // ?? means if DB_PORT is undefined, then use "3306"
-    port: parseInt(DB_PORT ?? "3306"),
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_DATABASE,
-    multipleStatements: true,
-    connectionLimit: 10,
-    waitForConnections: true,
-    queueLimit: 0,
-});
-
-async function addSchool(forms: Record<string, string>): Promise<number | null>
+async function addSchool(connection: DBClient, forms: Record<string, string>): Promise<number | null>
 {
     if(!forms.schoolName)
         return null;
 
-    const [schools] = await pool.execute<RowDataPacket[]>(
+    const [schools] = await connection.execute<RowDataPacket[]>(
         `
         SELECT SchoolID
         FROM School
@@ -35,7 +21,7 @@ async function addSchool(forms: Record<string, string>): Promise<number | null>
     if(schools.length > 0)
         return schools[0].SchoolID;
 
-    const [result] = await pool.execute<ResultSetHeader>(
+    const [result] = await connection.execute<ResultSetHeader>(
         `INSERT INTO School(
             SchoolName,
             SchoolAddress
@@ -52,13 +38,13 @@ async function addSchool(forms: Record<string, string>): Promise<number | null>
     return result.insertId;
 }
 
-async function addExistingExaminations(applicant: number, forms: Record<string, any>)
+async function addExistingExaminations(connection: DBClient, applicant: number, forms: Record<string, any>)
 {
     let existingExaminationsPromise = [];
 
     for(const [seq, existingExamination] of forms.existingExaminations.entries())
     {
-        const promise = pool.execute(`
+        const promise = connection.execute(`
             INSERT INTO ExistingExamination (
                 ApplicantNo,
                 ExistingExaminationSeq,
@@ -85,9 +71,9 @@ async function addExistingExaminations(applicant: number, forms: Record<string, 
     await Promise.all(existingExaminationsPromise);
 }
 
-async function addAgency(forms: Record<string, any>): Promise<number>
+async function addAgency(connection: DBClient, forms: Record<string, any>): Promise<number>
 {
-    const [agency] = await pool.execute<ResultSetHeader>(`
+    const [agency] = await connection.execute<ResultSetHeader>(`
         INSERT INTO Agency (
             AgencyName,
             AgencyAddress
@@ -104,20 +90,20 @@ async function addAgency(forms: Record<string, any>): Promise<number>
     return agency.insertId;
 }
 
-async function addEmployment(applicant: number, forms: Record<string, any>)
+async function addEmployment(connection: DBClient, applicant: number, forms: Record<string, any>)
 {
     if(!forms.isEmployed)
         return;
 
-    const agency = await addAgency(forms);
+    const agency = await addAgency(connection, forms);
 
-    await pool.execute(`
+    await connection.execute(`
         INSERT INTO Employment (
             ApplicantNo,
             AgencyID,
             EmploymentPosition,
             EmploymentYears,
-            EmploymentStatus,
+            EmploymentStatus
         )
         VALUES (
             ?, ?, ?, ?, ?
@@ -132,12 +118,12 @@ async function addEmployment(applicant: number, forms: Record<string, any>)
     );
 }
 
-export async function addApplicant(forms: Record<string, any>)
+export async function addApplicant(connection: DBClient, forms: Record<string, any>)
 {
     const name = `${forms.applicantLastName}, ${forms.applicantFirstName} ${forms.applicantMiddleName}`;
-    const schoolID = await addSchool(forms);
+    const schoolID = await addSchool(connection, forms);
 
-    const [applicant] = await pool.execute<ResultSetHeader>(`
+    const [applicant] = await connection.execute<ResultSetHeader>(`
         INSERT INTO Applicant (
             IsFirstTime,
             LastExaminationTaken,
@@ -215,6 +201,9 @@ export async function addApplicant(forms: Record<string, any>)
         ],
     );
 
-    addExistingExaminations(applicant.insertId, forms);
-    addEmployment(applicant.insertId, forms);
+    const examPromise = addExistingExaminations(connection, applicant.insertId, forms);
+    const empPromise = addEmployment(connection, applicant.insertId, forms);
+
+    await Promise.all([examPromise, empPromise])
+        .catch(err => { throw new Error("Could not add existing examinations, and employment. err: " + err) });
 }

@@ -4,14 +4,14 @@ import { upload } from "$lib/server/storage";
 import { fail } from "@sveltejs/kit";
 
 export const actions: Actions = {
-    submit: async ({ request }) => {
+    submit: async ({ request, locals }) => {
         const data = await request.formData();
         const payload = JSON.parse(data.get("payload") as string);
         const applicantPhoto = data.get("applicantPhoto") as File;
         const signaturePhoto = data.get("signaturePhoto") as File;
 
-        const applicantPhotoPromise = upload(applicantPhoto, "applicant-photo");
-        const signaturePhotoPromise = upload(signaturePhoto, "signature-photo");
+        const applicantPhotoPromise = upload(locals.storage, applicantPhoto, "applicant-photo");
+        const signaturePhotoPromise = upload(locals.storage, signaturePhoto, "signature-photo");
         const urls = await Promise.all([applicantPhotoPromise, signaturePhotoPromise])
             .catch(() => null);
 
@@ -20,7 +20,7 @@ export const actions: Actions = {
 
         payload["applicantPhoto"] = urls[0];
         payload["signaturePhoto"] = urls[1];
-        await addApplicant(payload);
+        await addApplicant(locals.db, payload);
 
         console.log("Applicant added.");
 
