@@ -52,7 +52,7 @@
         bind:value={formSchemaData.applicantSex}
     />
     <FormDate bind:value={formSchemaData.applicantBirthdate} name={"Date of Birth"} />
-    <FormField bind:value={formSchemaData.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
+    <FormField disabled={true} bind:value={formSchemaData.applicantAge} name={"Age"} type={"number"} readonly={true} placeholder={"Age"} errorMessage={"You must be atleast 18 years old to apply!"} />
     <FormField bind:value={formSchemaData.applicantBirthplace} name={"Place of Birth"} placeholder={"Manila"} />
     <FormPicker
         name={"Citizenship"}
@@ -84,26 +84,31 @@
     />
     <FormField
         bind:value={formSchemaData.applicantMobile}
-        type={"number"}
+        type={"tel"}
         name={"Mobile Number"}
+        pattern={"[0-9]{11}"}
+        errorMessage={"Digits must be exactly 11."}
         placeholder={"09123456789"}
     />
     <FormField
         bind:value={formSchemaData.applicantTelephone}
         name={"Telephone Number"}
+        type={"tel"}
+        pattern={"+[0-9]{3} [0-9]{3} [0-9]{3}"}
         placeholder={"+632 123 456"}
     >
         {#snippet icon()}
-            <PhoneIcon size={23} strokeWidth={1} />
+            <PhoneIcon size={20} strokeWidth={1} />
         {/snippet}
     </FormField>
     <FormField
         bind:value={formSchemaData.applicantEmail}
         name={"Email"}
+        type={"email"}
         placeholder={"johndoe@gmail.com"}
     >
         {#snippet icon()}
-            <MailIcon strokeWidth={1} />
+            <MailIcon strokeWidth={1} size={"20"} />
         {/snippet}
     </FormField>
     <FormImageUpload

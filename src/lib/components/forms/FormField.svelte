@@ -5,7 +5,7 @@
     import { ValidState } from "$lib/components/ItemSchema.svelte"
     import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert"
 
-    let { value = $bindable(), name, errorMessage = "Invalid!", type = "text", readonly = false, placeholder = "", icon = null } = $props();
+    let { value = $bindable(), name, disabled = false, pattern = "", errorMessage = "Invalid!", type = "text", readonly = false, placeholder = "", icon = null } = $props();
 </script>
 
 <div class="flex flex-col items-stretch">
@@ -17,18 +17,20 @@
     </Label>
     <div class="relative flex items-center mt-1.25">
         {#if icon}
-            <div class="absolute left-2">
+            <div class="absolute left-2.5">
                 {@render icon()}
             </div>
         {/if}
         <Input
             readonly={readonly}
             type={type}
+            disabled={disabled}
             placeholder={placeholder}
             class={`w-full border-2 text-sm
                 ${icon ? "pl-[2.5em]" : ""}
                 ${(value.validState != ValidState.Valid) ? "pr-10 border-destructive" : ""}
             `}
+            pattern={pattern}
             bind:value={value.value}
             id="${name}"
             onblur={() => value.validateThenSet() }

@@ -1,4 +1,4 @@
-import type { DBClient, StorageClinet } from "$lib/server/db"
+import type { DBClient, StorageClient } from "$lib/server"
 
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
@@ -7,7 +7,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
             db: DBClient,
-            storage: DBClient,
+            storage: StorageClient,
         }
 		// interface PageData {}
 		// interface PageState {}

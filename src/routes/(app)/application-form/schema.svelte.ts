@@ -25,7 +25,7 @@ export const formSchema = {
     applicantPhoto: item.image().size(5 * 1024 * 1024).page(1), // Limits to 5MB
     applicantMotherMaidenName: item.string().page(1),
     applicantAddress: item.string().page(1),
-    applicantMobile: item.number().page(1),
+    applicantMobile: item.string().min(11).max(11).page(1),
     applicantTelephone: item.string().optional(true).page(1),
     applicantEmail: item.string().page(1),
 

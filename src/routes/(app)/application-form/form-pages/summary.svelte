@@ -4,23 +4,12 @@
     import Row from "$lib/components/row.svelte"
     import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import CheckIcon from "@lucide/svelte/icons/check-check"
-    import { CalendarDate, getLocalTimeZone } from "@internationalized/date"
-    import SummaryField from "./summary-field.svelte"
+    import SummaryField from "$lib/components/summary-field.svelte"
     import SeparatorLabel from "$lib/components/forms/FormSeparatorLabel.svelte"
     import { CIVIL_STATUS, EMPLOYMENT_STATUS } from "../selection-constants.svelte"
+    import { formatDate } from "$lib/utils/date"
 
     let { formSchemaData = $bindable() } = $props();
-
-    function formatDate(date: CalendarDate)
-    {
-        const formatted = Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-        }).format(date.toDate(getLocalTimeZone()));
-
-        return formatted;
-    }
 
     function completionLabel(value: string)
     {
