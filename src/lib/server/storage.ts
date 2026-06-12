@@ -34,3 +34,12 @@ export async function upload(client: StorageClient, file: File, directory: strin
 
     return publicUrl;
 }
+
+export async function getImage(client: StorageClient, url: string): Promise<Response>
+{
+    const response = await client.client.fetch(url, {
+        method: "GET",
+    });
+
+    return response;
+}

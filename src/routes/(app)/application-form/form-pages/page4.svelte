@@ -6,13 +6,13 @@
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import BriefcaseIcon from "@lucide/svelte/icons/briefcase"
-    import { EMPLOYMENT_STATUS } from "../selection-constants.svelte"
+    import { EMPLOYMENT_STATUS, EMPLOYMENT_TYPE } from "$lib/selection-constants"
     import { slide } from "svelte/transition"
 
     let { formSchemaData = $bindable() } = $props();
 
     $effect(() => {
-        if(formSchemaData.isEmployed.value === false)
+        if(formSchemaData.employmentType.value === "U")
         {
             formSchemaData.employmentPosition.value = null;
             formSchemaData.employmentYears.value = null;
@@ -28,17 +28,14 @@
     <Label class="min-h-8 text-lg pb-[0.5em] font-serif">Employment</Label>
 </Row>
 
-<div class="divider space-y-5">
-    <FormToggleGroup
-        name={"DO YOU HAVE A JOB?"}
-        options={[
-            {value: true, label: "Yes"},
-            {value: false, label: "No"},
-        ]}
-        bind:value={formSchemaData.isEmployed}
+<div class="divider">
+    <FormPicker
+        name={"Type"}
+        options={EMPLOYMENT_TYPE}
+        bind:value={formSchemaData.employmentType}
     />
-    {#if formSchemaData.isEmployed.value}
-        <div transition:slide class="divider space-y-5">
+    {#if formSchemaData.employmentType.value && formSchemaData.employmentType.value !== "U"}
+        <div transition:slide class="divider space-y-5 mt-5">
             <FormField
                 bind:value={formSchemaData.employmentPosition}
                 name={"Position"}

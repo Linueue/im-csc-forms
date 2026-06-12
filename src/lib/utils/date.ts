@@ -13,7 +13,7 @@ export function getAge(birthdate: CalendarDate): number
 
 export function formatDate(date: CalendarDate | Date | null)
 {
-    if(date === null)
+    if(date === null || date === undefined)
         return "";
 
     const dateConverted = date instanceof Date ?

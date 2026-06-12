@@ -5,13 +5,11 @@
     import { mapForm } from "$lib/components/ItemSchema.svelte"
     import { toast } from "svelte-sonner"
     import {
-        checkAllValidation,
         checkValidation,
-        serialize,
         getFileUploads,
         formSchema,
-        SubmitStatus,
     } from "./schema.svelte.ts"
+    import { checkAllValidation, serialize, SubmitStatus } from "$lib/utils/forms"
     import { enhance } from "$app/forms"
     import { fade, scale } from "svelte/transition"
     import CheckIcon from "@lucide/svelte/icons/circle-check"
@@ -33,7 +31,7 @@
         // Check if there are non-optional empty fields
         const isValid = checkAllValidation(schemaMap);
 
-        if(!isValid && false)
+        if(!isValid)
         {
             toast.error("Missing required/invalid fields!");
             cancel();

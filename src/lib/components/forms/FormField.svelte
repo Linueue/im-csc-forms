@@ -5,7 +5,7 @@
     import { ValidState } from "$lib/components/ItemSchema.svelte"
     import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert"
 
-    let { value = $bindable(), name, disabled = false, pattern = "", errorMessage = "Invalid!", type = "text", readonly = false, placeholder = "", icon = null } = $props();
+    let { value = $bindable(), name, disabled = false, pattern = undefined, errorMessag = "Invalid!", type = "text", readonly = false, placeholder = "", icon = null } = $props();
 </script>
 
 <div class="flex flex-col items-stretch">
@@ -41,3 +41,8 @@
     </div>
     <RequiredField validState={value.validState} errorMessage={errorMessage} />
 </div>
+
+
+
+
+

@@ -55,33 +55,16 @@ export const formSchema = {
     schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
 
     // Page 4
-    isEmployed: item.boolean().page(4),
-    employmentPosition: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
-    employmentYears: item.number().min(0).max(100).conditionallyRequired("isEmployed", (val) => val === true).page(4),
-    employmentStatus: item.string().min(1).max(3).conditionallyRequired("isEmployed", (val) => val === true).page(4),
-    agencyName: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
-    agencyAddress: item.string().conditionallyRequired("isEmployed", (val) => val === true).page(4),
+    employmentType: item.string().page(4),
+    employmentPosition: item.string().conditionallyRequired("employmentType", (val) => val !== null && val !== "U").page(4),
+    employmentYears: item.number().min(0).max(100).conditionallyRequired("employmentType", (val) => val !== null &&  val !== "U").page(4),
+    employmentStatus: item.string().min(1).max(3).conditionallyRequired("employmentType", (val) => val !== null && val !== "U").page(4),
+    agencyName: item.string().conditionallyRequired("employmentType", (val) => val !== null && val !== "U").page(4),
+    agencyAddress: item.string().conditionallyRequired("employmentType", (val) => val !== null && val !== "U").page(4),
 
     // Page 5
     signaturePhoto: item.image().size(1 * 1024 * 1024).page(5), // Limits to 1MB
 };
-
-export const enum SubmitStatus
-{
-    None, Submitted, Failed,
-};
-
-export function checkAllValidation(schema: Map<String, Item<any>>): boolean
-{
-    for(const [_, value] of schema)
-    {
-        value.validateThenSet();
-        if(value.validState != ValidState.Valid)
-            return false;
-    };
-
-    return true;
-}
 
 export function checkValidation(schema: Map<String, Item<any>>, page: number): boolean
 {
@@ -98,44 +81,6 @@ export function checkValidation(schema: Map<String, Item<any>>, page: number): b
     };
 
     return valid;
-}
-
-export function serialize(schema: Map<string, Item<any>>)
-{
-    let data: Record<string, any | null> = {};
-
-    schema.forEach((value, key) => {
-        // Ignore any file uploads, these are handled as part of the formData
-        if(value.schemaItem instanceof SchemaItemImage)
-            return;
-        if(value.schemaItem instanceof SchemaItemArray)
-        {
-            if(!value.value)
-            {
-                data[key.toString()] = null;
-                return;
-            }
-
-            let allSerialized: Array<Record<string, any>> = []
-
-            for(const entry of value.value as Array<Record<string, Item<any>>>)
-            {
-                const mapped = new Map(Object.entries(entry));
-                const serialized = serialize(mapped);
-                allSerialized.push(serialized);
-            }
-
-            data[key.toString()] = allSerialized;
-            return;
-        }
-
-        if(value.value instanceof CalendarDate)
-            data[key.toString()] = value.value.toString() ?? null;
-        else
-            data[key.toString()] = value.value ?? null;
-    });
-
-    return data;
 }
 
 export function getFileUploads(schema: Map<string, Item<any>>): Record<string, File | null>

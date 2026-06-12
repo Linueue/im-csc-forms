@@ -11,7 +11,7 @@
         today,
     } from "@internationalized/date";
 
-    let { value = $bindable(), name, icon = null, errorMessage = "Invalid!" } = $props();
+    let { value = $bindable(), name, icon = null, errorMessage = "Invalid!", limit = true } = $props();
 
     let open = $state(false);
 </script>
@@ -52,7 +52,7 @@
                 open = false;
                 value.validateThenSet();
             }}
-            maxValue={today(getLocalTimeZone())}
+            maxValue={limit ? today(getLocalTimeZone()) : undefined}
         />
         </Popover.Content>
     </Popover.Root>

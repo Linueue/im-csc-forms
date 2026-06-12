@@ -6,31 +6,10 @@
     import CheckIcon from "@lucide/svelte/icons/check-check"
     import SummaryField from "$lib/components/summary-field.svelte"
     import SeparatorLabel from "$lib/components/forms/FormSeparatorLabel.svelte"
-    import { CIVIL_STATUS, EMPLOYMENT_STATUS } from "../selection-constants.svelte"
+    import { completionLabel, civilStatus, employmentStatus } from "$lib/utils/forms"
     import { formatDate } from "$lib/utils/date"
 
     let { formSchemaData = $bindable() } = $props();
-
-    function completionLabel(value: string)
-    {
-        switch(value)
-        {
-            case 'G':
-                return "Graduated";
-            case 'NO':
-                return "Not-Graduated/On-Going";
-        }
-    }
-
-    function civilStatus(value: string)
-    {
-        return CIVIL_STATUS.find((v) => v.value == value)?.label;
-    }
-
-    function employmentStatus(value: string)
-    {
-        return EMPLOYMENT_STATUS.find((v) => v.value == value)?.label;
-    }
 </script>
 
 <Row gap="0.5em" class="pt-[0.5em] pb-[0.5em]">
@@ -109,7 +88,7 @@
         {/if}
         <SummaryField
             name="PWD"
-            value={formSchemaData.PWD.value || " - "}
+            value={formSchemaData.PWD.value}
         />
         <SummaryField
             name="Pregnant"
@@ -175,7 +154,7 @@
             {/if}
             <SummaryField
                 name="Honors Received"
-                value={formSchemaData.honorsReceived.value || " - "}
+                value={formSchemaData.honorsReceived.value}
             />
             <SummaryField
                 name="School Year"
@@ -197,7 +176,11 @@
         {/if}
 
         <SeparatorLabel name="Employment" grid_full={true} />
-        {#if formSchemaData.isEmployed.value}
+        <SummaryField
+            name="Employment Type"
+            value={formSchemaData.employmentType.value}
+        />
+        {#if formSchemaData.employmentType.value && formSchemaData.employmentType.value !== "U"}
             <SummaryField
                 name="Employment Position"
                 value={formSchemaData.employmentPosition.value}

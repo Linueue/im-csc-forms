@@ -255,3 +255,11 @@ export const EMPLOYMENT_STATUS = [
   { value: "SEA", label: "Seasonal" },
   { value: "FT", label: "Fixed-Term/Contractual" },
 ];
+
+export const EMPLOYMENT_TYPE = [
+  { value: "U", label: "Unemployed" },
+  { value: "SE", label: "Self-Employed" },
+  { value: "NGO", label: "Non-Government Organization" },
+  { value: "G", label: "Government" },
+  { value: "P", label: "Private" },
+];

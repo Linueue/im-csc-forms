@@ -14,7 +14,7 @@
     import EarthIcon from "@lucide/svelte/icons/earth"
     import UsersIcon from "@lucide/svelte/icons/users"
     import { getAge } from "$lib/utils/date"
-    import { CITIZENSHIPS, CIVIL_STATUS } from "../selection-constants.svelte"
+    import { CITIZENSHIPS, CIVIL_STATUS } from "$lib/selection-constants"
     import MailIcon from "@lucide/svelte/icons/mail"
 
     let { formSchemaData = $bindable() } = $props();

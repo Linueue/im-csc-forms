@@ -1,8 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import type { RowDataPacket } from "mysql2/promise"
 import { type Actions, json } from "@sveltejs/kit";
-import { upload } from "$lib/server/storage";
-import { fail } from "@sveltejs/kit";
+import { addPostDetails } from "$lib/server/db"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
     const [applicants, fields] = await locals.db.execute<RowDataPacket[]>(`
@@ -11,23 +10,26 @@ export const load: PageServerLoad = async ({ locals, request }) => {
         LEFT JOIN Payment P ON A.ApplicantNo = P.ApplicantNo
         WHERE P.ApplicantNo IS NULL;
     `);
+    const [collectingOfficers] = await locals.db.execute<RowDataPacket[]>(`
+        SELECT *
+        FROM CollectingOfficer;
+    `);
+    const [processors] = await locals.db.execute<RowDataPacket[]>(`
+        SELECT ProcessorID, ProcessorName
+        FROM Processor;
+    `);
 
-    return { applicants: applicants, fields: fields.map(f => f.name) };
+    return { applicants: applicants, fields: fields.map(f => f.name), collectingOfficers, processors };
 }
 
 export const actions: Actions = {
-    getApplicantDetails: async ({ locals, request }) => {
+    submit: async ({ locals, request }) => {
         const data = await request.formData();
-        const applicantNo = data.get("applicantNo");
+        const payload = JSON.parse(data.get("payload") as string);
+        await addPostDetails(locals.db, payload);
 
-        const [applicant] = await locals.db.execute<RowDataPacket[]>(`
-            SELECT *
-            FROM Applicant
-            WHERE ApplicantNo = ?;
-        `, [
-            applicantNo,
-        ]);
+        console.log("Post details added.");
 
-        return json({ applicant: applicant.length == 1 ? applicant[0].rows : null });
+        return { ok: true };
     },
 };

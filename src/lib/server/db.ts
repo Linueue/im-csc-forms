@@ -92,7 +92,7 @@ async function addAgency(connection: DBClient, forms: Record<string, any>): Prom
 
 async function addEmployment(connection: DBClient, applicant: number, forms: Record<string, any>)
 {
-    if(!forms.isEmployed)
+    if(forms.employmentType === "U")
         return;
 
     const agency = await addAgency(connection, forms);
@@ -184,10 +184,10 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
             forms.isPregnant,
             forms.isSeniorCitizen,
             forms.PWD,
-            `0${forms.applicantMobile}`,
+            forms.applicantMobile,
             forms.applicantTelephone,
             forms.applicantEmail,
-            forms.employmentStatus,
+            forms.employmentType,
             forms.highestEducLevel,
             forms.completion,
             forms.graduationDate,
@@ -206,4 +206,20 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
 
     await Promise.all([examPromise, empPromise])
         .catch(err => { throw new Error("Could not add existing examinations, and employment. err: " + err) });
+}
+
+export async function addPostDetails(connection: DBClient, forms: Record<string, any>)
+{
+}
+
+export async function addCollectingOfficer(connection: DBClient, forms: Record<string, any>)
+{
+    await connection.execute(`
+        INSERT INTO CollectingOfficer(
+            CollectingOfficerName
+        )
+        VALUES ( ? );
+    `, [
+        forms.collectingOfficerName
+    ]);
 }

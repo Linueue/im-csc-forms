@@ -28,6 +28,15 @@
                     <Sidebar.MenuItem>
                         <Sidebar.MenuButton>
                             {#snippet child({ props })}
+                                <a href="/cms/officers" {...props}>
+                                    <span>Officers</span>
+                                </a>
+                            {/snippet}
+                        </Sidebar.MenuButton>
+                    </Sidebar.MenuItem>
+                    <Sidebar.MenuItem>
+                        <Sidebar.MenuButton>
+                            {#snippet child({ props })}
                                 <a href="/cms/reports" {...props}>
                                     Reports
                                 </a>
