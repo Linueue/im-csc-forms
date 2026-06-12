@@ -6,7 +6,6 @@
     import { toast } from "svelte-sonner"
     import {
         checkValidation,
-        getFileUploads,
         formSchema,
     } from "./schema.svelte.ts"
     import { checkAllValidation, serialize, SubmitStatus } from "$lib/utils/forms"
@@ -44,13 +43,12 @@
         for(const key of formData.keys())
             formData.delete(key);
 
-        const serialized = serialize(schemaMap);
-        const serializedString = JSON.stringify(serialized);
-        const fileUploads = getFileUploads(schemaMap);
+        const { data, files } = serialize(schemaMap);
+        const serializedString = JSON.stringify(data);
 
         formData.set("payload", serializedString);
 
-        for(const [key, value] of Object.entries(fileUploads))
+        for(const [key, value] of Object.entries(files))
         {
             // value! means trust me, this will not be null
             formData.set(key, value!);

@@ -93,7 +93,7 @@
                     <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
                 </div>
             {/if}
-            <Input accept="image/png, image/jpeg" type="file" onchange={handleFileUpload} />
+            <Input accept="image/png, image/jpeg, image/webp" type="file" onchange={handleFileUpload} />
             <Dialog.Footer>
                 <Dialog.Close
                     type="button"

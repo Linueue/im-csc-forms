@@ -1,6 +1,35 @@
 <script lang="ts">
     import * as Sidebar from "$lib/components/ui/sidebar/index.js";
     import Logo from "$lib/assets/logo.svelte"
+
+    const navMenus = [
+        {
+            name: "Applicants",
+            contents: [
+                {
+                    name: "Pending",
+                    href: "/cms/pending",
+                },
+                {
+                    name: "Reviewed",
+                    href: "/cms/reviewed",
+                },
+                {
+                    name: "Officers",
+                    href: "/cms/officers",
+                },
+            ],
+        },
+        {
+            name: "Reports",
+            contents: [
+                {
+                    name: "SQL 1",
+                    href: "/cms/reports",
+                },
+            ],
+        }
+    ];
 </script>
 
 <Sidebar.Root collapsible="offcanvas">
@@ -12,41 +41,26 @@
         </div>
     </Sidebar.Header>
     <Sidebar.Content>
-        <Sidebar.Group>
-            <Sidebar.GroupLabel>Applicants</Sidebar.GroupLabel>
-            <Sidebar.GroupContent>
-                <Sidebar.Menu>
-                    <Sidebar.MenuItem>
-                        <Sidebar.MenuButton>
-                            {#snippet child({ props })}
-                                <a href="/cms/applicant" {...props}>
-                                    <span>Applicant</span>
-                                </a>
-                            {/snippet}
-                        </Sidebar.MenuButton>
-                    </Sidebar.MenuItem>
-                    <Sidebar.MenuItem>
-                        <Sidebar.MenuButton>
-                            {#snippet child({ props })}
-                                <a href="/cms/officers" {...props}>
-                                    <span>Officers</span>
-                                </a>
-                            {/snippet}
-                        </Sidebar.MenuButton>
-                    </Sidebar.MenuItem>
-                    <Sidebar.MenuItem>
-                        <Sidebar.MenuButton>
-                            {#snippet child({ props })}
-                                <a href="/cms/reports" {...props}>
-                                    Reports
-                                </a>
-                            {/snippet}
-                        </Sidebar.MenuButton>
-                    </Sidebar.MenuItem>
-                </Sidebar.Menu>
-            </Sidebar.GroupContent>
-        </Sidebar.Group>
-        <Sidebar.Group />
+        {#each navMenus as menu}
+            <Sidebar.Group>
+                <Sidebar.GroupLabel>{menu.name}</Sidebar.GroupLabel>
+                <Sidebar.GroupContent>
+                    <Sidebar.Menu>
+                        {#each menu.contents as content}
+                            <Sidebar.MenuItem>
+                                <Sidebar.MenuButton>
+                                    {#snippet child({ props })}
+                                        <a href={content.href} {...props}>
+                                            <span>{content.name}</span>
+                                        </a>
+                                    {/snippet}
+                                </Sidebar.MenuButton>
+                            </Sidebar.MenuItem>
+                        {/each}
+                    </Sidebar.Menu>
+                </Sidebar.GroupContent>
+            </Sidebar.Group>
+        {/each}
     </Sidebar.Content>
     <Sidebar.Footer />
 </Sidebar.Root>

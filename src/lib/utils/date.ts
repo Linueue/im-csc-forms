@@ -1,4 +1,16 @@
-import { type CalendarDate, today, getLocalTimeZone } from "@internationalized/date";
+import { type CalendarDate, today, getLocalTimeZone, now, toCalendarDateTime } from "@internationalized/date";
+
+export function getToday()
+{
+    return today(getLocalTimeZone());
+}
+
+export function getCurrentTime()
+{
+    const date = now(getLocalTimeZone());
+    const time = toCalendarDateTime(date);
+    return time.toDate(getLocalTimeZone()).toLocaleTimeString("en-GB");
+}
 
 export function getAge(birthdate: CalendarDate): number
 {

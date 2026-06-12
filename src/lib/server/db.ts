@@ -1,5 +1,6 @@
 import { type ResultSetHeader, type RowDataPacket } from "mysql2";
 import { type DBClient } from "$lib/server"
+import { getToday, getCurrentTime } from "$lib/utils/date"
 
 async function addSchool(connection: DBClient, forms: Record<string, string>): Promise<number | null>
 {
@@ -166,10 +167,10 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
         [
             forms.isFirstTime,
             forms.lastExaminationTaken,
-            "I", // CSCRegionalOffice
-            "2026-05-03", // ExaminationDate
-            "Manila", // ExaminationPlace
-            "DIBAR", // VerifiedAgainst
+            null, // CSCRegionalOffice
+            null, // ExaminationDate
+            null, // ExaminationPlace
+            null, // VerifiedAgainst
             forms.applicantPhoto,
             forms.signaturePhoto,
             name,
@@ -210,6 +211,49 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
 
 export async function addPostDetails(connection: DBClient, forms: Record<string, any>)
 {
+    const applicantPromise = connection.execute(`
+        UPDATE Applicant
+        SET VerifiedAgainst = ?,
+            ExaminationDate = ?,
+            ExaminationPlace = ?,
+            CSCRegionalOffice = ?
+        WHERE ApplicantNo = ?;
+    `, [
+        forms.verifiedAgainst,
+        forms.examinationDate,
+        forms.examinationPlace,
+        forms.CSCRegionalOffice,
+        forms.applicantNo
+    ]);
+
+    const paymentPromise = connection.execute(`
+        INSERT INTO Payment(
+            ApplicantNo,
+            ProcessingORNumber,
+            ProcessingDate,
+            ProcessingAmount,
+            CollectingOfficerID,
+            ProcessingIdentification,
+            ProcessingActionTaken,
+            ProcessingReasonForDisapproval,
+            ProcessorID,
+            TimeProcessed
+        )
+        VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
+    `, [
+        forms.applicantNo,
+        forms.processingORNumber,
+        getToday().toString(),
+        forms.processingAmount,
+        forms.collectingOfficerID,
+        forms.processingIdentification,
+        forms.processingActionTaken,
+        forms.processingReasonForDisapproval,
+        forms.processorID,
+        getCurrentTime().toString(),
+    ]);
+
+    await Promise.all([applicantPromise, paymentPromise]);
 }
 
 export async function addCollectingOfficer(connection: DBClient, forms: Record<string, any>)
@@ -221,5 +265,19 @@ export async function addCollectingOfficer(connection: DBClient, forms: Record<s
         VALUES ( ? );
     `, [
         forms.collectingOfficerName
+    ]);
+}
+
+export async function addProcessor(connection: DBClient, forms: Record<string, any>)
+{
+    await connection.execute(`
+        INSERT INTO Processor(
+            ProcessorName, ProcessorPosition, ProcessorSignatureURL
+        )
+        VALUES ( ?, ?, ? );
+    `, [
+        forms.processorName,
+        forms.processorPosition,
+        forms.processorSignatureURL,
     ]);
 }

@@ -1,5 +1,4 @@
-import { item, type Item, ValidState, SchemaItemImage, SchemaItemArray } from "$lib/components/ItemSchema.svelte";
-import { CalendarDate } from "@internationalized/date";
+import { item, type Item, ValidState } from "$lib/components/ItemSchema.svelte";
 
 export const existingExaminationSchema = {
     existingExaminationTitle: item.string().min(1).max(50),
@@ -22,7 +21,7 @@ export const formSchema = {
     applicantBirthplace: item.string().min(1).max(50).page(1),
     applicantCitizenship: item.string().default("Filipino").page(1),
     applicantCivilStatus: item.string().default("S").page(1),
-    applicantPhoto: item.image().size(5 * 1024 * 1024).page(1), // Limits to 5MB
+    applicantPhoto: item.image().size(1 * 1024 * 1024).page(1), // Limits to 1MB
     applicantMotherMaidenName: item.string().page(1),
     applicantAddress: item.string().page(1),
     applicantMobile: item.string().min(11).max(11).page(1),
@@ -81,19 +80,4 @@ export function checkValidation(schema: Map<String, Item<any>>, page: number): b
     };
 
     return valid;
-}
-
-export function getFileUploads(schema: Map<string, Item<any>>): Record<string, File | null>
-{
-    // While this might seem inefficient, it's negligible
-    let data: Record<string, File | null> = {};
-
-    schema.forEach((value, key) => {
-        if(!(value.schemaItem instanceof SchemaItemImage))
-            return;
-
-        data[key.toString()] = value.value;
-    });
-
-    return data;
 }

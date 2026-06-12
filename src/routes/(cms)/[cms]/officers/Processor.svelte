@@ -3,28 +3,31 @@
     import * as Dialog from "$lib/components/ui/dialog/index.js"
     import { Checkbox } from "$lib/components/ui/checkbox/index.js"
     import FormField from "$lib/components/forms/FormField.svelte"
+    import FormSignatureUpload from "$lib/components/forms/FormSignatureUpload.svelte"
     import TableView from "$lib/components/table-view.svelte"
     import { Button, buttonVariants } from "$lib/components/ui/button/index.js"
     import { item, mapForm } from "$lib/components/ItemSchema.svelte";
     import { toast } from "svelte-sonner"
     import { type SubmitFunction } from "@sveltejs/kit"
-    import { serialize, checkAllValidation, SubmitStatus } from "$lib/utils/forms"
+    import { serialize, checkAllValidation } from "$lib/utils/forms"
     import { invalidateAll } from "$app/navigation"
 
     export const detailsSchema = {
-        collectingOfficerName: item.string(),
+        processorName: item.string(),
+        processorPosition: item.string().default("Examination Processor I"),
+        processorSignature: item.image().size(1 * 1024 * 1024),
     };
     let schemaFormData = $state(mapForm(detailsSchema));
     let selected = $state(new Set());
 
-    let { collectingOfficers, coFields } = $props();
+    let { processors, pFields } = $props();
 
     async function deleteRowsFn()
     {
         if([...selected].length === 0)
             return;
 
-        const response = await fetch(`/api/removeCollectingOfficer`, {
+        const response = await fetch("/api/removeProcessor", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -55,13 +58,15 @@
             return;
         }
 
-        // Delete each params in formData, since we would like to send a JSON to the server
         for(const key of formData.keys())
             formData.delete(key);
 
-        const { data, files: _ } = serialize(schemaMap);
+        const { data, files } = serialize(schemaMap);
         const serializedString = JSON.stringify(data);
         formData.set("payload", serializedString);
+
+        for(const [key, value] of Object.entries(files))
+            formData.set(key, value!);
 
         return async ({ result, update }) => {
             await update();
@@ -80,11 +85,11 @@
 
 <div>
     <TableView
-        name="Collecting Officers"
+        name="Processor"
         enhanceFn={submitFn}
         submitName={"Add"}
-        dialogHeaderTitle={"Add Collecting Officer"}
-        formAction="?/submitCollectingOfficer"
+        dialogHeaderTitle={"Add Processor"}
+        formAction="?/submitProcessor"
     >
         {#snippet headerRows()}
             <Dialog.Trigger
@@ -93,39 +98,53 @@
             >
                 +
             </Dialog.Trigger>
-            {#each coFields as field}
+            {#each pFields as field}
                 <Table.Head class="max-w-[3em]">{field}</Table.Head>
             {/each}
         {/snippet}
         {#snippet bodyRows()}
-            {#each collectingOfficers as collectingOfficer}
+            {#each processors as processor}
                 <Table.Row>
                     <Table.Cell class="w-[3em] font-normal text-muted-foreground">
                         <Checkbox
-                            checked={selected.has(collectingOfficer.CollectingOfficerID)}
+                            checked={selected.has(processor.ProcessorID)}
                             onCheckedChange={(checked) => {
                                 if(checked)
-                                    selected.add(collectingOfficer.CollectingOfficerID);
+                                    selected.add(processor.ProcessorID);
                                 else
-                                    selected.delete(collectingOfficer.CollectingOfficerID);
+                                    selected.delete(processor.ProcessorID);
                             }}
                         />
                     </Table.Cell>
-                    {#each coFields as field}
+                    {#each pFields as field}
                         <Table.Cell class="font-normal text-muted-foreground">
-                            {collectingOfficer[field]}
+                            {processor[field]}
                         </Table.Cell>
                     {/each}
                 </Table.Row>
             {/each}
         {/snippet}
         {#snippet children()}
-            <div class="overflow-y-auto max-h-[75vh]">
+            <div class="overflow-y-auto max-h-[75vh] flex flex-col gap-5">
                 <FormField
                     name="Name"
                     placeholder="Dela Cruz, Juan"
-                    bind:value={schemaFormData.collectingOfficerName}
+                    bind:value={schemaFormData.processorName}
                 />
+                <FormField
+                    name="Position"
+                    placeholder="Examination Processor I"
+                    bind:value={schemaFormData.processorPosition}
+                />
+                <FormSignatureUpload
+                    name="Signature"
+                    title="Signature"
+                    bind:value={schemaFormData.processorSignature}
+                >
+                    {#snippet description()}
+                        - Black ink on white background.
+                    {/snippet}
+                </FormSignatureUpload>
             </div>
         {/snippet}
     </TableView>

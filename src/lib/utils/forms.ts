@@ -22,11 +22,14 @@ export function checkAllValidation(schema: Map<String, Item<any>>): boolean
 export function serialize(schema: Map<string, Item<any>>)
 {
     let data: Record<string, any | null> = {};
+    let files: Record<string, File | null> = {};
 
     schema.forEach((value, key) => {
-        // Ignore any file uploads, these are handled as part of the formData
         if(value.schemaItem instanceof SchemaItemImage)
+        {
+            files[key.toString()] = value.value;
             return;
+        }
         if(value.schemaItem instanceof SchemaItemArray)
         {
             if(!value.value)
@@ -40,8 +43,9 @@ export function serialize(schema: Map<string, Item<any>>)
             for(const entry of value.value as Array<Record<string, Item<any>>>)
             {
                 const mapped = new Map(Object.entries(entry));
-                const serialized = serialize(mapped);
-                allSerialized.push(serialized);
+                const { data: d, files: f } = serialize(mapped);
+                allSerialized.push(d);
+                files = { ...files, ...f };
             }
 
             data[key.toString()] = allSerialized;
@@ -54,7 +58,7 @@ export function serialize(schema: Map<string, Item<any>>)
             data[key.toString()] = value.value ?? null;
     });
 
-    return data;
+    return { data, files };
 }
 
 export function completionLabel(value: string)

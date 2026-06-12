@@ -13,10 +13,12 @@ export const enum ValidState
     Required,
 };
 
+type DefaultValueFn<T> = (() => T);
+
 export class SchemaItem<T>
 {
     isOptional: boolean = $state(false);
-    defaultValue: T | null = null;
+    defaultValue: T | DefaultValueFn<T> | null = null;
     pageNum: number = 0;
     #condition: { sourceKey: string, conditionFn: (value: any) => boolean } | null = null;
 
@@ -43,7 +45,7 @@ export class SchemaItem<T>
         return this;
     }
 
-    default(value: T | null)
+    default(value: T | DefaultValueFn<T> | null)
     {
         this.defaultValue = value;
         return this;
@@ -74,7 +76,10 @@ export class Item<T>
     constructor(schemaItem: SchemaItem<T>)
     {
         this.schemaItem = schemaItem;
-        this.value = schemaItem.defaultValue;
+        if(typeof schemaItem.defaultValue === "function")
+            this.value = (schemaItem.defaultValue as DefaultValueFn<T>)();
+        else
+            this.value = schemaItem.defaultValue;
     }
 
     isOptional()
