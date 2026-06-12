@@ -24,8 +24,44 @@
             name: "Reports",
             contents: [
                 {
-                    name: "SQL 1",
-                    href: "/cms/reports",
+                    name: "Report 1",
+                    href: "/cms/reports/report1",
+                },
+                {
+                    name: "Report 2",
+                    href: "/cms/reports/report2",
+                },
+                {
+                    name: "Report 3",
+                    href: "/cms/reports/report3",
+                },
+                {
+                    name: "Report 4",
+                    href: "/cms/reports/report4",
+                },
+                {
+                    name: "Report 5",
+                    href: "/cms/reports/report5",
+                },
+                {
+                    name: "Report 6",
+                    href: "/cms/reports/report6",
+                },
+                {
+                    name: "Report 7",
+                    href: "/cms/reports/report7",
+                },
+                {
+                    name: "Report 8",
+                    href: "/cms/reports/report8",
+                },
+                {
+                    name: "Report 9",
+                    href: "/cms/reports/report9",
+                },
+                {
+                    name: "Report 10",
+                    href: "/cms/reports/report10",
                 },
             ],
         }

@@ -1,25 +1,23 @@
 <script lang="ts">
-    import * as Table from "$lib/components/ui/table/index.js"
+    import * as Table from "$lib/components/ui/table/index"
     import { type PageProps } from "./$types"
     import { formatDate } from "$lib/utils/date"
+    import FlatTableView from "$lib/components/flat-table-view.svelte"
 
     let { data }: PageProps = $props();
 </script>
 
-<div class="p-8 w-full overflow-x-auto">
-    <div class="text-xl font-medium">
-        Reports
-    </div>
-
-    <Table.Root>
-        <Table.Header>
-            <Table.Row>
-                {#each data.fields as field}
-                    <Table.Head class="max-w-[25em]">{field}</Table.Head>
-                {/each}
-            </Table.Row>
-        </Table.Header>
-        <Table.Body>
+<div class="p-2 w-full overflow-x-auto">
+    <FlatTableView
+        name="Report 3"
+        desc="Show all fields for applicants who were born in 'Pasig City' and have a Civil Status of Single ('S')."
+    >
+        {#snippet headerRows()}
+            {#each data.fields as field}
+                <Table.Head class="max-w-[30em] w-[30em]">{field}</Table.Head>
+            {/each}
+        {/snippet}
+        {#snippet bodyRows()}
             {#each data.applicants as applicant}
                 <Table.Row>
                     {#each data.fields as field}
@@ -33,6 +31,6 @@
                     {/each}
                 </Table.Row>
             {/each}
-        </Table.Body>
-    </Table.Root>
+        {/snippet}
+    </FlatTableView>
 </div>

@@ -1,4 +1,4 @@
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad } from "../$types";
 import type { RowDataPacket } from "mysql2/promise"
 
 export const load: PageServerLoad = async ({ locals, request }) => {

@@ -3,9 +3,9 @@ import type { RowDataPacket } from "mysql2/promise"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
     const [applicants, fields] = await locals.db.execute<RowDataPacket[]>(`
-        SELECT ApplicantName, Age
+        SELECT ApplicantName, Birthdate, CivilStatus
         FROM Applicant
-        WHERE IsFirstTime = '1' AND Age <= 25;
+        WHERE Sex = 'F' AND CivilStatus = 'M';
     `);
 
     return { applicants: applicants, fields: fields.map(f => f.name) };

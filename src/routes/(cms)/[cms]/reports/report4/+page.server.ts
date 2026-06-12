@@ -3,9 +3,10 @@ import type { RowDataPacket } from "mysql2/promise"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
     const [applicants, fields] = await locals.db.execute<RowDataPacket[]>(`
-        SELECT ApplicantName, Age
+        SELECT EmploymentType, COUNT(*) as No_of_Applicants
         FROM Applicant
-        WHERE IsFirstTime = '1' AND Age <= 25;
+        GROUP BY EmploymentType
+        HAVING No_of_Applicants > 2;
     `);
 
     return { applicants: applicants, fields: fields.map(f => f.name) };
