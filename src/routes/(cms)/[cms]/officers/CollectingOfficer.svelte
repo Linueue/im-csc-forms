@@ -93,9 +93,7 @@
             >
                 +
             </Dialog.Trigger>
-            {#each coFields as field}
-                <Table.Head class="max-w-[3em]">{field}</Table.Head>
-            {/each}
+            <Table.Head class="max-w-[3em]">Collecting Officer Name</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
             {#each collectingOfficers as collectingOfficer}
@@ -111,16 +109,14 @@
                             }}
                         />
                     </Table.Cell>
-                    {#each coFields as field}
-                        <Table.Cell class="font-normal text-muted-foreground">
-                            {collectingOfficer[field]}
-                        </Table.Cell>
-                    {/each}
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {collectingOfficer.CollectingOfficerName}
+                    </Table.Cell>
                 </Table.Row>
             {/each}
         {/snippet}
         {#snippet children()}
-            <div class="overflow-y-auto max-h-[75vh]">
+            <div>
                 <FormField
                     name="Name"
                     placeholder="Dela Cruz, Juan"

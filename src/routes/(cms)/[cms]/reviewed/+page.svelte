@@ -17,9 +17,9 @@
             <Table.Head class="max-w-[10em]">Applicant Name</Table.Head>
             <Table.Head class="max-w-[5em] text-center">Age</Table.Head>
             <Table.Head class="max-w-[5em] text-center">Sex</Table.Head>
-            <Table.Head class="max-w-[5em] text-center">Examination Place</Table.Head>
-            <Table.Head class="max-w-[5em] text-center">Examination Date</Table.Head>
-            <Table.Head class="max-w-[5em] text-center">Verified Against</Table.Head>
+            <Table.Head class="max-w-[10em] text-center">Examination Place</Table.Head>
+            <Table.Head class="max-w-[10em] text-center">Examination Date</Table.Head>
+            <Table.Head class="max-w-[10em] text-center">Verified Against</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
             {#each data.applicants as applicant}

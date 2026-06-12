@@ -98,9 +98,8 @@
             >
                 +
             </Dialog.Trigger>
-            {#each pFields as field}
-                <Table.Head class="max-w-[3em]">{field}</Table.Head>
-            {/each}
+            <Table.Head class="max-w-[10em] w-[10em]">Processor Name</Table.Head>
+            <Table.Head class="max-w-[10em]">Processor Position</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
             {#each processors as processor}
@@ -116,16 +115,17 @@
                             }}
                         />
                     </Table.Cell>
-                    {#each pFields as field}
-                        <Table.Cell class="font-normal text-muted-foreground">
-                            {processor[field]}
-                        </Table.Cell>
-                    {/each}
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {processor.ProcessorName}
+                    </Table.Cell>
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {processor.ProcessorPosition}
+                    </Table.Cell>
                 </Table.Row>
             {/each}
         {/snippet}
         {#snippet children()}
-            <div class="overflow-y-auto max-h-[75vh] flex flex-col gap-5">
+            <div class="flex flex-col gap-5">
                 <FormField
                     name="Name"
                     placeholder="Dela Cruz, Juan"

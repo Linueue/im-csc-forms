@@ -26,7 +26,6 @@ export const actions: Actions = {
     submit: async ({ locals, request }) => {
         const data = await request.formData();
         const payload = JSON.parse(data.get("payload") as string);
-        console.log(payload);
         const details = await addPostDetails(locals.db, payload)
             .catch((e) => { console.error(e); return null });
 

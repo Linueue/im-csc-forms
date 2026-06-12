@@ -140,7 +140,7 @@
             {/each}
         {/snippet}
         {#snippet children()}
-            <div class="overflow-y-auto max-h-[75vh]">
+            <div>
                 {#if isLoading && !selectedApplicant}
                     <div class="flex flex-col items-center py-[15em] gap-3">
                         <LoadingIcon class="animate-spin" />

@@ -30,7 +30,7 @@
                             <Dialog.Description>{dialogHeaderDesc}</Dialog.Description>
                         {/if}
                     </Dialog.Header>
-                    <div class="overflow-y-auto max-h-[75vh]">
+                    <div class="overflow-y-auto max-h-[65vh] sm:max-h-[75vh]">
                         {@render children()}
                     </div>
                     <Dialog.Footer>
