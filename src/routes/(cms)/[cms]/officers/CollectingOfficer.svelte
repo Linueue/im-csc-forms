@@ -32,6 +32,7 @@
             body: JSON.stringify({
                 ids: [...selected],
             }),
+            cache: "no-store",
         });
 
         if(!response.ok)

@@ -31,6 +31,7 @@ export async function getConnection(connectionString: ConnectionString): Promise
         user: url.username,
         password: url.password,
         database: url.pathname.trim().replace("/", ""),
+        disableEval: true,
     });
 }
 

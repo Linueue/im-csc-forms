@@ -13,7 +13,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
     if(filters === null)
     {
-        [applicants] = await locals.db.execute<RowDataPacket[]>(`
+        [applicants] = await locals.db.query<RowDataPacket[]>(`
             SELECT A.ApplicantNo, P.ProcessingActionTaken AS 'Action', P.ProcessingDate, ApplicantName, Age, Sex, CSCRegionalOffice, Examinationplace, ExaminationDate, VerifiedAgainst
             FROM Applicant A
             JOIN Payment P ON A.ApplicantNo = P.ApplicantNo;
@@ -35,7 +35,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         params.push(filters.sex);
     }
 
-    [applicants] = await locals.db.execute<RowDataPacket[]>(`
+    [applicants] = await locals.db.query<RowDataPacket[]>(`
         SELECT A.ApplicantNo, P.ProcessingActionTaken AS 'Action', P.ProcessingDate, ApplicantName, Age, Sex, CSCRegionalOffice, Examinationplace, ExaminationDate, VerifiedAgainst
         FROM Applicant A
         JOIN Payment P ON A.ApplicantNo = P.ApplicantNo

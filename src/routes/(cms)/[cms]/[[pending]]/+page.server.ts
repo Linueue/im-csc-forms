@@ -4,7 +4,7 @@ import { type Actions, fail } from "@sveltejs/kit";
 import { addPostDetails } from "$lib/server/db"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
-    const [applicants, fields] = await locals.db.execute<RowDataPacket[]>(`
+    const [applicants, fields] = await locals.db.query<RowDataPacket[]>(`
         SELECT A.ApplicantNo, ApplicantName, Age, Sex
         FROM Applicant A
         LEFT JOIN Payment P ON A.ApplicantNo = P.ApplicantNo

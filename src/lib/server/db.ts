@@ -7,7 +7,7 @@ async function addSchool(connection: DBClient, forms: Record<string, string>): P
     if(!forms.schoolName)
         return null;
 
-    const [schools] = await connection.execute<RowDataPacket[]>(
+    const [schools] = await connection.query<RowDataPacket[]>(
         `
         SELECT SchoolID
         FROM School
@@ -22,7 +22,7 @@ async function addSchool(connection: DBClient, forms: Record<string, string>): P
     if(schools.length > 0)
         return schools[0].SchoolID;
 
-    const [result] = await connection.execute<ResultSetHeader>(
+    const [result] = await connection.query<ResultSetHeader>(
         `INSERT INTO School(
             SchoolName,
             SchoolAddress
@@ -45,7 +45,7 @@ async function addExistingExaminations(connection: DBClient, applicant: number, 
 
     for(const [seq, existingExamination] of forms.existingExaminations.entries())
     {
-        const promise = connection.execute(`
+        const promise = connection.query(`
             INSERT INTO ExistingExamination (
                 ApplicantNo,
                 ExistingExaminationSeq,
@@ -74,7 +74,7 @@ async function addExistingExaminations(connection: DBClient, applicant: number, 
 
 async function addAgency(connection: DBClient, forms: Record<string, any>): Promise<number>
 {
-    const [agency] = await connection.execute<ResultSetHeader>(`
+    const [agency] = await connection.query<ResultSetHeader>(`
         INSERT INTO Agency (
             AgencyName,
             AgencyAddress
@@ -98,7 +98,7 @@ async function addEmployment(connection: DBClient, applicant: number, forms: Rec
 
     const agency = await addAgency(connection, forms);
 
-    await connection.execute(`
+    await connection.query(`
         INSERT INTO Employment (
             ApplicantNo,
             AgencyID,
@@ -124,7 +124,7 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
     const name = `${forms.applicantLastName}, ${forms.applicantFirstName} ${forms.applicantMiddleName}`;
     const schoolID = await addSchool(connection, forms);
 
-    const [applicant] = await connection.execute<ResultSetHeader>(`
+    const [applicant] = await connection.query<ResultSetHeader>(`
         INSERT INTO Applicant (
             IsFirstTime,
             LastExaminationTaken,
@@ -211,7 +211,7 @@ export async function addApplicant(connection: DBClient, forms: Record<string, a
 
 export async function addPostDetails(connection: DBClient, forms: Record<string, any>)
 {
-    const applicantPromise = connection.execute(`
+    const applicantPromise = connection.query(`
         UPDATE Applicant
         SET VerifiedAgainst = ?,
             ExaminationDate = ?,
@@ -226,7 +226,7 @@ export async function addPostDetails(connection: DBClient, forms: Record<string,
         forms.applicantNo
     ]);
 
-    const paymentPromise = connection.execute(`
+    const paymentPromise = connection.query(`
         INSERT INTO Payment(
             ApplicantNo,
             ProcessingORNumber,
@@ -258,7 +258,7 @@ export async function addPostDetails(connection: DBClient, forms: Record<string,
 
 export async function addCollectingOfficer(connection: DBClient, forms: Record<string, any>)
 {
-    await connection.execute(`
+    await connection.query(`
         INSERT INTO CollectingOfficer(
             CollectingOfficerName
         )
@@ -270,7 +270,7 @@ export async function addCollectingOfficer(connection: DBClient, forms: Record<s
 
 export async function addProcessor(connection: DBClient, forms: Record<string, any>)
 {
-    await connection.execute(`
+    await connection.query(`
         INSERT INTO Processor(
             ProcessorName, ProcessorPosition, ProcessorSignatureURL
         )

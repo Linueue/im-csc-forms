@@ -19,7 +19,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         params.push(filters.collectingOfficer);
     }
 
-    [applicants] = await locals.db.execute<RowDataPacket[]>(`
+    [applicants] = await locals.db.query<RowDataPacket[]>(`
         SELECT a.ApplicantNo, ApplicantName, ProcessingORNumber, ProcessingAmount
         FROM Applicant a
         JOIN Payment p

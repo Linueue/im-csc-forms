@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
     if(applicantNo === null || applicantNo === undefined)
         return new Response("Missing params.", { status: 400 });
 
-    const [applicant] = await locals.db.execute<RowDataPacket[]>(`
+    const [applicant] = await locals.db.query<RowDataPacket[]>(`
         SELECT A.*, S.*, E.EmploymentPosition, E.EmploymentYears, E.EmploymentStatus, AG.AgencyName, AG.AgencyAddress
         FROM Applicant A
         LEFT JOIN School S ON A.SchoolID = S.SchoolID
@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
         applicantNo,
     ]);
 
-    const [existingExaminations] = await locals.db.execute<RowDataPacket[]>(`
+    const [existingExaminations] = await locals.db.query<RowDataPacket[]>(`
         SELECT EE.*
         FROM Applicant A
         JOIN ExistingExamination EE ON A.ApplicantNo = EE.ApplicantNo
