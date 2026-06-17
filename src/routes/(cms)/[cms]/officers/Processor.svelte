@@ -40,7 +40,8 @@
 
         if(!response.ok)
         {
-            toast.error("Could not be removed.");
+            const reason = await response.text();
+            toast.error(reason);
             return;
         }
         toast.info("Removed.");

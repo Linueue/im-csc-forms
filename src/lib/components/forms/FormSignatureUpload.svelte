@@ -137,7 +137,7 @@
             {:else}
                 <div class="w-full flex flex-col gap-1">
                     <Signature bind:signatureData />
-                    <p class="text-center text-muted-foreground">Boat goes binted</p>
+                    <p class="text-center text-muted-foreground">Draw</p>
                     <p class="text-center text-muted-foreground">or</p>
                     <Button onclick={() => { draw = false; }}>
                         Upload

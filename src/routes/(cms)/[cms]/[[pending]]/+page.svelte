@@ -124,7 +124,6 @@
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[5em] w-[5em] text-center">Action</Table.Head>
-            <Table.Head class="max-w-[8em] w-[8em]">Applicant No</Table.Head>
             <Table.Head class="max-w-[25em]">Applicant Name</Table.Head>
             <Table.Head class="max-w-[25em]">Age</Table.Head>
             <Table.Head class="max-w-[25em]">Sex</Table.Head>
@@ -145,15 +144,15 @@
                             Review
                         </Dialog.Trigger>
                     </Table.Cell>
-                    {#each data.fields as field}
-                        <Table.Cell class="font-normal text-muted-foreground">
-                            {#if ["Birthdate", "LastExaminationTaken", "ExaminationDate"].includes(field)}
-                                {formatDate(applicant[field])}
-                            {:else}
-                                {applicant[field]}
-                            {/if}
-                        </Table.Cell>
-                    {/each}
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {applicant.ApplicantName}
+                    </Table.Cell>
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {applicant.Age}
+                    </Table.Cell>
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {applicant.Sex}
+                    </Table.Cell>
                 </Table.Row>
             {/each}
         {/snippet}

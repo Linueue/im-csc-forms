@@ -3,4 +3,4 @@
 </script>
 
 <p class="font-medium min-w-[10em]">{name}</p>
-<p class="font-light">{value ? value : "-"}</p>
+<p class="font-light wrap-anywhere">{value ? value : "-"}</p>

@@ -46,7 +46,7 @@
 </script>
 
 <div class="px-2 my-3 w-full overflow-x-auto">
-    <div class="text-xl flex flex-row">
+    <div class="text-xl flex flex-row items-center">
         <div class="mr-auto font-medium font-serif">
             Reviewed Applications
         </div>

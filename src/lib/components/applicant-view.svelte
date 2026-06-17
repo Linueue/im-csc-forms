@@ -7,10 +7,10 @@
     let { applicant, children = null } = $props();
 </script>
 
-<div class="flex flex-row w-full flex-wrap justify-center">
+<div class="flex flex-row w-full flex-wrap justify-center gap-y-3">
     <div class="flex flex-col mr-auto max-w-[25em]">
         <h1 class="font-medium font-serif text-3xl">{applicant?.ApplicantName}</h1>
-        <h2 class="font-medium text-xl text-muted-foreground">{applicant?.Sex == "M" ? "Male" : "Female"}</h2>
+        <h2 class="font-medium text-[1.15em] text-muted-foreground">{applicant?.Sex == "M" ? "Male" : "Female"}</h2>
         <h2 class="font-medium text-[1.15em] text-muted-foreground">{applicant?.Age} years old</h2>
         {#if children}
             {@render children()}

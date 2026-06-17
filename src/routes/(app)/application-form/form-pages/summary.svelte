@@ -20,7 +20,7 @@
 <div class="divider">
     <h2 class="font-medium text-lg">Make sure the details are correct</h2>
 
-    <div class="text-sm mx-auto px-3 py-2 bg-muted rounded-md border-2 grid grid-cols-[8.5em_1fr] sm:grid-cols-[13em_1fr] gap-x-5 space-y-2">
+    <div class="text-sm mx-auto px-3 py-2 bg-muted rounded-md border-2 grid grid-cols-[1fr_1fr] sm:grid-cols-[18em_1fr] gap-x-5 space-y-2 w-full sm:w-[80%]">
         <SeparatorLabel name="Personal Details" grid_full={true} />
         <SummaryField
             name={"Name"}

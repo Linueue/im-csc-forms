@@ -2,7 +2,7 @@ import type { PageServerLoad } from "./$types";
 import type { RowDataPacket } from "mysql2/promise"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
-    const [applicants, fields] = await locals.db.execute<RowDataPacket[]>(`
+    const [applicants, fields] = await locals.db.query<RowDataPacket[]>(`
         SELECT CSCRegionalOffice, COUNT(*) AS Total_Applicants
         FROM Applicant
         GROUP BY CSCRegionalOffice

@@ -1,5 +1,4 @@
 import { type RequestHandler, json } from "@sveltejs/kit";
-import { type RowDataPacket } from "mysql2/promise"
 
 type DeleteRequest = {
     ids: number[];
@@ -11,12 +10,18 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
     if(!Array.isArray(ids) || ids.length === 0)
         return new Response("Missing params.", { status: 400 });
 
-    await locals.db.query(`
-        DELETE FROM CollectingOfficer
-        WHERE CollectingOfficerID IN (?);
-    `, [
-        ids.map(Number),
-    ]);
+    try
+    {
+        await locals.db.query(`
+            DELETE FROM CollectingOfficer
+            WHERE CollectingOfficerID IN (?);
+        `, [
+            ids.map(Number),
+        ]);
+    } catch(err)
+    {
+        return new Response("Cannot remove a collecting officer used by some Applicants.", { status: 409 });
+    }
 
     return json({ ok: true});
 }

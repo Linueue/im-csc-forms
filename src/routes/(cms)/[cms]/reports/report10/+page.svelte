@@ -1,6 +1,5 @@
 <script lang="ts">
     import * as Table from "$lib/components/ui/table/index"
-    import { formatDate } from "$lib/utils/date"
     import FlatTableView from "$lib/components/flat-table-view.svelte"
     import Filter from "$lib/components/filter/filter-collecting-officers.svelte"
     import { onMount } from "svelte"
@@ -27,7 +26,7 @@
 </script>
 
 <div class="p-2 w-full overflow-x-auto">
-    <div class="text-xl flex flex-row">
+    <div class="text-xl flex flex-row items-center">
         <div class="mr-auto font-medium font-serif">
             Report 10
         </div>
