@@ -7,6 +7,17 @@ The tech stack used are the following:
 2. [MySQL](https://www.mysql.com) - database
 3. [shadcn-svelte](https://www.shadcn-svelte.com) - UI components
 
+## Routes
+The project uses two primary routes, that is,
+1. `application` - contains the actual application form code, including the landing page
+2. `cms` - the Content Management System (CMS), or admin access
+
+Routes in SvelteKit are through folders/directories itself, for example, `routes/dashboard` is `something.com/dashboard`. The `+layout` file is the UI that is shared across children. Thus, if `routes/dashboard/+layout.svelte` exists, then all of its subroutes share the same UI. This is the case for our UI since the top bar are shared across routes.
+
+However, as you may see that the folder/directory name for our routes starts with `routes/(app)/`, and `routes/(cms)/`. The parenthesis simply means that you won't need to do `something.com/app/` to access our site, that is, it does not appear in our URL. This is useful, because `(app)` contains our landing page, and `(cms)` does not.
+
+Why bother? Because I want to share the dark mode watcher, and the toast across all routes. If we don't have this separation, that is, there is no parenthesis routes, then the `+layout` of the landing page will be shared to `cms` route too, which is not what we want.
+
 ## Build Instructions
 ### Dev
 
@@ -22,7 +33,7 @@ Open up the cloned repo to any of your favorite IDEs/code editors,
 npm install
 ```
 
-Copy the `.env.example` to `.env`, and modify the fields, `DB_USER`, and `DB_PASSWORD`.
+Copy the `.env.example` to `.env`, and modify all of the fields. I recommend going to our document IMG5_SQLproblems, and copy the .env there.
 
 If you have yet to create a database locally through Workbench, or other DBMS GUI, run,
 
@@ -52,6 +63,13 @@ Host it locally,
 npm run dev
 ```
 
-### Production
+### Presentation
 
-TODO
+For presentation, I recommend doing the following,
+
+```
+npm run build
+npm run preview
+```
+
+This will give an optimized, and faster execution of the website. Think of it as the lcoal production deployment.
