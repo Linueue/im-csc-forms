@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 9"
-        desc="Show the applicant’s name, and their average rating from their previous examinations."
+        name="Examination Reports"
+        desc="Previous Examination Ratings"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Applicant Name</Table.Head>

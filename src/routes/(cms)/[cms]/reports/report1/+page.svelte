@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 1"
-        desc="Display all applicants who are first time takers, and are 25 years old, or younger."
+        name="Applicant Demographics"
+        desc="First Time Applicants"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Applicant Name</Table.Head>

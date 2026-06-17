@@ -4,6 +4,7 @@
     import Row from "$lib/components/row.svelte"
     import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
+    import FormPicker from "$lib/components/forms/FormPicker.svelte"
     import FormUnlabeledField from "$lib/components/forms/FormUnlabeledField.svelte"
     import FormMultiField from "$lib/components/forms/FormMultiField.svelte"
     import FormDate from "$lib/components/forms/FormDate.svelte"
@@ -41,8 +42,9 @@
 </Row>
 
 <div class="divider">
-    <FormToggleGroup
+    <FormPicker
         name={"Highest Education Level"}
+        allowDeselect={true}
         options={[
             {value: "High School", label: "High School"},
             {value: "Vocational", label: "Vocational"},

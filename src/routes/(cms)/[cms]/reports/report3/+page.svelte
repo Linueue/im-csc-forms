@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 3"
-        desc="Show all fields for applicants who were born in 'Pasig City' and have a Civil Status of Single ('S')."
+        name="Applicant Demographics"
+        desc="Pasig Single Applicants"
     >
         {#snippet headerRows()}
             {#each data.fields as field}

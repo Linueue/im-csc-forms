@@ -54,7 +54,7 @@
     <FormField
         bind:value={formSchemaData.PWD}
         name={"PWD"}
-        placeholder={"Left handed"}
+        placeholder={"Orthopedic"}
     />
     <FormToggleGroup
         name={"Are you pregnant?"}

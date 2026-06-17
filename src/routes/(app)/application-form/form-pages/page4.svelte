@@ -3,7 +3,6 @@
     import { Separator } from "$lib/components/ui/separator/index.js"
     import Row from "$lib/components/row.svelte"
     import FormPicker from "$lib/components/forms/FormPicker.svelte"
-    import FormToggleGroup from "$lib/components/forms/FormToggleGroup.svelte"
     import FormField from "$lib/components/forms/FormField.svelte"
     import BriefcaseIcon from "@lucide/svelte/icons/briefcase"
     import { EMPLOYMENT_STATUS, EMPLOYMENT_TYPE } from "$lib/selection-constants"

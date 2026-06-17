@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 6"
-        desc="For each CSCRegionalOffice, count the total number of applicants. Only display the regions that have more than 2 applicants."
+        name="Applicant Statistics"
+        desc="CSC Regional Office Applicants"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">CSC Regional Office</Table.Head>

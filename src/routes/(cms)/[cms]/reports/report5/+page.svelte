@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 5"
-        desc="Calculate the average age of applicants per CivilStatus. Display only the statuses where the average age is exactly 25 or higher."
+        name="Applicant Statistics"
+        desc="Average Age by Civil Status"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Civil Status</Table.Head>

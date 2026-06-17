@@ -5,7 +5,7 @@ import { addPostDetails } from "$lib/server/db"
 
 export const load: PageServerLoad = async ({ locals, request }) => {
     const [applicants, fields] = await locals.db.query<RowDataPacket[]>(`
-        SELECT A.ApplicantNo, ApplicantName, Age, Sex
+        SELECT A.ApplicantNo, ApplicantName, Age, Sex, Citizenship
         FROM Applicant A
         LEFT JOIN Payment P ON A.ApplicantNo = P.ApplicantNo
         WHERE P.ApplicantNo IS NULL;

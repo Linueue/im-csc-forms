@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 7"
-        desc="Display the applicant’s full name, highest educational attainment, degree title, and their employment position for those who are Postgraduates."
+        name="Education Reports"
+        desc="Postgraduate Applicants"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Applicant Name</Table.Head>

@@ -41,8 +41,8 @@
 
     let selectedApplicant: Record<string, any> | null = $state(null);
     let isLoading = $state(false);
-    let collectingOfficers = $state([]);
-    let processors = $state([]);
+    let collectingOfficers = $state<Record<string, any>[]>([]);
+    let processors = $state<Record<string, any>[]>([]);
 
     let schemaFormData = $state(mapForm(detailsSchema));
 
@@ -103,7 +103,6 @@
 
         if(!r1.ok || !r2.ok)
         {
-            console.log(r1, r2);
             toast.error("Could not fetch the database.");
             return;
         }
@@ -111,6 +110,10 @@
         const [result1, result2] = await Promise.all([r1.json(), r2.json()]) as Record<string, any>[];
         collectingOfficers = result1.collectingOfficers;
         processors = result2.processors;
+        if(collectingOfficers)
+            schemaFormData.collectingOfficerID.value = collectingOfficers[0].CollectingOfficerID;
+        if(processors)
+            schemaFormData.processorID.value = processors[0].ProcessorID;
     })
 </script>
 
@@ -125,8 +128,9 @@
         {#snippet headerRows()}
             <Table.Head class="max-w-[5em] w-[5em] text-center">Action</Table.Head>
             <Table.Head class="max-w-[25em]">Applicant Name</Table.Head>
-            <Table.Head class="max-w-[25em]">Age</Table.Head>
-            <Table.Head class="max-w-[25em]">Sex</Table.Head>
+            <Table.Head class="max-w-[25em] w-[5em] text-center">Age</Table.Head>
+            <Table.Head class="max-w-[25em] w-[5em] text-center">Sex</Table.Head>
+            <Table.Head class="max-w-[25em] w-[8em] text-center">Citizenship</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
             {#each data.applicants as applicant}
@@ -147,11 +151,14 @@
                     <Table.Cell class="font-normal text-muted-foreground">
                         {applicant.ApplicantName}
                     </Table.Cell>
-                    <Table.Cell class="font-normal text-muted-foreground">
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
                         {applicant.Age}
                     </Table.Cell>
-                    <Table.Cell class="font-normal text-muted-foreground">
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
                         {applicant.Sex}
+                    </Table.Cell>
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
+                        {applicant.Citizenship}
                     </Table.Cell>
                 </Table.Row>
             {/each}

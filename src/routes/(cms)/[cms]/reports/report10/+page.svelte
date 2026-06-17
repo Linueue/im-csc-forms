@@ -28,33 +28,33 @@
 <div class="p-2 w-full overflow-x-auto">
     <div class="text-xl flex flex-row items-center">
         <div class="mr-auto font-medium font-serif">
-            Report 10
+            Payment Reports
         </div>
         <Filter bind:applicants bind:collectingOfficers />
     </div>
     <FlatTableView
         name={null}
-        desc="Display the ApplicantNo, ApplicantName, ProcessingORNumber, and ProcessingAmount for applicants whose payment was handled by the Collecting Officer named %name%."
+        desc="Collcting Officer Transactions"
     >
         {#snippet headerRows()}
-            <Table.Head class="max-w-[30em] w-[5em]">Applicant No</Table.Head>
+            <Table.Head class="max-w-[30em] w-[5em] text-center">Applicant No</Table.Head>
             <Table.Head class="max-w-[25em]">Applicant Name</Table.Head>
-            <Table.Head class="max-w-[25em]">Processing OR Number</Table.Head>
-            <Table.Head class="max-w-[25em]">Processing Amount</Table.Head>
+            <Table.Head class="max-w-[25em] w-[5em] text-center">Processing OR Number</Table.Head>
+            <Table.Head class="max-w-[10em] w-[5em] text-center">Processing Amount</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
             {#each applicants as applicant}
                 <Table.Row>
-                    <Table.Cell class="font-normal text-muted-foreground">
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
                         {applicant.ApplicantNo}
                     </Table.Cell>
                     <Table.Cell class="font-normal text-muted-foreground">
                         {applicant.ApplicantName}
                     </Table.Cell>
-                    <Table.Cell class="font-normal text-muted-foreground">
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
                         {applicant.ProcessingORNumber}
                     </Table.Cell>
-                    <Table.Cell class="font-normal text-muted-foreground">
+                    <Table.Cell class="font-normal text-muted-foreground text-center">
                         {applicant.ProcessingAmount}
                     </Table.Cell>
                 </Table.Row>

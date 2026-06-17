@@ -10,9 +10,34 @@
     {
         goto("/application-form");
     }
+
+    /*
+    let app: HTMLDivElement | null = $state(null);
+    function handleMM(event: MouseEvent)
+    {
+        const coords = { x: event.clientX, y: event.clientY };
+        const size = { x: window.innerWidth, y: window.innerHeight };
+        const half = { x: size.x / 2, y: size.y / 2 };
+        const dir = { x: coords.x - half.x, y: coords.y - half.y };
+        const normalized = { x: dir.x / size.x, y: dir.y / size.y };
+        if(app === null)
+            return;
+        const factor = 0.3;
+        let dirx = normalized.x * 2;
+        let diry = normalized.y * 2;
+        let x = -normalized.x * 100 * factor;
+        let y = -normalized.y * 100 * factor;
+        const rotFactor = 0.5;
+        const yaw = Math.atan2(diry, 1) * 25 * rotFactor;
+        const pitch = Math.atan2(-dirx, 1) * 25 * rotFactor;
+        app.style = `transform: translate(${x}px, ${y}px) rotateX(${yaw}deg) rotateY(${pitch}deg)`;
+    }
+    */
 </script>
 
-<div class="flex flex-row content-container">
+<!-- <svelte:window on:mousemove={handleMM} /> -->
+
+<div class="flex flex-row content-container perspsective-normal">
     <div class="background-static"></div>
 
     <Column>

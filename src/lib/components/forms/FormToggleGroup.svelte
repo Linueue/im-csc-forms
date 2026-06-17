@@ -27,25 +27,10 @@
                 value={option.value}
                 class={
                     `${option.value === value.value ? "text-primary" : ""}
-                    border-2 border-l-2 data-[state=on]:bg-primary/25 bg-input/30 hover:bg-muted flex-1 py-[2em]
+                    border-2 border-l-2 data-[state=on]:bg-primary/15 bg-input/30 hover:bg-muted flex-1 py-[1.5em]
                     hover:text-secondary data-[state=on]:hover:text-primary
                     min-w-[10em] sm:w-auto
                     ${(value.validState != ValidState.Valid) ? "pr-10 border-destructive" : ""}
-
-                    ${options.length == 4 ? `
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-tl-md
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-bl-none
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-2:rounded-tr-md
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-3:rounded-bl-md
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-4:rounded-tr-none
-                    group-data-horizontal/toggle-group:data-[spacing=0]:nth-4:rounded-br-md
-
-                    sm:group-data-horizontal/toggle-group:data-[spacing=0]:nth-1:rounded-l-md
-                    sm:group-data-horizontal/toggle-group:data-[spacing=0]:nth-2:rounded-none
-                    sm:group-data-horizontal/toggle-group:data-[spacing=0]:nth-3:rounded-none
-                    sm:group-data-horizontal/toggle-group:data-[spacing=0]:nth-4:rounded-r-md
-                    ` : ""}
-
                     group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-l-2
                     group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-l-2`
                 }>

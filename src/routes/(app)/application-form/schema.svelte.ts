@@ -48,7 +48,7 @@ export const formSchema = {
     graduationDate: item.date().conditionallyRequired("completion", (val) => val === "G").page(3),
     honorsReceived: item.string().optional(true).page(3),
     NGHighestAttain: item.string().conditionallyRequired("completion", (val) => val === "NO").page(3),
-    schoolStartYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
+    schoolStartYear: item.number().min(1000).max(9999).conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
     schoolEndYear: item.number().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
     schoolName: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),
     schoolAddress: item.string().conditionallyRequired("highestEducLevel", (val) => val !== null && val !== "").page(3),

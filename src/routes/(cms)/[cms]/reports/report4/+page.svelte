@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 4"
-        desc="For each type of employment, count the number of applicants. Only show when count is at least 2."
+        name="Applicant Statistics"
+        desc="Employment Type Distribution"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Employment Type</Table.Head>

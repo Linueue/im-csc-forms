@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 8"
-        desc="Display the applicants who took their examination before 2023, currently employed in the private sector, and graduated from a University."
+        name="Education Reports"
+        desc="Private Sector University Graduates"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Applicant Name</Table.Head>

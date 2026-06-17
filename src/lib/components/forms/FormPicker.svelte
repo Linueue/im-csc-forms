@@ -9,7 +9,8 @@
         errorMessage = "Invalid!",
         icon = null,
         options = [],
-        value = $bindable()
+        value = $bindable(),
+        allowDeselect = false,
     } = $props();
 
     // To use the labels, rather than the values for displaying the current selection
@@ -23,7 +24,7 @@
             <div class="text-muted-foreground">(Optional)</div>
         {/if}
     </Label>
-    <Select.Root type="single" name={name} bind:value={value.value}>
+    <Select.Root type="single" name={name} bind:value={value.value} allowDeselect={allowDeselect}>
         <Select.Trigger
             class={`w-full bg-muted border-2 ${(value.validState != ValidState.Valid) ? "border-destructive!" : ""}`}
         >
@@ -38,7 +39,6 @@
         </Select.Trigger>
         <Select.Content class="max-h-75">
             <Select.Group>
-            <Select.Item value={""} label={"<None Selected>"} disabled={true} />
                 {#each options as option}
                     <Select.Item
                         value={option.value}

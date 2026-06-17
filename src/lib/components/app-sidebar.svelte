@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+    import SidebarItem from "./sidebar-item.svelte";
     import Logo from "$lib/assets/logo.svelte"
     import PendingIcon from "@lucide/svelte/icons/clipboard-clock"
     import ReviewedIcon from "@lucide/svelte/icons/clipboard-check"
@@ -31,44 +32,74 @@
                     href: "/cms/reports",
                     subcontents: [
                         {
-                            name: "Report 1",
-                            href: "/cms/reports/report1",
+                            name: "Demographics",
+                            collapsible: true,
+                            subcontents: [
+                                {
+                                    name: "First Time",
+                                    href: "/cms/reports/report1",
+                                },
+                                {
+                                    name: "Married Female",
+                                    href: "/cms/reports/report2",
+                                },
+                                {
+                                    name: "Pasig Single",
+                                    href: "/cms/reports/report3",
+                                },
+                            ],
                         },
                         {
-                            name: "Report 2",
-                            href: "/cms/reports/report2",
+                            name: "Applicant Statistics",
+                            collapsible: true,
+                            subcontents: [
+                                {
+                                    name: "Distributions",
+                                    href: "/cms/reports/report4",
+                                },
+                                {
+                                    name: "Average Age",
+                                    href: "/cms/reports/report5",
+                                },
+                                {
+                                    name: "CSC Regional Office",
+                                    href: "/cms/reports/report6",
+                                },
+                            ],
                         },
                         {
-                            name: "Report 3",
-                            href: "/cms/reports/report3",
+                            name: "Education Reports",
+                            collapsible: true,
+                            subcontents: [
+                                {
+                                    name: "Postgraduate",
+                                    href: "/cms/reports/report7",
+                                },
+                                {
+                                    name: "Private Sector",
+                                    href: "/cms/reports/report8",
+                                },
+                            ],
                         },
                         {
-                            name: "Report 4",
-                            href: "/cms/reports/report4",
+                            name: "Examination Reports",
+                            collapsible: true,
+                            subcontents: [
+                                {
+                                    name: "Examination Ratings",
+                                    href: "/cms/reports/report9",
+                                },
+                            ],
                         },
                         {
-                            name: "Report 5",
-                            href: "/cms/reports/report5",
-                        },
-                        {
-                            name: "Report 6",
-                            href: "/cms/reports/report6",
-                        },
-                        {
-                            name: "Report 7",
-                            href: "/cms/reports/report7",
-                        },
-                        {
-                            name: "Report 8",
-                            href: "/cms/reports/report8",
-                        },
-                        {
-                            name: "Report 9",
-                            href: "/cms/reports/report9",
-                        },
-                        {
-                            name: "Report 10",
-                            href: "/cms/reports/report10",
+                            name: "Payment Records",
+                            collapsible: true,
+                            subcontents: [
+                                {
+                                    name: "Transactions",
+                                    href: "/cms/reports/report10",
+                                },
+                            ],
                         },
                     ],
                 },
@@ -94,31 +125,7 @@
                 <Sidebar.GroupContent>
                     <Sidebar.Menu>
                         {#each menu.contents as content}
-                            <Sidebar.MenuItem>
-                                <Sidebar.MenuButton>
-                                    {#snippet child({ props })}
-                                        <a href={content.href} {...props}>
-                                            <content.icon />
-                                            <span>{content.name}</span>
-                                        </a>
-                                    {/snippet}
-                                </Sidebar.MenuButton>
-                                {#if content.subcontents}
-                                    {#each content.subcontents as subcontent}
-                                        <Sidebar.MenuSub>
-                                            <Sidebar.MenuSubItem>
-                                                <Sidebar.MenuSubButton>
-                                                    {#snippet child({ props })}
-                                                        <a href={subcontent.href} {...props}>
-                                                            <span>{subcontent.name}</span>
-                                                        </a>
-                                                    {/snippet}
-                                                </Sidebar.MenuSubButton>
-                                            </Sidebar.MenuSubItem>
-                                        </Sidebar.MenuSub>
-                                    {/each}
-                                {/if}
-                            </Sidebar.MenuItem>
+                                <SidebarItem content={content} />
                         {/each}
                     </Sidebar.Menu>
                 </Sidebar.GroupContent>

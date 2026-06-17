@@ -9,8 +9,8 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Report 2"
-        desc="Show the applicant name, Birthdate, Civil Status of all female applicants, who are married."
+        name="Applicants Demographics"
+        desc="Married Female Applicants"
     >
         {#snippet headerRows()}
             <Table.Head class="max-w-[30em] w-[30em]">Applicant Name</Table.Head>
