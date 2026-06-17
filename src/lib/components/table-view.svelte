@@ -8,9 +8,11 @@
 </script>
 
 <div>
-    <div class="text-xl font-medium font-serif">
-        {name}
-    </div>
+    {#if name}
+        <div class="text-xl font-medium font-serif">
+            {name}
+        </div>
+    {/if}
 
     <Table.Root>
         <Dialog.Root>
@@ -40,12 +42,14 @@
                         >
                             Cancel
                         </Dialog.Close>
-                        <Dialog.Close
-                            type="submit"
-                            class={buttonVariants({ variant: "default" })}
-                        >
-                            {submitName}
-                        </Dialog.Close>
+                        {#if submitName}
+                            <Dialog.Close
+                                type="submit"
+                                class={buttonVariants({ variant: "default" })}
+                            >
+                                {submitName}
+                            </Dialog.Close>
+                        {/if}
                     </Dialog.Footer>
                 </form>
             </Dialog.Content>
