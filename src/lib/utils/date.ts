@@ -23,14 +23,19 @@ export function getAge(birthdate: CalendarDate): number
     return age;
 }
 
-export function formatDate(date: CalendarDate | Date | null)
+export function formatDate(date: CalendarDate | Date | string | null)
 {
     if(date === null || date === undefined)
         return "";
 
-    const dateConverted = date instanceof Date ?
-        date :
-        date.toDate(getLocalTimeZone());
+    let dateConverted: Date;
+
+    if(date instanceof Date)
+        dateConverted = date;
+    else if(typeof date === "string")
+        dateConverted = new Date(date);
+    else
+        dateConverted = date.toDate(getLocalTimeZone());
 
     const formatted = Intl.DateTimeFormat("en-US", {
         month: "short",

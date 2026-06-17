@@ -10,16 +10,8 @@ export const load: PageServerLoad = async ({ locals, request }) => {
         LEFT JOIN Payment P ON A.ApplicantNo = P.ApplicantNo
         WHERE P.ApplicantNo IS NULL;
     `);
-    const [collectingOfficers] = await locals.db.execute<RowDataPacket[]>(`
-        SELECT *
-        FROM CollectingOfficer;
-    `);
-    const [processors] = await locals.db.execute<RowDataPacket[]>(`
-        SELECT ProcessorID, ProcessorName
-        FROM Processor;
-    `);
 
-    return { applicants: applicants, fields: fields.map(f => f.name), collectingOfficers, processors };
+    return { applicants: applicants, fields: fields.map(f => f.name) };
 }
 
 export const actions: Actions = {

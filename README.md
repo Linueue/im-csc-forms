@@ -22,7 +22,7 @@ Open up the cloned repo to any of your favorite IDEs/code editors,
 npm install
 ```
 
-Copy the `.env.example` to `.env`, and modify all of the fields. I recommend going to our document IMG5_SQLproblems, and copy the .env there.
+Copy the `.env.example` to `.env`, and modify the fields, `DB_USER`, and `DB_PASSWORD`.
 
 If you have yet to create a database locally through Workbench, or other DBMS GUI, run,
 
@@ -52,13 +52,6 @@ Host it locally,
 npm run dev
 ```
 
-### Presentation
+### Production
 
-For presentation, I recommend doing the following,
-
-```
-npm run build
-npm run preview
-```
-
-This will give an optimized, and faster execution of the website. Think of it as the lcoal production deployment.
+TODO

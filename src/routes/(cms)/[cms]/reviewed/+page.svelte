@@ -1,16 +1,16 @@
 <script lang="ts">
     import * as Table from "$lib/components/ui/table/index.js"
-    import { type PageProps } from "./$types"
     import { formatDate } from "$lib/utils/date"
     import FlatTable from "$lib/components/table-view.svelte"
     import ApplicantView from "$lib/components/applicant-view.svelte";
     import LoadingIcon from "@lucide/svelte/icons/loader-circle"
     import { buttonVariants } from "$lib/components/ui/button/index.js"
     import * as Dialog from "$lib/components/ui/dialog/index.js";
-    import Filter from "$lib/components/filter/filter.svelte";
+    import Filter from "$lib/components/filter/filter-reviewed.svelte";
+    import { onMount } from "svelte";
+    import { toast } from "svelte-sonner";
 
-    let { data }: PageProps = $props();
-
+    let applicants = $state<Record<string, any>[]>([]);
     let selectedApplicant = $state<Record<string, any> | null>(null);
     let isLoading = $state(false);
     let selectedApplicantAction = $state("A");
@@ -31,6 +31,18 @@
         selectedApplicant!.existingExaminations = result.existingExaminations;
         isLoading = false;
     }
+
+    onMount(async () => {
+        const response = await fetch(`/api/filterReviewed`, {
+            method: "POST",
+        });
+
+        if(!response.ok)
+            toast.error("Error fetching the database.");
+
+        const result: Record<string, any> = await response.json();
+        applicants = result.applicants;
+    });
 </script>
 
 <div class="px-2 my-3 w-full overflow-x-auto">
@@ -38,7 +50,7 @@
         <div class="mr-auto font-medium font-serif">
             Reviewed Applications
         </div>
-        <Filter />
+        <Filter bind:applicants />
     </div>
     <FlatTable
         name={null}
@@ -59,7 +71,7 @@
             <Table.Head class="max-w-[10em] text-center">Date Processed</Table.Head>
         {/snippet}
         {#snippet bodyRows()}
-            {#each data.applicants as applicant}
+            {#each applicants as applicant}
                 <Table.Row>
                     <Table.Cell class="font-normal text-muted-foreground flex align-center justify-center">
                         <Dialog.Trigger

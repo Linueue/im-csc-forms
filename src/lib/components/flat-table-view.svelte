@@ -5,9 +5,11 @@
 </script>
 
 <div>
-    <div class="text-xl font-medium font-serif">
-        {name}
-    </div>
+    {#if name}
+        <div class="text-xl font-medium font-serif">
+            {name}
+        </div>
+    {/if}
 
     {#if desc}
         <div class="text-sm font-medium text-muted-foreground">

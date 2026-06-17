@@ -3,14 +3,15 @@
     import { buttonVariants } from "$lib/components/ui/button/index.js"
     import Picker from "./picker.svelte"
     import { toast } from "svelte-sonner"
-    import { invalidateAll } from "$app/navigation"
+
+    let { applicants = $bindable() } = $props();
 
     let values = $state({
         action: null,
         sex: null,
     });
 
-    async function get()
+    async function filter()
     {
         const response = await fetch("/api/filterReviewed", {
             method: "POST",
@@ -21,12 +22,18 @@
         });
 
         if(!response.ok)
+        {
+            toast.error("Could not fetch the databse.");
             return;
-        invalidateAll();
+        }
+
+        const result: Record<string, any> = await response.json();
+        applicants = result.applicants;
     }
 
     function onChange()
     {
+        filter();
     }
 </script>
 

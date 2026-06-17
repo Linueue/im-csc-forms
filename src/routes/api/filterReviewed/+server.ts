@@ -1,18 +1,46 @@
 import { type RequestHandler, json } from "@sveltejs/kit";
 import { type RowDataPacket } from "mysql2/promise"
 
-export const GET: RequestHandler = async ({ url, locals }) => {
-    const applicantNo = url.searchParams.get("filter");
+export const POST: RequestHandler = async ({ request, locals }) => {
+    const filters = await request.json()
+        .catch(() => null) as
+    {
+        action: string | null,
+        sex: string | null,
+    } | null;
 
-    if(!Array.isArray(ids) || ids.length === 0)
-        return new Response("Missing params.", { status: 400 });
+    let applicants: Record<string, any>[] = [];
 
-    await locals.db.query(`
-        DELETE FROM Processor
-        WHERE ProcessorID IN (?);
-    `, [
-        ids.map(Number),
-    ]);
+    if(filters === null)
+    {
+        [applicants] = await locals.db.execute<RowDataPacket[]>(`
+            SELECT A.ApplicantNo, P.ProcessingActionTaken AS 'Action', P.ProcessingDate, ApplicantName, Age, Sex, CSCRegionalOffice, Examinationplace, ExaminationDate, VerifiedAgainst
+            FROM Applicant A
+            JOIN Payment P ON A.ApplicantNo = P.ApplicantNo;
+        `);
+        return json({ applicants: applicants });
+    }
 
-    return json({ ok: true});
+    let where = [];
+    let params = []
+
+    if(filters.action != null)
+    {
+        where.push("P.ProcessingActionTaken = ?");
+        params.push(filters.action);
+    }
+    if(filters.sex != null)
+    {
+        where.push("A.Sex = ?");
+        params.push(filters.sex);
+    }
+
+    [applicants] = await locals.db.execute<RowDataPacket[]>(`
+        SELECT A.ApplicantNo, P.ProcessingActionTaken AS 'Action', P.ProcessingDate, ApplicantName, Age, Sex, CSCRegionalOffice, Examinationplace, ExaminationDate, VerifiedAgainst
+        FROM Applicant A
+        JOIN Payment P ON A.ApplicantNo = P.ApplicantNo
+        ${where.length ? `WHERE ${where.join(" AND ")};` : ";"}
+    `, params);
+
+    return json({ applicants: applicants });
 }

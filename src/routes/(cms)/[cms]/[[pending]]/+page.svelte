@@ -11,6 +11,7 @@
     import { CalendarDate } from "@internationalized/date";
     import ApplicantView from "$lib/components/applicant-view.svelte";
     import { toast } from "svelte-sonner"
+    import { onMount } from "svelte"
     import { type SubmitFunction } from "@sveltejs/kit"
     import { checkAllValidation, serialize } from "$lib/utils/forms"
 
@@ -40,6 +41,8 @@
 
     let selectedApplicant: Record<string, any> | null = $state(null);
     let isLoading = $state(false);
+    let collectingOfficers = $state([]);
+    let processors = $state([]);
 
     let schemaFormData = $state(mapForm(detailsSchema));
 
@@ -92,6 +95,23 @@
             toast.error("Could not add.")
         };
     }
+
+    onMount(async () => {
+        const collectingOfficersPromise = fetch("/api/getCollectingOfficers");
+        const processorsPromise = fetch("/api/getProcessors");
+        const [r1, r2] = await Promise.all([collectingOfficersPromise, processorsPromise]);
+
+        if(!r1.ok || !r2.ok)
+        {
+            console.log(r1, r2);
+            toast.error("Could not fetch the database.");
+            return;
+        }
+
+        const [result1, result2] = await Promise.all([r1.json(), r2.json()]) as Record<string, any>[];
+        collectingOfficers = result1.collectingOfficers;
+        processors = result2.processors;
+    })
 </script>
 
 <div class="px-2 my-3 w-full overflow-x-auto">
@@ -149,7 +169,7 @@
                 {:else}
                     <div class="flex flex-col">
                         <ApplicantView applicant={selectedApplicant} />
-                        <PostDetails bind:schemaFormData collectingOfficers={data.collectingOfficers} processors={data.processors} />
+                        <PostDetails bind:schemaFormData collectingOfficers={collectingOfficers} processors={processors} />
                     </div>
                 {/if}
             </div>
