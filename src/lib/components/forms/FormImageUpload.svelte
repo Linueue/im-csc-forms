@@ -84,15 +84,17 @@
                     {@render description()}
                 </Dialog.Description>
             </Dialog.Header>
-            {#if previewSrc}
-                <div class="flex align-center justify-center border-2 rounded-md p-2">
-                    <img src={previewSrc} alt="Preview" class="rounded-md" />
-                </div>
-            {:else}
-                <div class="flex align-center justify-center border-2 rounded-md">
-                    <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
-                </div>
-            {/if}
+            <div class="overflow-y-auto max-h-[35vh] sm:max-h-[55vh]">
+                {#if previewSrc}
+                    <div class="flex align-center justify-center border-2 rounded-md p-2">
+                        <img src={previewSrc} alt="Preview" class="rounded-md" />
+                    </div>
+                {:else}
+                    <div class="flex align-center justify-center border-2 rounded-md">
+                        <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
+                    </div>
+                {/if}
+            </div>
             <Input accept="image/png, image/jpeg, image/webp" type="file" onchange={handleFileUpload} />
             <Dialog.Footer>
                 <Dialog.Close

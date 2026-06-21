@@ -16,7 +16,7 @@
     $effect(() => {
         if(formSchemaData.applicantAge.value !== null)
             formSchemaData.isSeniorCitizen.value = formSchemaData.applicantAge.value >= 60;;
-        if(formSchemaData.isFirstTime.value !== null)
+        if(formSchemaData.isFirstTime.value !== null && formSchemaData.isFirstTime.value)
             formSchemaData.lastExaminationTaken.value = null;
     });
 

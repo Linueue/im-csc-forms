@@ -9,7 +9,7 @@
 
 <div class="p-2 w-full overflow-x-auto">
     <FlatTableView
-        name="Applicants Demographics"
+        name="Applicant Demographics"
         desc="Married Female Applicants"
     >
         {#snippet headerRows()}

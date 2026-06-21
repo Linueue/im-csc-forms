@@ -86,9 +86,9 @@
         bind:value={formSchemaData.applicantMobile}
         type={"tel"}
         name={"Mobile Number"}
-        pattern={"[0-9]{11}"}
-        errorMessage={"Digits must be exactly 11."}
+        errorMessage={"Value must be a valid number."}
         placeholder={"09123456789"}
+        maxlength={11}
     />
     <FormField
         bind:value={formSchemaData.applicantTelephone}

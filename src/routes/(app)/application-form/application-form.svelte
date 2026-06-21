@@ -14,6 +14,8 @@
     import CheckIcon from "@lucide/svelte/icons/circle-check"
     import XIcon from "@lucide/svelte/icons/circle-x"
     import { type SubmitFunction } from "@sveltejs/kit"
+    import { pushState } from "$app/navigation"
+    import { page as appPage } from "$app/state"
     import Page1 from "./form-pages/page1.svelte"
     import Page2 from "./form-pages/page2.svelte"
     import Page3 from "./form-pages/page3.svelte"
@@ -23,7 +25,8 @@
     let isSubmitting = $state(false);
     let submitStatus = $state(SubmitStatus.None);
     let formSchemaData = $state(mapForm(formSchema));
-    let titleRef = $state<HTMLHeadingElement | null>(null)
+    let titleRef = $state<HTMLHeadingElement | null>(null);
+    let currentPage = $state(appPage.state.page ?? 1);
 
     const submitFn: SubmitFunction = async ({ cancel, formData }) => {
         const schemaMap = new Map(Object.entries(formSchemaData));
@@ -61,17 +64,39 @@
         };
     }
 
+    let prevHistory = appPage.state.page ?? 1;
+
+    $effect(() => {
+        const historyPage = appPage.state.page ?? 1;
+
+        if(historyPage !== prevHistory)
+        {
+            prevHistory = historyPage;
+            currentPage = historyPage;
+        }
+    });
+
     function nextButtonFn(page: number)
     {
         const schemaMap = new Map(Object.entries(formSchemaData));
         const valid = checkValidation(schemaMap, page);
 
         if(!valid)
+        {
             toast.error("Missing required/invalid fields!");
-        else
+        } else
+        {
             titleRef!.scrollIntoView({ behavior: "smooth", block: "center" })
+            if((currentPage + 1) !== (appPage.state.page ?? 1))
+                pushState("", { page: currentPage + 1 })
+        }
 
         return valid;
+    }
+
+    function prevButtonFn(_: number)
+    {
+        history.back();
     }
 </script>
 
@@ -83,9 +108,9 @@
 
         {#if submitStatus == SubmitStatus.None}
             <form method="POST" action="?/submit" use:enhance={submitFn} autocomplete=off enctype="multipart/form-data">
-                <FormPagination totalPages={5} nextButtonFn={nextButtonFn}>
-                    <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
-                    {#snippet childRender({currentPage})}
+                <FormPagination totalPages={5} bind:page={currentPage} nextButtonFn={nextButtonFn} prevButtonFn={prevButtonFn}>
+                    {#snippet childRender({ currentPage })}
+                        <!-- The `currentPage` is a variable that is provided by the `FormPagination` component. -->
                         {#if currentPage == 1}
                             <Page1 bind:formSchemaData />
                         {:else if currentPage == 2}

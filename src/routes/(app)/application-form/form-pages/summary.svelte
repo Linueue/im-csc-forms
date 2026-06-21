@@ -31,7 +31,7 @@
             value={formSchemaData.applicantSex.value == "M" ? "Male" : "Female"}
         />
         <SummaryField
-            name={"Date of Birt"}
+            name={"Date of Birth"}
             value={formatDate(formSchemaData.applicantBirthdate.value)}
         />
         <SummaryField

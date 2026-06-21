@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { Button } from "$lib/components/ui/button/index.js"
-
     const reports = [
         {
             name: "Applicant Demographics",
@@ -70,7 +68,7 @@
     ];
 </script>
 
-<div class="px-8 overflow-x-auto">
+<div class="px-2 my-3 overflow-x-auto">
     <div class="font-medium font-serif">
         Reports/Analytics
     </div>

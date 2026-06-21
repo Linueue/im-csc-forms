@@ -117,6 +117,7 @@ export class SchemaItemString extends SchemaItem<string>
 {
     minLen: number = 0;
     maxLen: number = Infinity;
+    matchStr: string = "";
 
     min(value: number)
     {
@@ -127,6 +128,12 @@ export class SchemaItemString extends SchemaItem<string>
     max(value: number)
     {
         this.maxLen = value;
+        return this;
+    }
+
+    match(value: string)
+    {
+        this.matchStr = value;
         return this;
     }
 
@@ -147,7 +154,8 @@ export class SchemaItemString extends SchemaItem<string>
         assert(value != null);
 
         const valueLen = value.length;
-        const isValid = (valueLen >= this.minLen && valueLen <= this.maxLen);
+        const isValid = (valueLen >= this.minLen && valueLen <= this.maxLen) &&
+            (this.matchStr ? value.match(this.matchStr) !== null : true);
         return isValid ? ValidState.Valid : ValidState.Invalid;
     }
 }

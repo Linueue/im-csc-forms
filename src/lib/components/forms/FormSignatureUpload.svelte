@@ -117,33 +117,35 @@
                     {@render description()}
                 </Dialog.Description>
             </Dialog.Header>
-            {#if !draw}
-                {#if previewSrc}
-                    <div class="flex align-center justify-center border-2 rounded-md p-2">
-                        <img src={previewSrc} alt="Preview" class="rounded-md" />
+            <div class="overflow-y-auto max-h-[35vh] sm:max-h-[55vh]">
+                {#if !draw}
+                    {#if previewSrc}
+                        <div class="flex align-center justify-center border-2 rounded-md p-2">
+                            <img src={previewSrc} alt="Preview" class="rounded-md" />
+                        </div>
+                    {:else}
+                        <div class="flex align-center justify-center border-2 rounded-md">
+                            <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
+                        </div>
+                    {/if}
+                    <div class="w-full flex flex-col gap-1">
+                        <Input accept="image/png, image/jpeg" type="file" onchange={handleFileUpload} />
+                        <p class="text-center text-muted-foreground">or</p>
+                        <Button onclick={() => { draw = true; }} class="w-full">
+                            Draw
+                        </Button>
                     </div>
                 {:else}
-                    <div class="flex align-center justify-center border-2 rounded-md">
-                        <ImageIcon size={128} strokeWidth={0.5} color="var(--muted)" />
+                    <div class="w-full flex flex-col gap-1">
+                        <Signature bind:signatureData />
+                        <p class="text-center text-muted-foreground">Draw</p>
+                        <p class="text-center text-muted-foreground">or</p>
+                        <Button onclick={() => { draw = false; }}>
+                            Upload
+                        </Button>
                     </div>
                 {/if}
-                <div class="w-full flex flex-col gap-1">
-                    <Input accept="image/png, image/jpeg" type="file" onchange={handleFileUpload} />
-                    <p class="text-center text-muted-foreground">or</p>
-                    <Button onclick={() => { draw = true; }} class="w-full">
-                        Draw
-                    </Button>
-                </div>
-            {:else}
-                <div class="w-full flex flex-col gap-1">
-                    <Signature bind:signatureData />
-                    <p class="text-center text-muted-foreground">Draw</p>
-                    <p class="text-center text-muted-foreground">or</p>
-                    <Button onclick={() => { draw = false; }}>
-                        Upload
-                    </Button>
-                </div>
-            {/if}
+            </div>
             <Dialog.Footer>
                 <Dialog.Close
                     type="button"

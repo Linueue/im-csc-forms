@@ -5,10 +5,13 @@
     import MessageSquareWarningIcon from "@lucide/svelte/icons/message-square-warning"
     import {goto} from "$app/navigation"
     import Logo from "$lib/assets/logo.svelte"
+    import { browser } from "$app/environment"
 
+    const sfx = browser ? new Audio("/vine-boom.mp3") : null;
     function gotoApply()
     {
         goto("/application-form");
+        sfx?.play();
     }
 
     /*

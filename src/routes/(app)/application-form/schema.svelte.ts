@@ -24,9 +24,9 @@ export const formSchema = {
     applicantPhoto: item.image().size(1 * 1024 * 1024).page(1), // Limits to 1MB
     applicantMotherMaidenName: item.string().page(1),
     applicantAddress: item.string().page(1),
-    applicantMobile: item.string().min(11).max(11).page(1),
+    applicantMobile: item.string().min(11).max(11).match("09[0-9]{9}").page(1),
     applicantTelephone: item.string().optional(true).page(1),
-    applicantEmail: item.string().page(1),
+    applicantEmail: item.string().match("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$").page(1),
 
     // Page 2
     isFirstTime: item.boolean().default(null).page(2),

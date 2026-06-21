@@ -10,7 +10,9 @@ declare global {
             storage: StorageClient,
         }
 		// interface PageData {}
-		// interface PageState {}
+		interface PageState {
+            page?: number,
+        }
 		interface Platform {
             env?: Env,
         }

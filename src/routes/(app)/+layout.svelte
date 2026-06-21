@@ -30,7 +30,9 @@
                         </NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link class="px-[1em]">About</NavigationMenu.Link>
+                        <NavigationMenu.Link onSelect={() => window.location.href =  "https://www.csc.gov.ph"} class={`${buttonVariants({ variant: "ghost" })} px-[1em]`}>
+                            About
+                        </NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
                         <DarkMode />

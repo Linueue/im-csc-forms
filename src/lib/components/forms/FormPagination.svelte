@@ -3,15 +3,15 @@
 
     type ChildRender = (args: { currentPage: number }) => any;
     type SubmitRender = (args: { }) => any;
-    type NextButtonFn = (page: number) => any;
-    let { totalPages, childRender, submitRender, nextButtonFn } = $props<{
+    type ButtonFn = (page: number) => any;
+    let { totalPages, page = $bindable(), childRender, submitRender, nextButtonFn, prevButtonFn } = $props<{
         totalPages: number,
+        page: number,
         childRender?: ChildRender,
         submitRender?: SubmitRender,
-        nextButtonFn: NextButtonFn,
+        nextButtonFn: ButtonFn,
+        prevButtonFn: ButtonFn,
     }>();
-
-    let page = $state(1);
 
     function handleNextButton()
     {
@@ -19,6 +19,14 @@
         if(valid)
             return;
         page = page - 1;
+    }
+
+    function handlePrevButton()
+    {
+        const valid = prevButtonFn(page);
+        if(valid)
+            return;
+        page = page + 1;
     }
 </script>
 
@@ -31,7 +39,7 @@
         <Pagination.Content class="flex flex-row w-full justify-between pt-2">
             {#if currentPage != 1}
                 <Pagination.Item class="self-start">
-                    <Pagination.PrevButton />
+                    <Pagination.PrevButton onclick={() => handlePrevButton()} />
                 </Pagination.Item>
             {:else}
                 <!-- Placeholder, this pushes Next to the right when page is 1 -->

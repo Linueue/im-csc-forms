@@ -3,6 +3,7 @@
     import { type PageProps } from "./$types"
     import { formatDate } from "$lib/utils/date"
     import FlatTableView from "$lib/components/flat-table-view.svelte"
+    import { employmentType } from "$lib/utils/forms"
 
     let { data }: PageProps = $props();
 </script>
@@ -19,15 +20,12 @@
         {#snippet bodyRows()}
             {#each data.applicants as applicant}
                 <Table.Row>
-                    {#each data.fields as field}
-                        <Table.Cell class="font-normal text-muted-foreground">
-                            {#if ["Birthdate", "LastExaminationTaken", "ExaminationDate"].includes(field)}
-                                {formatDate(applicant[field])}
-                            {:else}
-                                {applicant[field]}
-                            {/if}
-                        </Table.Cell>
-                    {/each}
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {employmentType(applicant.EmploymentType)}
+                    </Table.Cell>
+                    <Table.Cell class="font-normal text-muted-foreground">
+                        {applicant.No_of_Applicants}
+                    </Table.Cell>
                 </Table.Row>
             {/each}
         {/snippet}
